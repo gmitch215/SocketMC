@@ -1,6 +1,5 @@
 plugins {
     kotlin("jvm") version "1.9.23"
-    id("com.github.johnrengelman.shadow") version "8.1.1" apply false
 
     java
     `maven-publish`
@@ -10,6 +9,12 @@ allprojects {
     group = "me.gamercoder215.socketmc"
     version = "0.1.0"
     description = "Direct Minecraft Server-to-Client Communication"
+
+    project.ext["id"] = "socketmc"
+    project.ext["name"] = "SocketMC"
+    project.ext["author"] = "gmitch215"
+    project.ext["license"] = "GPL-3.0"
+    project.ext["github"] = "https://github.com/gmitch215/SocketMC"
 
     apply(plugin = "maven-publish")
     apply<JavaPlugin>()
@@ -22,12 +27,17 @@ allprojects {
         maven("https://repo.codemc.org/repository/nms/")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
+        maven("https://maven.fabricmc.net/")
+        maven("https://maven.minecraftforge.net/")
+        maven("https://maven.parchmentmc.org")
     }
+
+    project.ext["minecraft_version"] = "1.20.4"
+    project.ext["parchment"] = "2024.02.25"
 }
 
 subprojects {
     apply<JacocoPlugin>()
-    apply(plugin = "com.github.johnrengelman.shadow")
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     tasks {

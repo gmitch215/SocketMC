@@ -1,2 +1,1 @@
 description = "SocketMC Core Library"
-

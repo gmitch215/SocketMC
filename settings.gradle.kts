@@ -3,6 +3,9 @@ rootProject.name = "SocketMC"
 include(":socketmc-core")
 project(":socketmc-core").projectDir = rootDir.resolve("core")
 
+include(":socketmc-mod")
+project(":socketmc-mod").projectDir = rootDir.resolve("mod/dist")
+
 listOf("fabric", "forge").forEach {
     include(":socketmc-$it")
     project(":socketmc-$it").projectDir = rootDir.resolve("mod/$it")
@@ -13,11 +16,13 @@ listOf("paper", "spigot").forEach {
     project(":socketmc-$it").projectDir = rootDir.resolve("plugin/$it")
 }
 
-listOf(
-    "1_20_R1",
-    "1_20_R2",
-    "1_20_R3"
-).forEach {
-    include(":socketmc-nms-$it")
-    project(":socketmc-nms-$it").projectDir = rootDir.resolve("plugin/nms/$it")
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+
+        maven("https://maven.fabricmc.net/")
+        maven("https://maven.minecraftforge.net/")
+        maven("https://maven.parchmentmc.org")
+    }
 }
