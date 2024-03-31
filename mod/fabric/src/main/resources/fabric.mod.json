@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "id": "${project.ext.id}",
+  "version": "${project.version}",
+
+  "name": "${project.ext.name}",
+  "description": "${project.description}",
+  "authors": ["${project.ext.author}"],
+  "contact": {
+    "homepage": "${project.ext.github}",
+    "sources": "${project.ext.github}/tree/master",
+    "issues": "${project.ext.github}/issues"
+  },
+
+  "license": "${project.ext.license}",
+  "icon": "assets/icon.png"
+}
