@@ -1,6 +1,7 @@
 plugins {
     id("net.minecraftforge.gradle") version "6.0.21"
     id("org.parchmentmc.librarian.forgegradle") version "1.+"
+    id("org.spongepowered.mixin") version "0.7.38"
 }
 
 description = "Forge Mod for SocketMC Client-side Implementation"
@@ -18,6 +19,11 @@ dependencies {
 
 minecraft {
     mappings("parchment", "$parchment-$minecraft")
+}
+
+mixin {
+    add(sourceSets["main"], "socketmc-forge.mixins.refmap.json")
+    config("socketmc-forge.mixins.json")
 }
 
 tasks {

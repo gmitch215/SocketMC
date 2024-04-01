@@ -6,8 +6,11 @@ plugins {
 }
 
 allprojects {
+    project.ext["minecraft_version"] = "1.20.4"
+    project.ext["parchment"] = "2024.02.25"
+
     group = "me.gamercoder215.socketmc"
-    version = "0.1.0"
+    version = "${project.ext["minecraft_version"]}-0.1.0"
     description = "Direct Minecraft Server-to-Client Communication"
 
     project.ext["id"] = "socketmc"
@@ -31,9 +34,6 @@ allprojects {
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.parchmentmc.org")
     }
-
-    project.ext["minecraft_version"] = "1.20.4"
-    project.ext["parchment"] = "2024.02.25"
 }
 
 subprojects {
