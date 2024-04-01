@@ -1,6 +1,6 @@
 package me.gamercoder215.socketmc;
 
-import me.gamercoder215.socketmc.mod.ModListener;
+import me.gamercoder215.socketmc.events.ModListener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
 

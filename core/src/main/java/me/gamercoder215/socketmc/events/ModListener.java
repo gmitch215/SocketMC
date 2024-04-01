@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.mod;
+package me.gamercoder215.socketmc.events;
 
 /**
  * Represents a custom listener attached to the SocketMC Mod.
