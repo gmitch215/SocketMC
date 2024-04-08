@@ -3,9 +3,11 @@ package me.gamercoder215.socketmc.spigot;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import me.gamercoder215.socketmc.SocketMCNotInstalledException;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import net.minecraft.network.Connection;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.network.ServerCommonPacketListenerImpl;
 import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -68,12 +70,15 @@ public final class SocketPlayer {
     /**
      * Sends an instruction to the player.
      * @param i The instruction to send.
+     * @throws SocketMCNotInstalledException if the player does not have SocketMC installed
      */
-    public void sendInstruction(@NotNull Instruction i) {
+    public void sendInstruction(@NotNull Instruction i) throws SocketMCNotInstalledException {
         if (i == null) throw new IllegalArgumentException("Instruction cannot be null");
 
         ByteBuf buf = Unpooled.wrappedBuffer(i.toByteArray());
-        channel.writeAndFlush(buf);
+        ChannelFuture future = channel.writeAndFlush(new FriendlyByteBuf(buf));
+        if (!future.isSuccess())
+            throw new SocketMCNotInstalledException("SocketMC is not installed on the player's client");
     }
 
 }
