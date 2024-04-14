@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"me.gamercoder215.socketmc"},{"l":"me.gamercoder215.socketmc.instruction"},{"l":"me.gamercoder215.socketmc.instruction.util"},{"l":"me.gamercoder215.socketmc.spigot"}];updateSearchResults();
