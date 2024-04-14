@@ -1,8 +1,11 @@
 package me.gamercoder215.socketmc.fabric;
 
+import me.gamercoder215.socketmc.SocketMC;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 
 import java.util.logging.Logger;
 
@@ -11,21 +14,17 @@ public final class FabricSocketMC implements ClientModInitializer {
 
     public static final Logger LOGGER = Logger.getLogger("SocketMC");
 
+    public static Minecraft minecraft;
+    public static GuiGraphics graphics;
+
     @Override
     public void onInitializeClient() {
-
+        minecraft = Minecraft.getInstance();
+        graphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
     }
 
     public static void print(Throwable t) {
-        LOGGER.severe(t.getClass().getSimpleName());
-        LOGGER.severe("-----------");
-        LOGGER.severe(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.severe(element.toString());
-
-        if (t.getCause() != null) {
-            LOGGER.severe("Caused by:");
-            print(t.getCause());
-        }
+        SocketMC.print(LOGGER, t);
     }
 
 }

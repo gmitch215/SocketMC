@@ -1,6 +1,8 @@
 package me.gamercoder215.socketmc.forge;
 
 import me.gamercoder215.socketmc.SocketMC;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.logging.Logger;
@@ -10,20 +12,16 @@ public final class ForgeSocketMC {
 
     public static final Logger LOGGER = Logger.getLogger("SocketMC");
 
-    public ForgeSocketMC() {
+    public static Minecraft minecraft;
+    public static GuiGraphics graphics;
 
+    public ForgeSocketMC() {
+        minecraft = Minecraft.getInstance();
+        graphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
     }
 
     public static void print(Throwable t) {
-        LOGGER.severe(t.getClass().getSimpleName());
-        LOGGER.severe("-----------");
-        LOGGER.severe(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.severe(element.toString());
-
-        if (t.getCause() != null) {
-            LOGGER.severe("Caused by:");
-            print(t.getCause());
-        }
+        SocketMC.print(LOGGER, t);
     }
 
 }
