@@ -5,6 +5,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.*;
 import java.util.List;
@@ -41,6 +43,12 @@ public final class Instruction implements Serializable {
      * Instruction to draw a shape on the client's screen.
      */
     public static final String DRAW_SHAPE = "draw_shape";
+
+    /**
+     * Instruction to play audio on the client's device. This supports all audio formats supported by the client, according to its JDK. Most commonly is {@code .wav} and {@code .au}.
+     * @see AudioSystem#getAudioFileTypes()
+     */
+    public static final String PLAY_AUDIO = "play_audio";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -427,6 +435,43 @@ public final class Instruction implements Serializable {
         if (alpha < 0 || alpha > 255) throw new IllegalArgumentException("Alpha must be between 0 and 255");
 
         return new Instruction(DRAW_SHAPE, List.of("line_h", x, y, width, color.getRGB() | (alpha << 24)));
+    }
+
+    /**
+     * Creates a {@link #PLAY_AUDIO} instruction.
+     * @param file Path to Audio File
+     * @return Play Audio Instruction
+     */
+    @NotNull
+    public static Instruction playAudio(@NotNull File file) {
+        if (file == null) throw new IllegalArgumentException("File cannot be null");
+        if (!file.exists()) throw new IllegalArgumentException("File does not exist");
+
+        try {
+            return playAudio(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Failed to read audio file", e);
+        }
+    }
+
+    /**
+     * Creates a {@link #PLAY_AUDIO} instruction.
+     * @param file Input Stream to Audio File
+     * @return Play Audio Instruction
+     */
+    @NotNull
+    public static Instruction playAudio(@NotNull InputStream file) {
+        if (file == null) throw new IllegalArgumentException("File cannot be null");
+
+        try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
+            byte[] buf = new byte[1024];
+            for (int readNum; (readNum = file.read(buf)) != -1;) bos.write(buf, 0, readNum);
+
+            buf = bos.toByteArray();
+            return new Instruction(PLAY_AUDIO, List.of(buf));
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to read audio file", e);
+        }
     }
 
     // Serialization

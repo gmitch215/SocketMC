@@ -2,6 +2,7 @@ package me.gamercoder215.socketmc.fabric.mixin;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import me.gamercoder215.socketmc.fabric.FabricSocketMC;
 import me.gamercoder215.socketmc.fabric.machines.FabricMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import net.minecraft.network.FriendlyByteBuf;
@@ -24,7 +25,13 @@ public class PacketDecoderMixin {
         if (id == -2) {
             byte[] arr = buf.readByteArray();
             Instruction i = Instruction.fromByteArray(arr);
-            FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
+
+            try {
+                FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
+            } catch (Exception e) {
+                FabricSocketMC.print(e);
+            }
+
             ci.cancel();
         }
     }
