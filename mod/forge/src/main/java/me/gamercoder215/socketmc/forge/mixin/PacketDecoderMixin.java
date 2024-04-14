@@ -2,6 +2,7 @@ package me.gamercoder215.socketmc.forge.mixin;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import me.gamercoder215.socketmc.forge.machines.ForgeMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import net.minecraft.network.FriendlyByteBuf;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,8 +24,7 @@ public class PacketDecoderMixin {
         if (id == -2) {
             byte[] arr = buf.readByteArray();
             Instruction i = Instruction.fromByteArray(arr);
-            list.add(i);
-
+            ForgeMachineFinder.getMachine(i.getId()).onInstruction(i);
             ci.cancel();
         }
     }
