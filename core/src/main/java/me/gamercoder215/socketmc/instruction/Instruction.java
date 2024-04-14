@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
 
-import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.*;
@@ -17,8 +16,6 @@ import java.util.Objects;
  * <br>
  * All instructions are serialized and sent over the network as byte arrays. They contain an {@linkplain #getId() id} and a list of {@linkplain #getParameters() parameters}
  * that are serialized and sent through the player's channel.
- *
- * <h1>Notes</h1>
  * <ul>
  *     <li>Instructions are immutable and cannot be modified after creation.</li>
  *     <li>Instructions are serializable and can be sent over the network as byte arrays.</li>

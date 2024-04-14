@@ -60,6 +60,11 @@ public final class BukkitText extends Text {
         return text;
     }
 
+    /**
+     * Sets the text content for this text element.
+     * @param text Text Content
+     * @throws IllegalArgumentException if the text is null
+     */
     public void setText(@NotNull String text) throws IllegalArgumentException {
         if (text == null) throw new IllegalArgumentException("Text cannot be null");
 
