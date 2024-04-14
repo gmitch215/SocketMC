@@ -24,6 +24,8 @@ minecraft {
 mixin {
     add(sourceSets["main"], "socketmc-forge.mixins.refmap.json")
     config("socketmc-forge.mixins.json")
+
+    disableEclipseAddon = true
 }
 
 tasks {
