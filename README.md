@@ -2,6 +2,8 @@
 
 > Minecraft Server-to-Client Direct Communication Library
 
+[Notice](./NOTICE.md) | [License](./LICENSE)
+
 ## Background
 
 "Client-side only" is a term widely used when advancing in plugin development, where you're limited in interacting with player's own client. The goal of this library
