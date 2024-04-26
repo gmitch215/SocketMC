@@ -27,7 +27,7 @@ public final class Instruction implements Serializable {
     // Instruction IDs
 
     /**
-     * Instruction to verify SocketMC is present.
+     * Instruction to verify SocketMC is present. This then enables events to be sent from the client to the server, if not already enabled.
      */
     public static final String PING = "ping";
 
