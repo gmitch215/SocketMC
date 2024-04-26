@@ -16,6 +16,9 @@ public final class PingMachine implements Machine {
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         FabricSocketMC.LOGGER.info("Received ping instruction");
+
+        if (!FabricSocketMC.eventsEnabled)
+            FabricSocketMC.eventsEnabled = true;
     }
 
 }

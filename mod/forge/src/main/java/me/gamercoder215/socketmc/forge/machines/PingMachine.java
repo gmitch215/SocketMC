@@ -16,6 +16,9 @@ public final class PingMachine implements Machine {
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         ForgeSocketMC.LOGGER.info("Received ping instruction");
+
+        if (!ForgeSocketMC.eventsEnabled)
+            ForgeSocketMC.eventsEnabled = true;
     }
 
 }

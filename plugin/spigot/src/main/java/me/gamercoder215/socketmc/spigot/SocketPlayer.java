@@ -20,6 +20,11 @@ import java.lang.reflect.Field;
  */
 public final class SocketPlayer {
 
+    /**
+     * The ID of the packet injector.
+     */
+    public static final String PACKET_INJECTOR_ID = "socketmc:packet_injector";
+
     private final Player player;
     private final Channel channel;
 
@@ -40,6 +45,7 @@ public final class SocketPlayer {
         }
 
         ping();
+        EventFactory.addPacketInjector(this);
     }
 
     /**
