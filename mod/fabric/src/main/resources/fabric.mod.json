@@ -14,6 +14,7 @@
   "mixins": [
     "socketmc-fabric.mixins.json"
   ],
+  "accessWidener": "socketmc.accesswidener",
 
   "license": "${project.ext.license}",
   "icon": "assets/icon.png"

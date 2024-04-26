@@ -24,6 +24,10 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 }
 
+loom {
+    accessWidenerPath = file("src/main/resources/socketmc.accesswidener")
+}
+
 tasks {
     jar {
         from(project(":socketmc-core").sourceSets["main"].output)
