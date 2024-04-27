@@ -20,19 +20,19 @@ public class PacketDecoderMixin {
     protected void decode(ChannelHandlerContext channelHandlerContext, ByteBuf byteBuf, List<Object> list, CallbackInfo ci) {
         if (byteBuf.readableBytes() == 0) return;
 
-        FriendlyByteBuf buf = new FriendlyByteBuf(byteBuf.copy());
-        int id = buf.readVarInt();
-        if (id == -2) {
-            byte[] arr = buf.readByteArray();
-            Instruction i = Instruction.fromByteArray(arr);
+        try {
+            FriendlyByteBuf buf = new FriendlyByteBuf(byteBuf.copy());
+            int id = buf.readVarInt();
+            if (id == -2) {
+                byteBuf.clear();
+                ci.cancel();
 
-            try {
+                byte[] arr = buf.readByteArray();
+                Instruction i = Instruction.fromByteArray(arr);
                 FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
-            } catch (Exception e) {
-                FabricSocketMC.print(e);
             }
-
-            ci.cancel();
+        } catch (Exception e) {
+            FabricSocketMC.print(e);
         }
     }
 

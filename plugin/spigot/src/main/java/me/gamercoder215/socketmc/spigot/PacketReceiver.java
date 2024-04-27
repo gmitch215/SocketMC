@@ -22,6 +22,8 @@ final class PacketReceiver extends ChannelDuplexHandler {
         if (msg instanceof FriendlyByteBuf buf) {
             FriendlyByteBuf clone = new FriendlyByteBuf(buf.copy());
             if (clone.readVarInt() == -3) {
+                buf.clear();
+
                 int id = clone.readVarInt();
                 byte[] params = clone.readByteArray();
 
@@ -30,7 +32,6 @@ final class PacketReceiver extends ChannelDuplexHandler {
                 Map<String, Object> parameters = (Map<String, Object>) ois.readObject();
 
                 EventFactory.call(player, id, parameters);
-                buf.release();
             }
         }
     }
