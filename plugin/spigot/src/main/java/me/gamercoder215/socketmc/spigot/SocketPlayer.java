@@ -44,8 +44,8 @@ public final class SocketPlayer {
             throw new IllegalArgumentException("Failed to get connection field", e);
         }
 
-        ping();
         EventFactory.addPacketInjector(this);
+        ping();
     }
 
     /**
@@ -81,8 +81,11 @@ public final class SocketPlayer {
     public void sendInstruction(@NotNull Instruction i) throws SocketMCNotInstalledException {
         if (i == null) throw new IllegalArgumentException("Instruction cannot be null");
 
-        ByteBuf buf = Unpooled.wrappedBuffer(i.toByteArray());
-        ChannelFuture future = channel.writeAndFlush(new FriendlyByteBuf(buf));
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        buf.writeVarInt(-2);
+        buf.writeByteArray(i.toByteArray());
+
+        ChannelFuture future = channel.writeAndFlush(buf);
         if (!future.isSuccess())
             throw new SocketMCNotInstalledException("SocketMC is not installed on the player's client");
     }
