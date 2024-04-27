@@ -10,6 +10,7 @@ val minecraft = project.ext["minecraft_version"].toString()
 
 dependencies {
     compileOnly("org.spigotmc:spigot:$minecraft-R0.1-SNAPSHOT:remapped-mojang")
+    testCompileOnly("org.spigotmc:spigot:$minecraft-R0.1-SNAPSHOT:remapped-mojang")
 
     // API
     api(project(":socketmc-core"))
@@ -22,7 +23,7 @@ java {
 
 tasks {
     assemble {
-        dependsOn("remap")
+        dependsOn(remap)
     }
 
     javadoc {
@@ -42,6 +43,19 @@ tasks {
         enabled = false
     }
 
+    shadowJar {
+        manifest {
+            attributes(
+                "Implementation-Title" to project.name,
+                "Implementation-Version" to project.version,
+                "Implementation-Vendor" to project.ext["author"],
+            )
+        }
+
+        archiveFileName.set("${project.name}-${project.version}.jar")
+        archiveClassifier.set("")
+    }
+
     remap {
         dependsOn("shadowJar")
 
@@ -49,5 +63,12 @@ tasks {
         version.set(minecraft)
         action.set(RemapTask.Action.MOJANG_TO_SPIGOT)
         archiveName.set("${project.name}-${project.version}.jar")
+    }
+}
+
+configurations {
+    listOf(apiElements, runtimeElements).map { it.get() }.forEach {
+        it.outgoing.artifacts.removeIf { true }
+        it.outgoing.artifact(tasks.getByName("shadowJar"))
     }
 }

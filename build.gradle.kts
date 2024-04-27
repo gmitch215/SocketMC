@@ -65,6 +65,44 @@ allprojects {
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.parchmentmc.org")
     }
+
+    publishing {
+        publications {
+            create<MavenPublication>("maven") {
+                artifactId = project.name
+
+                pom {
+                    description.set(project.description)
+                    licenses {
+                        license {
+                            name.set("GPL-3.0")
+                            url.set("https://github.com/gmitch215/SocketMC/blob/master/LICENSE")
+                        }
+                    }
+                    scm {
+                        connection.set("scm:git:git://gmitch215/SocketMC.git")
+                        developerConnection.set("scm:git:ssh://gmitch215/SocketMC.git")
+                        url.set("https://github.com/gmitch215/SocketMC")
+                    }
+                }
+
+                from(components["java"])
+            }
+        }
+
+        repositories {
+            maven {
+                credentials {
+                    username = System.getenv("JENKINS_USERNAME")
+                    password = System.getenv("JENKINS_PASSWORD")
+                }
+
+                val releases = "https://repo.codemc.io/repository/maven-releases/"
+                val snapshots = "https://repo.codemc.io/repository/maven-snapshots/"
+                url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshots else releases)
+            }
+        }
+    }
 }
 
 subprojects {

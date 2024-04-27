@@ -23,6 +23,10 @@ dependencies {
 }
 
 tasks {
+    compileJava {
+        dependsOn(project(":socketmc-spigot").tasks["assemble"])
+    }
+
     javadoc {
         enabled = true
 
