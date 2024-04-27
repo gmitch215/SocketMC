@@ -11,6 +11,8 @@ description = "Fabric Mod for SocketMC Client-side Implementation"
 val minecraft = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
+val fabric = "0.91.3"
+
 dependencies {
     api(project(":socketmc-core"))
 
@@ -21,6 +23,14 @@ dependencies {
     })
 
     modImplementation("net.fabricmc:fabric-loader:0.15.1")
+
+    setOf(
+        "fabric-api-base",
+        "fabric-networking-api-v1"
+    ).forEach {
+        modImplementation(fabricApi.module(it, "$fabric+$minecraft"))
+    }
+
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 }
 
