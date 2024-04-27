@@ -2,6 +2,11 @@
   "schemaVersion": 1,
   "id": "${project.ext.id}",
   "version": "${project.version}",
+  "entrypoints": {
+    "client": [
+      "me.gamercoder215.socketmc.fabric.FabricSocketMC"
+    ]
+  },
 
   "name": "${project.ext.name}",
   "description": "${project.description}",
