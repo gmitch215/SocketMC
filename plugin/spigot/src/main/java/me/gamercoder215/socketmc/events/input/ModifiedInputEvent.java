@@ -13,6 +13,7 @@ public abstract class ModifiedInputEvent extends SocketEvent {
 
     /**
      * Constructs a new ModifiedInputEvent.
+     * @param player The player that triggered the event.
      * @param flags The flags that were active when the event occurred.
      */
     public ModifiedInputEvent(@NotNull SocketPlayer player, int flags) {
