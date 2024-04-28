@@ -1,14 +1,16 @@
 package me.gamercoder215.socketmc.events;
 
 import me.gamercoder215.socketmc.spigot.SocketPlayer;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an event fired by SocketMC.
+ * Represents an event fired by SocketMC. All SocketMC events are fired asynchronously.
  */
-public abstract class SocketEvent extends PlayerEvent {
+public abstract class SocketEvent extends Event {
 
     private static final HandlerList HANDLERS = new HandlerList();
     private final SocketPlayer socketPlayer;
@@ -18,7 +20,7 @@ public abstract class SocketEvent extends PlayerEvent {
      * @param player The player associated with this event
      */
     public SocketEvent(@NotNull SocketPlayer player) {
-        super(player.getPlayer());
+        super(true);
         this.socketPlayer = player;
     }
 
@@ -29,6 +31,15 @@ public abstract class SocketEvent extends PlayerEvent {
     @NotNull
     public SocketPlayer getSocketPlayer() {
         return socketPlayer;
+    }
+
+    /**
+     * Gets the player associated with this event.
+     * @return Player
+     */
+    @NotNull
+    public Player getPlayer() {
+        return socketPlayer.getPlayer();
     }
 
     @Override

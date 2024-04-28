@@ -1,11 +1,11 @@
 package me.gamercoder215.socketmc.spigot;
 
 import io.netty.channel.ChannelPipeline;
-import me.gamercoder215.socketmc.events.input.PlayerClickMouseEvent;
-import me.gamercoder215.socketmc.events.input.PlayerMoveMouseEvent;
-import me.gamercoder215.socketmc.events.input.PlayerScrollMouseEvent;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEventAsync;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
 import me.gamercoder215.socketmc.util.input.Action;
-import me.gamercoder215.socketmc.events.input.PlayerPressKeyEvent;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEventAsync;
 import me.gamercoder215.socketmc.events.SocketEvent;
 import me.gamercoder215.socketmc.util.input.Key;
 import me.gamercoder215.socketmc.util.input.MouseButton;
@@ -39,21 +39,21 @@ final class EventFactory {
                 int flags = (int) params.get("flags");
                 int action = (int) params.get("action");
 
-                return new PlayerPressKeyEvent(p, Key.fromCode(key), Action.values()[action], flags);
+                return new AsyncPlayerPressKeyEventAsync(p, Key.fromCode(key), Action.values()[action], flags);
             },
             // PlayerMoveMouseEvent
             (p, params) -> {
                 double x = (double) params.get("x");
                 double y = (double) params.get("y");
 
-                return new PlayerMoveMouseEvent(p, x, y);
+                return new AsyncPlayerMoveMouseEvent(p, x, y);
             },
             // PlayerScrollMouseEvent
             (p, params) -> {
                 double x = (double) params.get("x");
                 double y = (double) params.get("y");
 
-                return new PlayerScrollMouseEvent(p, x, y);
+                return new AsyncPlayerScrollMouseEvent(p, x, y);
             },
             // PlayerClickMouseEvent
             (p, params) -> {
@@ -61,12 +61,12 @@ final class EventFactory {
                 int action = (int) params.get("action");
                 int flags = (int) params.get("mods");
 
-                return new PlayerClickMouseEvent(p, MouseButton.values()[button], Action.values()[action], flags);
+                return new AsyncPlayerClickMouseEventAsync(p, MouseButton.values()[button], Action.values()[action], flags);
             }
     );
 
     static void call(SocketPlayer player, int id, Map<String, Object> params) {
         SocketEvent e = factory.get(id).apply(player, params);
-        Bukkit.getPluginManager().callEvent(e);
+        new Thread(() -> Bukkit.getPluginManager().callEvent(e)).start();
     }
 }

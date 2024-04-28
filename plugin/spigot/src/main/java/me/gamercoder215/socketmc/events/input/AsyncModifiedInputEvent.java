@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Represents an input event that can be modified using a keyboard modifier (Shift, Ctrl, Caps Lock, etc.)
  */
-public abstract class ModifiedInputEvent extends SocketEvent {
+public abstract class AsyncModifiedInputEvent extends SocketEvent {
 
     private final int flags;
 
@@ -16,7 +16,7 @@ public abstract class ModifiedInputEvent extends SocketEvent {
      * @param player The player that triggered the event.
      * @param flags The flags that were active when the event occurred.
      */
-    public ModifiedInputEvent(@NotNull SocketPlayer player, int flags) {
+    public AsyncModifiedInputEvent(@NotNull SocketPlayer player, int flags) {
         super(player);
         this.flags = flags;
     }

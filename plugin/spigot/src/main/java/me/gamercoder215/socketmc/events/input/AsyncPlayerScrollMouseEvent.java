@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when a player scrolls their mouse.
  */
-public class PlayerScrollMouseEvent extends SocketEvent {
+public class AsyncPlayerScrollMouseEvent extends SocketEvent {
 
     private final double xOffset;
     private final double yOffset;
@@ -18,7 +18,7 @@ public class PlayerScrollMouseEvent extends SocketEvent {
      * @param xOffset The x offset of the scroll.
      * @param yOffset The y offset of the scroll.
      */
-    public PlayerScrollMouseEvent(@NotNull SocketPlayer player, double xOffset, double yOffset) {
+    public AsyncPlayerScrollMouseEvent(@NotNull SocketPlayer player, double xOffset, double yOffset) {
         super(player);
 
         this.xOffset = xOffset;

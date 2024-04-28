@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when a player clicks or releases a button their mouse.
  */
-public class PlayerClickMouseEvent extends ModifiedInputEvent {
+public class AsyncPlayerClickMouseEventAsync extends AsyncModifiedInputEvent {
 
     private final MouseButton button;
     private final Action action;
@@ -20,7 +20,7 @@ public class PlayerClickMouseEvent extends ModifiedInputEvent {
      * @param action The action that was performed
      * @param flags Bitfield for flags of the mouse click
      */
-    public PlayerClickMouseEvent(@NotNull SocketPlayer player, @NotNull MouseButton button, @NotNull Action action, int flags) {
+    public AsyncPlayerClickMouseEventAsync(@NotNull SocketPlayer player, @NotNull MouseButton button, @NotNull Action action, int flags) {
         super(player, flags);
 
         this.button = button;
