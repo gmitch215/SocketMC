@@ -30,6 +30,7 @@ public class PacketDecoderMixin {
                 byte[] arr = buf.readByteArray();
                 Instruction i = Instruction.fromByteArray(arr);
                 FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
+                FabricSocketMC.LOGGER.info("Received instruction: {}, size {} bytes", i, arr.length);
             }
         } catch (Exception e) {
             FabricSocketMC.print(e);

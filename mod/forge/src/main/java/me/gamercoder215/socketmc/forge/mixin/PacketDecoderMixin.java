@@ -30,6 +30,7 @@ public class PacketDecoderMixin {
                 byte[] arr = buf.readByteArray();
                 Instruction i = Instruction.fromByteArray(arr);
                 ForgeMachineFinder.getMachine(i.getId()).onInstruction(i);
+                ForgeSocketMC.LOGGER.info("Received instruction: {}, size {} bytes", i, arr.length);
             }
         } catch (Exception e) {
             ForgeSocketMC.print(e);
