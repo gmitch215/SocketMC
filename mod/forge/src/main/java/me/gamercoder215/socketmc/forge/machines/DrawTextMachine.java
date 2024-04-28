@@ -12,6 +12,10 @@ import static me.gamercoder215.socketmc.forge.ForgeSocketMC.minecraft;
 @InstructionId(Instruction.DRAW_TEXT)
 public final class DrawTextMachine implements Machine {
 
+    public static final DrawTextMachine MACHINE = new DrawTextMachine();
+
+    private DrawTextMachine() {}
+
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         int x = instruction.parameter(0, Integer.class);

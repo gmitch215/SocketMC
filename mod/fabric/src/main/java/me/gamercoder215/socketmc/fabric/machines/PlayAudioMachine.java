@@ -11,6 +11,10 @@ import java.io.ByteArrayInputStream;
 @InstructionId(Instruction.PLAY_AUDIO)
 public final class PlayAudioMachine implements Machine {
 
+    public static final PlayAudioMachine MACHINE = new PlayAudioMachine();
+
+    private PlayAudioMachine() {}
+    
     @Override
     public void onInstruction(@NotNull Instruction instruction) throws Exception {
         byte[] data = instruction.parameter(0, byte[].class);

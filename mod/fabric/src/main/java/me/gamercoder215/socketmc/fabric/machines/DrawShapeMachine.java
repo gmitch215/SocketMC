@@ -11,6 +11,10 @@ import static me.gamercoder215.socketmc.fabric.FabricSocketMC.minecraft;
 @InstructionId(Instruction.DRAW_SHAPE)
 public final class DrawShapeMachine implements Machine {
 
+    public static final DrawShapeMachine MACHINE = new DrawShapeMachine();
+
+    private DrawShapeMachine() {}
+
     private static void fill(GuiGraphics graphics, int x, int y, Instruction i) {
         int width = i.parameter(3, Integer.class);
         int height = i.parameter(4, Integer.class);

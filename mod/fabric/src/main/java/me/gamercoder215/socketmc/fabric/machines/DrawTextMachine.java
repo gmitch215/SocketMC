@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.fabric.machines;
 
+import com.mojang.blaze3d.vertex.Tesselator;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
@@ -11,6 +12,10 @@ import static me.gamercoder215.socketmc.fabric.FabricSocketMC.minecraft;
 
 @InstructionId(Instruction.DRAW_TEXT)
 public final class DrawTextMachine implements Machine {
+
+    public static final DrawTextMachine MACHINE = new DrawTextMachine();
+
+    private DrawTextMachine() {}
 
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
