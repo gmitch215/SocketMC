@@ -44,7 +44,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Field&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
@@ -72,20 +72,18 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance"><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html" title="class or interface in org.bukkit.event" class="external-link">org.bukkit.event.Event</a>
-<div class="inheritance"><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html" title="class or interface in org.bukkit.event.player" class="external-link">org.bukkit.event.player.PlayerEvent</a>
 <div class="inheritance">me.gamercoder215.socketmc.events.SocketEvent</div>
-</div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="input/ModifiedInputEvent.html" title="class in me.gamercoder215.socketmc.events.input">ModifiedInputEvent</a></code>, <code><a href="input/PlayerMoveMouseEvent.html" title="class in me.gamercoder215.socketmc.events.input">PlayerMoveMouseEvent</a></code>, <code><a href="input/PlayerScrollMouseEvent.html" title="class in me.gamercoder215.socketmc.events.input">PlayerScrollMouseEvent</a></code></dd>
+<dd><code><a href="input/AsyncModifiedInputEvent.html" title="class in me.gamercoder215.socketmc.events.input">AsyncModifiedInputEvent</a></code>, <code><a href="input/AsyncPlayerMoveMouseEvent.html" title="class in me.gamercoder215.socketmc.events.input">AsyncPlayerMoveMouseEvent</a></code>, <code><a href="input/AsyncPlayerScrollMouseEvent.html" title="class in me.gamercoder215.socketmc.events.input">AsyncPlayerScrollMouseEvent</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">SocketEvent</span>
-<span class="extends-implements">extends <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html" title="class or interface in org.bukkit.event.player" class="external-link">PlayerEvent</a></span></div>
-<div class="block">Represents an event fired by SocketMC.</div>
+<span class="extends-implements">extends <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html" title="class or interface in org.bukkit.event" class="external-link">Event</a></span></div>
+<div class="block">Represents an event fired by SocketMC. All SocketMC events are fired asynchronously.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -96,15 +94,6 @@ loadScripts(document, 'script');</script>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.bukkit.event.Event">Nested classes/interfaces inherited from class&nbsp;org.bukkit.event.<a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html" title="class or interface in org.bukkit.event" class="external-link">Event</a></h2>
 <code><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.Result.html" title="class or interface in org.bukkit.event" class="external-link">Event.Result</a></code></div>
-</section>
-</li>
-<!-- =========== FIELD SUMMARY =========== -->
-<li>
-<section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.bukkit.event.player.PlayerEvent">Fields inherited from class&nbsp;org.bukkit.event.player.<a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html" title="class or interface in org.bukkit.event.player" class="external-link">PlayerEvent</a></h3>
-<code><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html#player" title="class or interface in org.bukkit.event.player" class="external-link">player</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -141,17 +130,19 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/HandlerList.html" title="class or interface in org.bukkit.event" class="external-link">HandlerList</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getHandlers()" class="member-name-link">getHandlers</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="../spigot/SocketPlayer.html" title="class in me.gamercoder215.socketmc.spigot">SocketPlayer</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSocketPlayer()" class="member-name-link">getSocketPlayer</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/Player.html" title="class or interface in org.bukkit.entity" class="external-link">Player</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPlayer()" class="member-name-link">getPlayer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Gets the player associated with this event.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="../spigot/SocketPlayer.html" title="class in me.gamercoder215.socketmc.spigot">SocketPlayer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSocketPlayer()" class="member-name-link">getSocketPlayer</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Gets the SocketPlayer associated with this event.</div>
 </div>
 </div>
 </div>
 </div>
-<div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.bukkit.event.player.PlayerEvent">Methods inherited from class&nbsp;org.bukkit.event.player.<a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html" title="class or interface in org.bukkit.event.player" class="external-link">PlayerEvent</a></h3>
-<code><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/player/PlayerEvent.html#getPlayer()" title="class or interface in org.bukkit.event.player" class="external-link">getPlayer</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.bukkit.event.Event">Methods inherited from class&nbsp;org.bukkit.event.<a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html" title="class or interface in org.bukkit.event" class="external-link">Event</a></h3>
 <code><a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html#getEventName()" title="class or interface in org.bukkit.event" class="external-link">getEventName</a>, <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/event/Event.html#isAsynchronous()" title="class or interface in org.bukkit.event" class="external-link">isAsynchronous</a></code></div>
@@ -198,6 +189,18 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>SocketPlayer</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPlayer()">
+<h3>getPlayer</h3>
+<div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://hub.spigotmc.org/javadocs/spigot/org/bukkit/entity/Player.html" title="class or interface in org.bukkit.entity" class="external-link">Player</a></span>&nbsp;<span class="element-name">getPlayer</span>()</div>
+<div class="block">Gets the player associated with this event.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>Player</dd>
 </dl>
 </section>
 </li>
