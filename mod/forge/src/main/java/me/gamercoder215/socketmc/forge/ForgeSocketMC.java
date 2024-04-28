@@ -34,7 +34,7 @@ public final class ForgeSocketMC {
         LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());
         LOGGER.error("-----------");
         LOGGER.error(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.error(element.toString());
+        for (StackTraceElement element : t.getStackTrace()) LOGGER.error("  {}", element.toString());
 
         if (t.getCause() != null) {
             LOGGER.error("Caused by:");
@@ -57,9 +57,10 @@ public final class ForgeSocketMC {
             buf.writeByteArray(out.toByteArray());
 
             ChannelFuture future = minecraft.player.connection.getConnection().channel().writeAndFlush(buf);
+            future.await();
             if (!future.isSuccess())
                 throw new IOException("Failed to send event", future.cause());
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             print(e);
         }
     }

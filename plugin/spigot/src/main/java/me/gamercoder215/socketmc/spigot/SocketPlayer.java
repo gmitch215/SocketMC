@@ -4,7 +4,9 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.handler.codec.DecoderException;
 import me.gamercoder215.socketmc.SocketMCNotInstalledException;
+import me.gamercoder215.socketmc.instruction.FailedInstructionException;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import net.minecraft.network.Connection;
 import net.minecraft.network.FriendlyByteBuf;
@@ -85,9 +87,18 @@ public final class SocketPlayer {
         buf.writeVarInt(-2);
         buf.writeByteArray(i.toByteArray());
 
-        ChannelFuture future = channel.writeAndFlush(buf);
-        if (!future.isSuccess())
-            throw new SocketMCNotInstalledException("SocketMC is not installed on the player's client");
+        try {
+            ChannelFuture future = channel.writeAndFlush(buf);
+            future.await();
+            if (!future.isSuccess()) {
+                if (future.cause() instanceof DecoderException)
+                    throw new SocketMCNotInstalledException("Player does not have SocketMC installed", future.cause());
+                else
+                    throw new FailedInstructionException("Failed to send instruction", future.cause());
+            }
+        } catch (InterruptedException e) {
+            throw new FailedInstructionException("Failed to send instruction", e);
+        }
     }
 
 }
