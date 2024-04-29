@@ -1,14 +1,15 @@
 package me.gamercoder215.socketmc.spigot;
 
 import io.netty.channel.ChannelPipeline;
+import me.gamercoder215.socketmc.events.SocketEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEventAsync;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEventAsync;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
 import me.gamercoder215.socketmc.util.input.Action;
-import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEventAsync;
-import me.gamercoder215.socketmc.events.SocketEvent;
 import me.gamercoder215.socketmc.util.input.Key;
 import me.gamercoder215.socketmc.util.input.MouseButton;
+import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 
 import java.util.List;
@@ -67,6 +68,6 @@ final class EventFactory {
 
     static void call(SocketPlayer player, int id, Map<String, Object> params) {
         SocketEvent e = factory.get(id).apply(player, params);
-        new Thread(() -> Bukkit.getPluginManager().callEvent(e)).start();
+        MinecraftServer.getServer().submit(() -> Bukkit.getPluginManager().callEvent(e));
     }
 }
