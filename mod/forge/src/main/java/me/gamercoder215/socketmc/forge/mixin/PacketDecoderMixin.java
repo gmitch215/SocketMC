@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
 
+import static me.gamercoder215.socketmc.forge.ForgeSocketMC.minecraft;
+
 @Mixin(targets = "net.minecraft.network.PacketDecoder")
 public class PacketDecoderMixin {
 
@@ -29,8 +31,15 @@ public class PacketDecoderMixin {
 
                 byte[] arr = buf.readByteArray();
                 Instruction i = Instruction.fromByteArray(arr);
-                ForgeMachineFinder.getMachine(i.getId()).onInstruction(i);
-                ForgeSocketMC.LOGGER.info("Received instruction: {}, size {} bytes", i, arr.length);
+
+                minecraft.execute(() -> {
+                    try {
+                        ForgeMachineFinder.getMachine(i.getId()).onInstruction(i);
+                        ForgeSocketMC.LOGGER.info("Received instruction: {}, size {} bytes", i, arr.length);
+                    } catch (Exception e) {
+                        ForgeSocketMC.print(e);
+                    }
+                });
             }
         } catch (Exception e) {
             ForgeSocketMC.print(e);
