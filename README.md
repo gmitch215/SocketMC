@@ -34,7 +34,12 @@ simple and efficient API.
 
 ### Prerequisites
 
-All players on your server must have the SocketMC mod installed.
+All players on your server must have the SocketMC mod installed. 
+You can download them from the following locations:
+
+- [Modrinth](https://modrinth.com/mod/socketmc)
+- [Jenkins CI](https://ci.codemc.io/job/gmitch215/job/SocketMC/)
+- [GitHub Releases](https://github.com/gmitch215/SocketMC/releases/latest)
 
 ### In your Plugin
 
