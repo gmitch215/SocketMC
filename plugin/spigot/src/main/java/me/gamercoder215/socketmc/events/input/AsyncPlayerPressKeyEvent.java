@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Called when a player presses or releases a key on a keyboard.
  */
-public class AsyncPlayerPressKeyEventAsync extends AsyncModifiedInputEvent {
+public class AsyncPlayerPressKeyEvent extends AsyncModifiedInputEvent {
 
     private final Key key;
     private final int flags;
@@ -21,7 +21,7 @@ public class AsyncPlayerPressKeyEventAsync extends AsyncModifiedInputEvent {
      * @param flags Bitfield for flags of the key press
      * @param action The action of the key press
      */
-    public AsyncPlayerPressKeyEventAsync(@NotNull SocketPlayer player, Key key, Action action, int flags) {
+    public AsyncPlayerPressKeyEvent(@NotNull SocketPlayer player, Key key, Action action, int flags) {
         super(player, flags);
 
         this.key = key;

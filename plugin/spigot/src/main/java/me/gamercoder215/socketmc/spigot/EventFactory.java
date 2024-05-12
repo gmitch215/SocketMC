@@ -2,9 +2,9 @@ package me.gamercoder215.socketmc.spigot;
 
 import io.netty.channel.ChannelPipeline;
 import me.gamercoder215.socketmc.events.SocketEvent;
-import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEventAsync;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
-import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEventAsync;
+import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
 import me.gamercoder215.socketmc.util.input.Action;
 import me.gamercoder215.socketmc.util.input.Key;
@@ -40,7 +40,7 @@ final class EventFactory {
                 int flags = (int) params.get("flags");
                 int action = (int) params.get("action");
 
-                return new AsyncPlayerPressKeyEventAsync(p, Key.fromCode(key), Action.values()[action], flags);
+                return new AsyncPlayerPressKeyEvent(p, Key.fromCode(key), Action.values()[action], flags);
             },
             // PlayerMoveMouseEvent
             (p, params) -> {
@@ -62,7 +62,7 @@ final class EventFactory {
                 int action = (int) params.get("action");
                 int flags = (int) params.get("mods");
 
-                return new AsyncPlayerClickMouseEventAsync(p, MouseButton.values()[button], Action.values()[action], flags);
+                return new AsyncPlayerClickMouseEvent(p, MouseButton.values()[button], Action.values()[action], flags);
             }
     );
 
