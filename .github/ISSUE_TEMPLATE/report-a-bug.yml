@@ -1,0 +1,87 @@
+name: Report a Bug
+description: Report a SocketMC Bug.
+labels: ['unconfirmed bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for taking the time to report a SocketMC bug. Please take time to fill out the information below.
+  - type: dropdown
+    attributes:
+      label: Bug Type
+      description: What type of bug are you trying to report?
+      multiple: true
+      options:
+        - Server Crash
+        - API Error
+        - Client Disconnect
+        - Other Unexpected Behavior
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: Minecraft Version
+      description: What is the Minecraft version you are using?
+      placeholder: |
+        Ex: 1.20.6
+    validations:
+      required: true
+
+  - type: input
+    attributes:
+      label: SocketMC Version
+      description: What is the Minecraft version you are using?
+      placeholder: |
+        Ex: 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Description
+      placeholder: |
+        Ex: "Text is not displaying on screen"
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: Explain how to recreate this bug.
+      placeholder: |
+        Ex: 
+        1. Use code provided
+        2. Run and join a server
+        3. Observe the error
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected Behavior
+      description: What you expect the plugin to do.
+      placeholder: |
+        Ex: "Text should be displayed in the top right"
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual Behavior
+      description: What does the plugin do? What are the error messages shown?
+      placeholder: |
+        Ex: "No text on screen"
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        In the box below, you can attach any relevant info or files that may help us solve the bug.
+        If you think this issue is relevant to any other issues, please mention it here.
+  - type: textarea
+    attributes:
+      label: Additional Info
+      description: Any additional info that may help us solve the bug.
+      placeholder: |
+        Ex: "I am using Spigot instead of Paper"
+    validations:
+      required: false
