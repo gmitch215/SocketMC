@@ -1,11 +1,18 @@
 package me.gamercoder215.socketmc.fabric;
 
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
+import me.gamercoder215.socketmc.fabric.machines.DrawBufferMachine;
+import me.gamercoder215.socketmc.fabric.machines.DrawShapeMachine;
+import me.gamercoder215.socketmc.fabric.machines.DrawTextMachine;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
+import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.FriendlyByteBuf;
@@ -32,6 +39,13 @@ public final class FabricSocketMC implements ClientModInitializer {
         // Events
         FabricEvents events = new FabricEvents();
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> events.onDisconnect());
+
+        // Events - Machines
+        HudRenderCallback.EVENT.register((graphics, delta) -> {
+            DrawTextMachine.frameTick(graphics, delta);
+            DrawShapeMachine.frameTick(graphics, delta);
+            DrawBufferMachine.frameTick(graphics, delta);
+        });
     }
 
     public static void print(Throwable t) {
