@@ -1,1 +1,1 @@
-tagSearchIndex = [{"l":"Constant Field Values","h":"","u":"constant-values.html"},{"l":"Serialized Form","h":"","u":"serialized-form.html"}];updateSearchResults();
+tagSearchIndex = [{"l":"Constant Field Values","h":"","u":"constant-values.html"},{"l":"Notes","h":"class me.gamercoder215.socketmc.instruction.Instruction","d":"Section","u":"me/gamercoder215/socketmc/instruction/Instruction.html#notes-heading"},{"l":"Serialized Form","h":"","u":"serialized-form.html"}];updateSearchResults();
