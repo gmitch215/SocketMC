@@ -126,4 +126,4 @@ sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", 5, TimeUnit.SEC
 
 Output:
 
-![Example](https://i.imgur.com/VZmqWLC.gif)
+![Example](.github/demo.gif)
