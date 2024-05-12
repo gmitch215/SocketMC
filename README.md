@@ -44,7 +44,7 @@ You can download them from the following locations:
 ### In your Plugin
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gmitch215/SocketMC)
-
+[![Static Badge](https://img.shields.io/badge/documentation-javadoc-yellow)](https://socketmc.gmitch215.xyz/)
 
 <details>
     <summary>Maven</summary>
