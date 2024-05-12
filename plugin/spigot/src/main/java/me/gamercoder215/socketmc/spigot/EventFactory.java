@@ -9,11 +9,11 @@ import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
 import me.gamercoder215.socketmc.util.input.Action;
 import me.gamercoder215.socketmc.util.input.Key;
 import me.gamercoder215.socketmc.util.input.MouseButton;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.Bukkit;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 
 final class EventFactory {
@@ -68,6 +68,6 @@ final class EventFactory {
 
     static void call(SocketPlayer player, int id, Map<String, Object> params) {
         SocketEvent e = factory.get(id).apply(player, params);
-        MinecraftServer.getServer().submit(() -> Bukkit.getPluginManager().callEvent(e));
+        CompletableFuture.runAsync(() -> Bukkit.getPluginManager().callEvent(e));
     }
 }
