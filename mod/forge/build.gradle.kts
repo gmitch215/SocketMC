@@ -1,7 +1,7 @@
 plugins {
-    id("net.minecraftforge.gradle") version "6.0.21"
+    id("net.minecraftforge.gradle") version "6.0.25"
     id("org.parchmentmc.librarian.forgegradle") version "1.+"
-    id("org.spongepowered.mixin") version "0.7.38"
+    id("org.spongepowered.mixin") version "0.7.+"
 }
 
 description = "Forge Mod for SocketMC Client-side Implementation"
@@ -12,7 +12,7 @@ val parchment = project.ext["parchment"].toString()
 dependencies {
     api(project(":socketmc-core"))
 
-    minecraft("net.minecraftforge:forge:$minecraft-49.0.30")
+    minecraft("net.minecraftforge:forge:$minecraft-50.0.13")
 
     annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
 }

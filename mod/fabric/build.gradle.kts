@@ -3,7 +3,7 @@
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 
 plugins {
-    id("fabric-loom") version "1.5-SNAPSHOT"
+    id("fabric-loom") version "1.6-SNAPSHOT"
 }
 
 description = "Fabric Mod for SocketMC Client-side Implementation"
@@ -11,7 +11,7 @@ description = "Fabric Mod for SocketMC Client-side Implementation"
 val minecraft = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
-val fabric = "0.91.3"
+val fabric = "0.98.0"
 
 dependencies {
     api(project(":socketmc-core"))

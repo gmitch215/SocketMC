@@ -37,8 +37,8 @@ tasks {
 }
 
 allprojects {
-    project.ext["minecraft_version"] = "1.20.4"
-    project.ext["parchment"] = "2024.02.25"
+    project.ext["minecraft_version"] = "1.20.6"
+    project.ext["parchment"] = "2024.05.01"
 
     group = "me.gamercoder215.socketmc"
     version = "${project.ext["minecraft_version"]}-0.1.0"
@@ -105,6 +105,8 @@ allprojects {
     }
 }
 
+val jdk = JavaVersion.VERSION_21
+
 subprojects {
     apply<JacocoPlugin>()
     apply(plugin = "org.jetbrains.kotlin.jvm")
@@ -118,7 +120,7 @@ subprojects {
         }
 
         compileKotlin {
-            kotlinOptions.jvmTarget = "17"
+            kotlinOptions.jvmTarget = jdk.toString()
         }
 
         jacocoTestReport {
@@ -145,8 +147,8 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = jdk
+        targetCompatibility = jdk
     }
 
     dependencies {
