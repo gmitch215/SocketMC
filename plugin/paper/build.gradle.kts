@@ -27,6 +27,19 @@ tasks {
         dependsOn(project(":socketmc-spigot").tasks["assemble"])
     }
 
+    shadowJar {
+        manifest {
+            attributes(
+                "Implementation-Title" to project.name,
+                "Implementation-Version" to project.version,
+                "Implementation-Vendor" to project.ext["author"],
+            )
+        }
+
+        archiveFileName.set("${project.name}-${project.version}.jar")
+        archiveClassifier.set("")
+    }
+
     javadoc {
         enabled = true
 
