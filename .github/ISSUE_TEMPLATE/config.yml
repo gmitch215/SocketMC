@@ -3,3 +3,6 @@ contact_links:
   - name: Modrinth
     url: https://modrinth.com/mod/socketmc
     about: Download the SocketMC Mod on Modrinth
+  - name: Jenkins
+    url: https://ci.codemc.io/job/gmitch215/job/SocketMC/
+    about: View the Jenkins builds for SocketMC
