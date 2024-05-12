@@ -18,10 +18,12 @@ import java.util.concurrent.TimeUnit;
  * <br>
  * All instructions are serialized and sent over the network as byte arrays. They contain an {@linkplain #getId() id} and a list of {@linkplain #getParameters() parameters}
  * that are serialized and sent through the player's channel.
+ * <h2>Notes</h2>
  * <ul>
  *     <li>Instructions are immutable and cannot be modified after creation.</li>
  *     <li>Instructions are serializable and can be sent over the network as byte arrays.</li>
  *     <li>All X, Y, Height, Width, and other measurements used in drawing instructions are in pixels.</li>
+ *     <li>Players render things on the screen based on their own FPS (Frames Per Second), hence the provision of timed renderings in milliseconds.</li>
  * </ul>
  */
 public final class Instruction implements Serializable {
@@ -274,6 +276,8 @@ public final class Instruction implements Serializable {
      * @param color Text Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
      * @param dropShadow Whether to Draw a Drop Shadow
+     * @param time Time Amount
+     * @param unit Time Unit
      * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
      * @return Draw Text Instruction
      */
@@ -291,6 +295,7 @@ public final class Instruction implements Serializable {
      * @param color Text Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
      * @param dropShadow Whether to Draw a Drop Shadow
+     * @param millis Duration to display, in milliseconds
      * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
      * @return Draw Text Instruction
      */
@@ -345,7 +350,8 @@ public final class Instruction implements Serializable {
      * @param y Y Coordinate for Shape
      * @param width Width of Shape
      * @param height Height of Shape
-     * @param millis Duration to display, in milliseconds
+     * @param time Duration to display, in milliseconds
+     * @param unit Time Unit
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
      */
@@ -438,6 +444,7 @@ public final class Instruction implements Serializable {
      * @param height Height of Shape
      * @param color Shape Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
+     * @param millis Duration to display, in milliseconds
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the alpha is not 0-255
      */

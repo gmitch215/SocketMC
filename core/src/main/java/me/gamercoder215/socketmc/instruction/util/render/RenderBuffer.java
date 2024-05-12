@@ -69,7 +69,7 @@ public final class RenderBuffer implements Serializable {
         final DrawingMode mode;
         final Map<Vertex, Integer> vertices = new HashMap<>();
 
-        public Builder(DrawingMode mode) {
+        private Builder(DrawingMode mode) {
             this.mode = mode;
         }
 
