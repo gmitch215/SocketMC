@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.spigot;
 
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import net.minecraft.network.FriendlyByteBuf;
@@ -19,7 +20,7 @@ final class PacketReceiver extends ChannelDuplexHandler {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        if (msg instanceof FriendlyByteBuf buf) {
+        if (msg instanceof ByteBuf buf) {
             FriendlyByteBuf clone = new FriendlyByteBuf(buf.copy());
             if (clone.readVarInt() == -3) {
                 buf.clear();
@@ -34,6 +35,8 @@ final class PacketReceiver extends ChannelDuplexHandler {
                 EventFactory.call(player, id, parameters);
             }
         }
+
+        super.channelRead(ctx, msg);
     }
 
 }
