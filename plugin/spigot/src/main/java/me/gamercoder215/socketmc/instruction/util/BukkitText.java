@@ -2,11 +2,8 @@ package me.gamercoder215.socketmc.instruction.util;
 
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
-
-import java.awt.*;
 
 /**
  * Represents a text element to be displayed on the client's screen, built by a {@link String}. This class will automatically strip color codes from  {@link #getText()}.
