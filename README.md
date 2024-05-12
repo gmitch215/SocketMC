@@ -56,8 +56,8 @@ You can download them from the following locations:
     
     <repositories>
         <repository>
-            <id>codemc-snapshots</id>
-            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+            <id>codemc-releases</id>
+            <url>https://repo.codemc.io/repository/maven-releases/</url>
         </repository>
     </repositories>
     
@@ -85,7 +85,7 @@ You can download them from the following locations:
 
 ```gradle
 repositories {
-    maven { url 'https://repo.codemc.io/repository/maven-snapshots/' }
+    maven { url 'https://repo.codemc.io/repository/maven-releases/' }
 }
 
 dependencies {
@@ -102,7 +102,7 @@ dependencies {
 
 ```kotlin
 repositories {
-    maven(url = "https://repo.codemc.io/repository/maven-snapshots/")
+    maven(url = "https://repo.codemc.io/repository/maven-releases/")
 }
 
 dependencies {
