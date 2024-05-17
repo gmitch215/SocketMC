@@ -100,4 +100,16 @@ public final class SocketPlayer {
         }
     }
 
+    // Static Util
+
+    /**
+     * Registers the packet injector for the player.
+     * Please note that a {@link Instruction#PING} instruction must be sent at least once in order for the client to start sending events.
+     * @param p The player to register the events for.
+     */
+    public static void registerEvents(@NotNull Player p) {
+        SocketPlayer sp = SocketPlayerRegistry.createIfAbsent(p);
+        EventFactory.addPacketInjector(sp);
+    }
+
 }
