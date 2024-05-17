@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.*;
+import java.time.Duration;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -41,7 +42,7 @@ public final class Instruction implements Serializable {
     public static final String DRAW_TEXT = "draw_text";
 
     /**
-     * Instruction to draw a shape on the client's screen.
+     * Instruction to draw a rectangle on the client's screen.
      */
     public static final String DRAW_SHAPE = "draw_shape";
 
@@ -52,6 +53,7 @@ public final class Instruction implements Serializable {
     public static final String PLAY_AUDIO = "play_audio";
 
     /**
+     * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      */
     public static final String DRAW_BUFFER = "draw_buffer";
@@ -161,15 +163,14 @@ public final class Instruction implements Serializable {
      * @param x X Coordinate for Text
      * @param y Y Coordinate for Text
      * @param text Text to Draw
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @throws IllegalArgumentException If the coordinates or duration are negative, or the text is null
      * @return Draw Text Instruction
      */
     @NotNull
-    public static Instruction drawText(int x, int y, @NotNull String text, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawText(x, y, text, unit.toMillis(time));
+    public static Instruction drawText(int x, int y, @NotNull String text, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, duration.toMillis());
     }
 
     /**
@@ -196,15 +197,14 @@ public final class Instruction implements Serializable {
      * @param y Y Coordinate for Text
      * @param text Text to Draw
      * @param color Text Color
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @throws IllegalArgumentException If the coordinates or duration are negative, the text is null, or the color is null
      * @return Draw Text Instruction
      */
     @NotNull
-    public static Instruction drawText(int x, int y, String text, @NotNull Color color, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawText(x, y, text, color, unit.toMillis(time));
+    public static Instruction drawText(int x, int y, String text, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, color, duration.toMillis());
     }
 
 
@@ -235,15 +235,14 @@ public final class Instruction implements Serializable {
      * @param text Text to Draw
      * @param color Text Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Text Instruction
      * @throws IllegalArgumentException If the coordinates or duration are negative, the text is null, the color is null, or alpha is not 0-255
      */
     @NotNull
-    public static Instruction drawText(int x, int y, String text, @NotNull Color color, int alpha,  long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawText(x, y, text, color, alpha, unit.toMillis(time));
+    public static Instruction drawText(int x, int y, String text, @NotNull Color color, int alpha, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, color, alpha, duration.toMillis());
     }
 
     /**
@@ -276,15 +275,14 @@ public final class Instruction implements Serializable {
      * @param color Text Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
      * @param dropShadow Whether to Draw a Drop Shadow
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
      * @return Draw Text Instruction
      */
     @NotNull
-    public static Instruction drawText(int x, int y, String text, @NotNull Color color, int alpha, boolean dropShadow, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawText(x, y, text, color, alpha, dropShadow, unit.toMillis(time));
+    public static Instruction drawText(int x, int y, String text, @NotNull Color color, int alpha, boolean dropShadow, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, color, alpha, dropShadow, duration.toMillis());
     }
 
     /**
@@ -315,15 +313,51 @@ public final class Instruction implements Serializable {
      * @param x X Coordinate for Text
      * @param y Y Coordinate for Text
      * @param text Text to Draw
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param argb Text Color (ARGB)
+     * @param dropShadow Whether to Draw a Drop Shadow
+     * @param duration Time Duration
+     * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
+     * @return Draw Text Instruction
+     */
+    @NotNull
+    public static Instruction drawText(int x, int y, String text, int argb, boolean dropShadow, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, argb, dropShadow, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXT} instruction.
+     * @param x X Coordinate for Text
+     * @param y Y Coordinate for Text
+     * @param text Text to Draw
+     * @param color Text Color
+     * @param argb Text Color (ARGB)
+     * @param millis Duration to display, in milliseconds
+     * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
+     * @return Draw Text Instruction
+     */
+    @NotNull
+    public static Instruction drawText(int x, int y, String text, int argb, boolean dropShadow, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (text == null || text.isEmpty()) throw new IllegalArgumentException("Text cannot be null or empty");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_TEXT, List.of(x, y, "{\"text\": \"" + text + "\"}", argb, dropShadow, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXT} instruction.
+     * @param x X Coordinate for Text
+     * @param y Y Coordinate for Text
+     * @param text Text to Draw
+     * @param duration Time Duration
      * @return Draw Text Instruction
      * @throws IllegalArgumentException If the coordinates or duration are negative, or the text is null
      */
     @NotNull
-    public static Instruction drawText(int x, int y, @NotNull Text text, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawText(x, y, text, unit.toMillis(time));
+    public static Instruction drawText(int x, int y, @NotNull Text text, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawText(x, y, text, duration.toMillis());
     }
 
     /**
@@ -356,9 +390,9 @@ public final class Instruction implements Serializable {
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
      */
     @NotNull
-    public static Instruction drawRect(int x, int y, int width, int height, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawRect(x, y, width, height, unit.toMillis(time));
+    public static Instruction drawRect(int x, int y, int width, int height, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawRect(x, y, width, height, duration.toMillis());
     }
 
     /**
@@ -386,15 +420,14 @@ public final class Instruction implements Serializable {
      * @param width Width of Shape
      * @param height Height of Shape
      * @param color Shape Color
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
      */
     @NotNull
-    public static Instruction drawRect(int x, int y, int width, int height, @NotNull Color color, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawRect(x, y, width, height, color, unit.toMillis(time));
+    public static Instruction drawRect(int x, int y, int width, int height, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawRect(x, y, width, height, color, duration.toMillis());
     }
 
     /**
@@ -425,15 +458,14 @@ public final class Instruction implements Serializable {
      * @param height Height of Shape
      * @param color Shape Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the alpha is not 0-255
      */
     @NotNull
-    public static Instruction drawRect(int x, int y, int width, int height, @NotNull Color color, int alpha, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawRect(x, y, width, height, color, alpha, unit.toMillis(time));
+    public static Instruction drawRect(int x, int y, int width, int height, @NotNull Color color, int alpha, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawRect(x, y, width, height, color, alpha, duration.toMillis());
     }
 
     /**
@@ -466,15 +498,14 @@ public final class Instruction implements Serializable {
      * @param height Height of Shape
      * @param from Gradient Start Color
      * @param to Gradient End Color
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the colors are null
      */
     @NotNull
-    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, @NotNull Color to, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawGradientRect(x, y, width, height, from, to, unit.toMillis(time));
+    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, @NotNull Color to, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawGradientRect(x, y, width, height, from, to, duration.toMillis());
     }
 
     /**
@@ -508,15 +539,14 @@ public final class Instruction implements Serializable {
      * @param fromAlpha Gradient Start Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
      * @param to Gradient End Color
      * @param toAlpha Gradient End Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the colors are null, or the alphas are not 0-255
      */
     @NotNull
-    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, int fromAlpha, @NotNull Color to, int toAlpha, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawGradientRect(x, y, width, height, from, fromAlpha, to, toAlpha, unit.toMillis(time));
+    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, int fromAlpha, @NotNull Color to, int toAlpha, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawGradientRect(x, y, width, height, from, fromAlpha, to, toAlpha, duration.toMillis());
     }
 
     /**
@@ -554,15 +584,14 @@ public final class Instruction implements Serializable {
      * @param to Gradient End Color
      * @param toAlpha Gradient End Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
      * @param z Shape Z-Index
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the colors are null, or the alphas are not 0-255
      */
     @NotNull
-    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, int fromAlpha, @NotNull Color to, int toAlpha, int z, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawGradientRect(x, y, width, height, from, fromAlpha, to, toAlpha, z, unit.toMillis(time));
+    public static Instruction drawGradientRect(int x, int y, int width, int height, @NotNull Color from, int fromAlpha, @NotNull Color to, int toAlpha, int z, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawGradientRect(x, y, width, height, from, fromAlpha, to, toAlpha, z, duration.toMillis());
     }
 
     /**
@@ -595,15 +624,14 @@ public final class Instruction implements Serializable {
      * @param x X Coordinate for Line
      * @param y Y Coordinate for Line
      * @param height Height of Line
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates or dimensions are negative
      */
     @NotNull
-    public static Instruction drawVerticalLine(int x, int y, int height, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawVerticalLine(x, y, height, unit.toMillis(time));
+    public static Instruction drawVerticalLine(int x, int y, int height, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawVerticalLine(x, y, height, duration.toMillis());
     }
 
     /**
@@ -629,15 +657,14 @@ public final class Instruction implements Serializable {
      * @param y Y Coordinate for Line
      * @param height Height of Line
      * @param color Line Color
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
      */
     @NotNull
-    public static Instruction drawVerticalLine(int x, int y, int height, @NotNull Color color, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawVerticalLine(x, y, height, color, unit.toMillis(time));
+    public static Instruction drawVerticalLine(int x, int y, int height, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawVerticalLine(x, y, height, color, duration.toMillis());
     }
 
     /**
@@ -666,15 +693,14 @@ public final class Instruction implements Serializable {
      * @param height Height of Line
      * @param color Line Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the alpha is not 0-255
      */
     @NotNull
-    public static Instruction drawVerticalLine(int x, int y, int height, @NotNull Color color, int alpha, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawVerticalLine(x, y, height, color, alpha, unit.toMillis(time));
+    public static Instruction drawVerticalLine(int x, int y, int height, @NotNull Color color, int alpha, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawVerticalLine(x, y, height, color, alpha, duration.toMillis());
     }
 
     /**
@@ -703,15 +729,14 @@ public final class Instruction implements Serializable {
      * @param x X Coordinate for Line
      * @param y Y Coordinate for Line
      * @param width Width of Line
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates or dimensions are negative
      */
     @NotNull
-    public static Instruction drawHorizontalLine(int x, int y, int width, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawHorizontalLine(x, y, width, unit.toMillis(time));
+    public static Instruction drawHorizontalLine(int x, int y, int width, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawHorizontalLine(x, y, width, duration.toMillis());
     }
 
     /**
@@ -737,15 +762,14 @@ public final class Instruction implements Serializable {
      * @param y Y Coordinate for Line
      * @param width Width of Line
      * @param color Line Color
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
      */
     @NotNull
-    public static Instruction drawHorizontalLine(int x, int y, int width, @NotNull Color color, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawHorizontalLine(x, y, width, color, unit.toMillis(time));
+    public static Instruction drawHorizontalLine(int x, int y, int width, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawHorizontalLine(x, y, width, color, duration.toMillis());
     }
 
     /**
@@ -774,15 +798,14 @@ public final class Instruction implements Serializable {
      * @param width Width of Line
      * @param color Line Color
      * @param alpha Color Alpha ({@code 0-255} / {@code 0x00 - 0xFF}).
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the alpha is not 0-255
      */
     @NotNull
-    public static Instruction drawHorizontalLine(int x, int y, int width, @NotNull Color color, int alpha, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawHorizontalLine(x, y, width, color, alpha, unit.toMillis(time));
+    public static Instruction drawHorizontalLine(int x, int y, int width, @NotNull Color color, int alpha, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawHorizontalLine(x, y, width, color, alpha, duration.toMillis());
     }
 
     /**
@@ -825,15 +848,14 @@ public final class Instruction implements Serializable {
     /**
      * Creates a {@link #DRAW_BUFFER} instruction.
      * @param buffer Render Buffer
-     * @param time Time Amount
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the buffer is null, or the duration is negative
      */
     @NotNull
-    public static Instruction drawBuffer(@NotNull RenderBuffer buffer, long time, @NotNull TimeUnit unit) throws IllegalArgumentException {
-        if (unit == null) throw new IllegalArgumentException("Time Unit cannot be null");
-        return drawBuffer(buffer, unit.toMillis(time));
+    public static Instruction drawBuffer(@NotNull RenderBuffer buffer, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBuffer(buffer, duration.toMillis());
     }
 
     /**
