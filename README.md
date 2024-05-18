@@ -116,12 +116,44 @@ dependencies {
 
 ## 📺 Example
 
-```java
-Player player = Bukkit.getPlayer("gmitch215");
-SocketPlayer sp = new SocketPlayer(player);
+**Java**
 
-// Specify X and Y, Text, and Duration
-sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", 5, TimeUnit.SECONDS));
+```java
+import me.gamercoder215.socketmc.spigot.SocketPlayer;
+import me.gamercoder215.socketmc.instruction.Instruction;
+
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.time.Duration;
+
+public static void sendInstructions() {
+  Player player = Bukkit.getPlayer("gmitch215");
+  SocketPlayer sp = new SocketPlayer(player);
+
+  // Specify X and Y, Text, and Duration
+  sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)));
+}
+```
+
+**Kotlin**
+
+```kotlin
+import me.gamercoder215.socketmc.spigot.SocketPlayer
+import me.gamercoder215.socketmc.instruction.Instruction
+
+import org.bukkit.Bukkit
+import org.bukkit.entity.Player
+
+import java.time.Duration
+
+fun sendInstructions() {
+  val player: Player = Bukkit.getPlayer("gmitch215")
+  val sp = SocketPlayer(player)
+
+  // Specify X and Y, Text, and Duration
+  sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)))
+}
 ```
 
 Output:

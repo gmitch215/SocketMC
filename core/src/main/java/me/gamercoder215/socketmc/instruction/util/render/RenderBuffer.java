@@ -108,6 +108,21 @@ public final class RenderBuffer implements Serializable {
         }
 
         /**
+         * Adds a vertex to the buffer with a specified color and alpha value.
+         * @param vertex The vertex to add.
+         * @param argb The color of the vertex in ARGB format.
+         * @return this class, for chaining
+         * @throws IllegalArgumentException If the vertex or color is null, or if the alpha value is not between 0 and 255
+         */
+        @NotNull
+        public Builder addVertex(@NotNull Vertex vertex, int argb) throws IllegalArgumentException {
+            if (vertex == null) throw new IllegalArgumentException("Vertex cannot be null");
+
+            vertices.put(vertex, argb);
+            return this;
+        }
+
+        /**
          * Builds the buffer.
          * @return Built {@link RenderBuffer}
          */
