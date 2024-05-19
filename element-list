@@ -2,8 +2,10 @@ me.gamercoder215.socketmc
 me.gamercoder215.socketmc.events
 me.gamercoder215.socketmc.events.input
 me.gamercoder215.socketmc.instruction
+me.gamercoder215.socketmc.instruction.builder
 me.gamercoder215.socketmc.instruction.util
 me.gamercoder215.socketmc.instruction.util.render
+me.gamercoder215.socketmc.log
 me.gamercoder215.socketmc.spigot
 me.gamercoder215.socketmc.util
 me.gamercoder215.socketmc.util.input
