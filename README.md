@@ -127,12 +127,20 @@ import org.bukkit.entity.Player;
 
 import java.time.Duration;
 
-public static void sendInstructions() {
-  Player player = Bukkit.getPlayer("gmitch215");
-  SocketPlayer sp = new SocketPlayer(player);
+public class MyPlugin extends JavaPlugin {
+    @Override
+    public void onEnable() {
+        sendInstructions();
+    }
 
-  // Specify X and Y, Text, and Duration
-  sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)));
+    public void sendInstructions() {
+        Player player = Bukkit.getPlayer("gmitch215");
+        SocketPlayer sp = new SocketPlayer(player);
+
+        // Specify X and Y, Text, and Duration
+        // Pass the plugin instance to the sendInstruction method
+        sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)), this);
+    }
 }
 ```
 
@@ -147,12 +155,19 @@ import org.bukkit.entity.Player
 
 import java.time.Duration
 
-fun sendInstructions() {
-  val player: Player = Bukkit.getPlayer("gmitch215")
-  val sp = SocketPlayer(player)
+class MyPlugin : JavaPlugin() {
+    override fun onEnable() {
+        sendInstructions()
+    }
 
-  // Specify X and Y, Text, and Duration
-  sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)))
+    fun sendInstructions() {
+        val player: Player = Bukkit.getPlayer("gmitch215")
+        val sp = SocketPlayer(player)
+
+        // Specify X and Y, Text, and Duration
+        // Pass the plugin instance to the sendInstruction method
+        sp.sendInstruction(Instruction.drawText(100, 100, "Hello World", Duration.ofSeconds(5)), this)
+    }
 }
 ```
 
