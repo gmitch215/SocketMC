@@ -3,7 +3,6 @@ package me.gamercoder215.socketmc.forge;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;

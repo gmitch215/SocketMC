@@ -1,8 +1,5 @@
 package me.gamercoder215.socketmc.fabric;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import me.gamercoder215.socketmc.fabric.machines.DrawBufferMachine;

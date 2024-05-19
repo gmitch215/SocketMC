@@ -12,6 +12,16 @@ public final class Vertex implements Serializable {
     @Serial
     private static final long serialVersionUID = -3611231838349785190L;
 
+    /**
+     * Represents a Vertex at the origin with a Z index of 0.
+     */
+    public static final Vertex ZERO = new Vertex(0, 0, 0);
+
+    /**
+     * Represents a Vertex at the origin with the lowest possible Z index.
+     */
+    public static final Vertex ZERO_BACK = new Vertex(0, 0, Integer.MIN_VALUE);
+
     private int x;
     private int y;
     private int z;

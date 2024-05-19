@@ -19,7 +19,7 @@ dependencies {
     minecraft("com.mojang:minecraft:$minecraft")
     mappings(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-$minecraft:$parchment")
+        parchment("org.parchmentmc.data:parchment-$minecraft:$parchment@zip")
     })
 
     modImplementation("net.fabricmc:fabric-loader:0.15.1")

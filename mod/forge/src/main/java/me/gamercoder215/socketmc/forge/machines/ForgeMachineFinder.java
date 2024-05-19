@@ -17,7 +17,11 @@ public final class ForgeMachineFinder {
             PingMachine.class,
             DrawTextMachine.class,
             DrawShapeMachine.class,
-            PlayAudioMachine.class
+            PlayAudioMachine.class,
+            DrawBufferMachine.class,
+            LogMessageMachine.class,
+            DrawTextureMachine.class,
+            OpenBookAndQuillMachine.class
     );
 
     public static Machine getMachine(@NotNull String id) {

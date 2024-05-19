@@ -3,6 +3,7 @@ package me.gamercoder215.socketmc.util;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -74,6 +75,16 @@ public class LifecycleMap<T> implements Iterable<T> {
     public void store(@NotNull T key, long time, @NotNull TimeUnit unit) {
         if (unit == null) throw new IllegalArgumentException("TimeUnit cannot be null");
         put(key, System.currentTimeMillis(), unit.toMillis(time));
+    }
+
+    /**
+     * Returns the value to which the specified key is mapped, or null if this map contains no mapping for the key.
+     * @param key The key whose associated value is to be returned
+     * @param duration The duration to store the key for
+     */
+    public void store(@NotNull T key, @NotNull Duration duration) {
+        if (duration == null) throw new IllegalArgumentException("TimeUnit cannot be null");
+        put(key, System.currentTimeMillis(), duration.toMillis());
     }
 
     /**
