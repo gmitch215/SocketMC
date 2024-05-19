@@ -14,7 +14,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
 
     /**
      * Sets the X coordinate of the element.
-     * @param x X coordinate
+     * @param x X coordinate, in pixels
      * @return this class, for chaining
      */
     @NotNull
@@ -22,7 +22,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
 
     /**
      * Sets the Y coordinate of the element.
-     * @param y Y coordinate
+     * @param y Y coordinate, in pixels
      * @return this class, for chaining
      */
     @NotNull
@@ -59,7 +59,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
     }
 
     /**
-     * Sets the color of the text using ARGB format.
+     * Sets the color of the element using ARGB format.
      * @param a Alpha
      * @param r Red
      * @param g Green
@@ -97,6 +97,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
      * @param millis Duration, in milliseconds
      * @return this class, for chaining
      */
+    @NotNull
     T duration(long millis);
 
     /**
@@ -104,6 +105,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
      * @param millis Duration, in milliseconds
      * @return this class, for chaining
      */
+    @NotNull
     default T duration(int millis) {
         return duration((long) millis);
     }
@@ -113,6 +115,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
      * @param duration Duration
      * @return this class, for chaining
      */
+    @NotNull
     default T duration(@NotNull Duration duration) {
         return duration(duration.toMillis());
     }
@@ -123,6 +126,7 @@ public interface HUDBuilder<T> extends InstructionBuilder {
      * @param unit Duration Unit
      * @return this class, for chaining
      */
+    @NotNull
     default T duration(long time, @NotNull TimeUnit unit) {
         return duration(unit.toMillis(time));
     }
