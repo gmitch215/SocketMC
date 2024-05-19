@@ -23,7 +23,9 @@ public final class FabricMachineFinder {
             PingMachine.class,
             DrawTextMachine.class,
             DrawShapeMachine.class,
-            PlayAudioMachine.class
+            PlayAudioMachine.class,
+            DrawBufferMachine.class,
+            LogMessageMachine.class
     );
 
     public static Machine getMachine(@NotNull String id) {
