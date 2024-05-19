@@ -71,6 +71,11 @@ public final class Instruction implements Serializable {
      */
     public static final String DRAW_TEXTURE = "draw_texture";
 
+    /**
+     * Instruction to open an empty book and quill GUI on the client's screen, allowing for long text input.
+     */
+    public static final String OPEN_BOOK_AND_QUILL = "open_book_and_quill";
+
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
 
@@ -1071,6 +1076,15 @@ public final class Instruction implements Serializable {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_TEXTURE, List.of(x, y, width, height, texture, startLeft, startTop, regionWidth, regionHeight, millis));
+    }
+
+    /**
+     * Creates a {@link #OPEN_BOOK_AND_QUILL} instruction.
+     * @return Open Book and Quill Instruction
+     */
+    @NotNull
+    public static Instruction openBookAndQuill() {
+        return new Instruction(OPEN_BOOK_AND_QUILL, List.of());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

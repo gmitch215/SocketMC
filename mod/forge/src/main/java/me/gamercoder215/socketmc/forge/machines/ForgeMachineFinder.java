@@ -20,7 +20,8 @@ public final class ForgeMachineFinder {
             PlayAudioMachine.class,
             DrawBufferMachine.class,
             LogMessageMachine.class,
-            DrawTextureMachine.class
+            DrawTextureMachine.class,
+            OpenBookAndQuillMachine.class
     );
 
     public static Machine getMachine(@NotNull String id) {
