@@ -2,6 +2,7 @@ package me.gamercoder215.socketmc.instruction;
 
 import me.gamercoder215.socketmc.instruction.util.Text;
 import me.gamercoder215.socketmc.instruction.util.render.RenderBuffer;
+import me.gamercoder215.socketmc.log.AuditLog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
@@ -9,10 +10,12 @@ import org.jetbrains.annotations.Unmodifiable;
 import javax.sound.sampled.AudioSystem;
 import java.awt.*;
 import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Represents a SocketMC Instruction to be sent to the client.
@@ -54,9 +57,13 @@ public final class Instruction implements Serializable {
 
     /**
      * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
-     * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      */
     public static final String DRAW_BUFFER = "draw_buffer";
+
+    /**
+     * Instruction to log a message in the client's logs. This is not the same thing as the {@link AuditLog} API.
+     */
+    public static final String LOG_MESSAGE = "log";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -113,7 +120,7 @@ public final class Instruction implements Serializable {
      * @return Last Parameter
      */
     public Object lastParameter() {
-        return parameters.get(parameters.size() - 1);
+        return parameters.getLast();
     }
 
     /**
@@ -123,7 +130,7 @@ public final class Instruction implements Serializable {
      * @param <T> Parameter Type
      */
     public <T> T lastParameter(Class<T> type) {
-        return type.cast(parameters.get(parameters.size() - 1));
+        return type.cast(parameters.getLast());
     }
 
     @Override
@@ -142,6 +149,31 @@ public final class Instruction implements Serializable {
     @Override
     public String toString() {
         return "Instruction(\"" + id + "\") {" + parameters + '}';
+    }
+
+    /**
+     * Gets all the IDs of the instructions in this class.
+     * @return Instruction IDs
+     */
+    public static String[] ids() {
+        List<String> ids = new ArrayList<>();
+
+        try {
+            for (Field f : Instruction.class.getDeclaredFields()) {
+                int m = f.getModifiers();
+
+                if (!Modifier.isStatic(m)) continue;
+                if (!Modifier.isFinal(m)) continue;
+                if (!Modifier.isPublic(m)) continue;
+                if (!String.class.equals(f.getType())) continue;
+
+                ids.add((String) f.get(null));
+            }
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to get instruction IDs", e);
+        }
+
+        return ids.toArray(String[]::new);
     }
 
     // Instruction Creation
@@ -888,6 +920,17 @@ public final class Instruction implements Serializable {
         } catch (IOException e) {
             throw new IllegalStateException("Failed to read audio file", e);
         }
+    }
+
+    /**
+     * Creates a {@link #LOG_MESSAGE} instruction.
+     * @param message Message to Log
+     * @return Log Message Instruction
+     */
+    @NotNull
+    public static Instruction logMessage(@NotNull String message) {
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        return new Instruction(LOG_MESSAGE, List.of(message));
     }
 
     // Serialization
