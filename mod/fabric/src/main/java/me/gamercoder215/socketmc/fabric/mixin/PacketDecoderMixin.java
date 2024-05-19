@@ -2,9 +2,11 @@ package me.gamercoder215.socketmc.fabric.mixin;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import me.gamercoder215.socketmc.fabric.FabricAuditLog;
 import me.gamercoder215.socketmc.fabric.FabricSocketMC;
 import me.gamercoder215.socketmc.fabric.machines.FabricMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
+import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import net.minecraft.network.FriendlyByteBuf;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,13 +31,17 @@ public class PacketDecoderMixin {
                 byteBuf.clear();
                 ci.cancel();
 
-                byte[] arr = buf.readByteArray();
-                Instruction i = Instruction.fromByteArray(arr);
+                byte[] i0 = buf.readByteArray();
+                Instruction i = Instruction.fromByteArray(i0);
+
+                byte[] p0 = buf.readByteArray();
+                SocketPlugin p = SocketPlugin.fromByteArray(p0);
 
                 minecraft.execute(() -> {
                     try {
                         FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
-                        FabricSocketMC.LOGGER.info("Received instruction: {}, size {} bytes", i, arr.length);
+                        FabricSocketMC.LOGGER.info(FabricAuditLog.CLIENT_RECEIVED_MESSAGE, i, i0.length);
+                        FabricAuditLog.INSTANCE.logReceived(i, p);
                     } catch (Exception e) {
                         FabricSocketMC.print(e);
                     }
