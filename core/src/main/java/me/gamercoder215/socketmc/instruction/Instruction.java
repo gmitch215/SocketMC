@@ -370,8 +370,8 @@ public final class Instruction implements Serializable {
      * @param x X Coordinate for Text
      * @param y Y Coordinate for Text
      * @param text Text to Draw
-     * @param color Text Color
      * @param argb Text Color (ARGB)
+     * @param dropShadow Whether to Draw a Drop Shadow
      * @param millis Duration to display, in milliseconds
      * @throws IllegalArgumentException If the coordinates are negative, the text is null, or the color is null
      * @return Draw Text Instruction
@@ -424,8 +424,7 @@ public final class Instruction implements Serializable {
      * @param y Y Coordinate for Shape
      * @param width Width of Shape
      * @param height Height of Shape
-     * @param time Duration to display, in milliseconds
-     * @param unit Time Unit
+     * @param duration Time Duration
      * @return Draw Shape Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
      */
@@ -954,8 +953,6 @@ public final class Instruction implements Serializable {
      * @param texture Texture Identifier
      * @param width Width of Texture
      * @param height Height of Texture
-     * @param startTop Where to start drawing from the top of the texture
-     * @param startLeft Where to start drawing from the left of the texture
      * @param duration Time Duration
      * @return Draw Texture Instruction
      * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
