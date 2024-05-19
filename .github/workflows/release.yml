@@ -21,7 +21,7 @@ jobs:
           cache: 'gradle'
       - name: Change Permissions
         run: chmod +x ./gradlew
-      - name: Gradle Information
+      - name: Upload to Modrinth
         run: ./gradlew clean modrinth
         env:
           MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
