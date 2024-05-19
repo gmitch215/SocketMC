@@ -1,3 +1,6 @@
+import groovy.json.JsonSlurper
+import java.net.*
+
 plugins {
     kotlin("jvm") version "1.9.24"
 
@@ -54,6 +57,13 @@ allprojects {
     project.ext["license"] = "GPL-3.0"
     project.ext["github"] = "https://github.com/gmitch215/SocketMC"
 
+    project.ext["version_type"] = when {
+        version.toString().contains("SNAPSHOT") -> "alpha"
+        version.toString().split("-")[1].startsWith("0") -> "beta"
+        else -> "release"
+    }
+    project.ext["changelog"] = createChangelog()
+
     apply(plugin = "maven-publish")
     apply<JavaPlugin>()
     apply<JavaLibraryPlugin>()
@@ -80,13 +90,13 @@ allprojects {
                     licenses {
                         license {
                             name.set("GPL-3.0")
-                            url.set("https://github.com/gmitch215/SocketMC/blob/master/LICENSE")
+                            url.set("${project.ext["github"]}/blob/master/LICENSE")
                         }
                     }
                     scm {
                         connection.set("scm:git:git://gmitch215/SocketMC.git")
                         developerConnection.set("scm:git:ssh://gmitch215/SocketMC.git")
-                        url.set("https://github.com/gmitch215/SocketMC")
+                        url.set(project.ext["github"].toString())
                     }
                 }
 
@@ -162,4 +172,19 @@ subprojects {
         testImplementation("org.junit.jupiter:junit-jupiter:5.10.2")
     }
 
+}
+
+fun createChangelog(): String {
+    val url = "https://api.github.com/repos/gmitch215/SocketMC/releases/tags/$version"
+    return with(URI.create(url).toURL().openConnection() as HttpURLConnection) {
+        requestMethod = "GET"
+
+        if (responseCode != 200)
+            return@with "No changelog available for $version"
+
+        val response = inputStream.bufferedReader().readText()
+        val json = JsonSlurper().parseText(response) as Map<*, *>
+
+        json["body"].toString()
+    }
 }

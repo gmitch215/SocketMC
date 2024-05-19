@@ -1,0 +1,27 @@
+name: Release Project
+on:
+  release:
+    types: [published, edited]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    name: Publish to Modrinth
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gradle/actions/wrapper-validation@v3
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'gradle'
+      - name: Change Permissions
+        run: chmod +x ./gradlew
+      - name: Gradle Information
+        run: ./gradlew clean modrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}

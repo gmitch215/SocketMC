@@ -4,6 +4,7 @@ import net.fabricmc.loom.api.LoomGradleExtensionAPI
 
 plugins {
     id("fabric-loom") version "1.6-SNAPSHOT"
+    id("com.modrinth.minotaur") version "2.+"
 }
 
 description = "Fabric Mod for SocketMC Client-side Implementation"
@@ -49,4 +50,24 @@ tasks {
             expand(project.properties)
         }
     }
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set(project.ext["id"].toString())
+
+    versionName.set("SocketMC v$version")
+    versionNumber.set(version.toString())
+    versionType.set(project.ext["version_type"].toString())
+
+    uploadFile.set(tasks.jar)
+    gameVersions.add(project.ext["minecraft_version"].toString())
+    changelog.set(project.ext["changelog"].toString())
+
+    loaders.addAll(listOf("fabric", "quilt"))
+    dependencies {
+        required.project("fabric-api")
+    }
+
+    syncBodyFrom.set(rootProject.file("README.md").bufferedReader().use { it.readText() })
 }

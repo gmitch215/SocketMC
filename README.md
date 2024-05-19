@@ -26,6 +26,8 @@ simple and efficient API.
 - Client Events
   - Player Type and Click Events
 
+<!-- modrinth_exclude.start -->
+
 ## 📥 Installation
 
 [![GitHub branch checks state](https://github.com/gmitch215/SocketMC/actions/workflows/build.yml/badge.svg)](https://github.com/gmitch215/SocketMC/actions/workflows/build.yml)
@@ -174,3 +176,5 @@ class MyPlugin : JavaPlugin() {
 Output:
 
 ![Example](.github/demo.gif)
+
+<!-- modrinth_exclude.end -->

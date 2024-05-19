@@ -2,6 +2,7 @@ plugins {
     id("net.minecraftforge.gradle") version "6.0.25"
     id("org.parchmentmc.librarian.forgegradle") version "1.+"
     id("org.spongepowered.mixin") version "0.7.+"
+    id("com.modrinth.minotaur") version "2.+"
 }
 
 description = "Forge Mod for SocketMC Client-side Implementation"
@@ -38,4 +39,21 @@ tasks {
             expand(project.properties)
         }
     }
+}
+
+modrinth {
+    token.set(System.getenv("MODRINTH_TOKEN"))
+    projectId.set(project.ext["id"].toString())
+
+    versionName.set("SocketMC v$version")
+    versionNumber.set(version.toString())
+    versionType.set(project.ext["version_type"].toString())
+
+    uploadFile.set(tasks.jar)
+    gameVersions.add(project.ext["minecraft_version"].toString())
+    changelog.set(project.ext["changelog"].toString())
+
+    loaders.add("forge")
+
+    syncBodyFrom.set(rootProject.file("README.md").bufferedReader().use { it.readText() })
 }
