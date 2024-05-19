@@ -1073,6 +1073,7 @@ public final class Instruction implements Serializable {
         return new Instruction(DRAW_TEXTURE, List.of(x, y, width, height, texture, startLeft, startTop, regionWidth, regionHeight, millis));
     }
 
+    // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">
     // Serialization
 
     /**
@@ -1108,4 +1109,6 @@ public final class Instruction implements Serializable {
             throw new IllegalArgumentException("Failed to deserialize Instruction", e);
         }
     }
+
+    // </editor-fold>
 }
