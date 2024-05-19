@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction;
 
+import me.gamercoder215.socketmc.instruction.util.Identifier;
 import me.gamercoder215.socketmc.instruction.util.Text;
 import me.gamercoder215.socketmc.instruction.util.render.RenderBuffer;
 import me.gamercoder215.socketmc.log.AuditLog;
@@ -64,6 +65,11 @@ public final class Instruction implements Serializable {
      * Instruction to log a message in the client's logs. This is not the same thing as the {@link AuditLog} API.
      */
     public static final String LOG_MESSAGE = "log";
+
+    /**
+     * Instruction to draw a texture on the client's screen.
+     */
+    public static final String DRAW_TEXTURE = "draw_texture";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -906,9 +912,11 @@ public final class Instruction implements Serializable {
      * Creates a {@link #PLAY_AUDIO} instruction.
      * @param file Input Stream to Audio File
      * @return Play Audio Instruction
+     * @throws IllegalArgumentException If the file is null
+     * @throws IllegalStateException If the file cannot be read
      */
     @NotNull
-    public static Instruction playAudio(@NotNull InputStream file) {
+    public static Instruction playAudio(@NotNull InputStream file) throws IllegalArgumentException, IllegalStateException {
         if (file == null) throw new IllegalArgumentException("File cannot be null");
 
         try (ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
@@ -926,11 +934,143 @@ public final class Instruction implements Serializable {
      * Creates a {@link #LOG_MESSAGE} instruction.
      * @param message Message to Log
      * @return Log Message Instruction
+     * @throws IllegalArgumentException If the message is null or empty
      */
     @NotNull
-    public static Instruction logMessage(@NotNull String message) {
+    public static Instruction logMessage(@NotNull String message) throws IllegalArgumentException {
         if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
         return new Instruction(LOG_MESSAGE, List.of(message));
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param startTop Where to start drawing from the top of the texture
+     * @param startLeft Where to start drawing from the left of the texture
+     * @param duration Time Duration
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawTexture(x, y, width, height, texture, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (texture == null) throw new IllegalArgumentException("Texture cannot be null");
+        if (width < 0 || height < 0) throw new IllegalArgumentException("Dimensions cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_TEXTURE, List.of(x, y, width, height, texture, 0, 0, -1, -1, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param startLeft The horizontal offset to start drawing from the left of the texture
+     * @param startTop The vertical offset to start drawing from the top of the texture
+     * @param duration Time Duration
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, int startLeft, int startTop, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawTexture(x, y, width, height, texture, startLeft, startTop, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param startLeft The horizontal offset to start drawing from the left of the texture
+     * @param startTop The vertical offset to start drawing from the top of the texture
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, int startLeft, int startTop, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (texture == null) throw new IllegalArgumentException("Texture cannot be null");
+        if (width < 0 || height < 0) throw new IllegalArgumentException("Dimensions cannot be negative");
+        if (startTop < 0 || startLeft < 0) throw new IllegalArgumentException("Start coordinates cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_TEXTURE, List.of(x, y, width, height, texture, startLeft, startTop, -1, -1, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param startLeft The horizontal offset to start drawing from the left of the texture
+     * @param startTop The vertical offset to start drawing from the top of the texture
+     * @param regionWidth Width of Region to Draw
+     * @param regionHeight Height of Region to Draw
+     * @param duration Time Duration
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, int startLeft, int startTop, int regionWidth, int regionHeight, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawTexture(x, y, width, height, texture, startLeft, startTop, regionWidth, regionHeight, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_TEXTURE} instruction.
+     * @param x X Coordinate for Texture
+     * @param y Y Coordinate for Texture
+     * @param texture Texture Identifier
+     * @param width Width of Texture
+     * @param height Height of Texture
+     * @param startLeft The horizontal offset to start drawing from the left of the texture
+     * @param startTop The vertical offset to start drawing from the top of the texture
+     * @param regionWidth Width of Region to Draw
+     * @param regionHeight Height of Region to Draw
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Texture Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the texture is null
+     */
+    @NotNull
+    public static Instruction drawTexture(int x, int y, int width, int height, @NotNull Identifier texture, int startLeft, int startTop, int regionWidth, int regionHeight, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (texture == null) throw new IllegalArgumentException("Texture cannot be null");
+        if (width < 0 || height < 0) throw new IllegalArgumentException("Dimensions cannot be negative");
+        if (startTop < 0 || startLeft < 0) throw new IllegalArgumentException("Start coordinates cannot be negative");
+        if (regionWidth < 0 || regionHeight < 0) throw new IllegalArgumentException("Region dimensions cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_TEXTURE, List.of(x, y, width, height, texture, startLeft, startTop, regionWidth, regionHeight, millis));
     }
 
     // Serialization

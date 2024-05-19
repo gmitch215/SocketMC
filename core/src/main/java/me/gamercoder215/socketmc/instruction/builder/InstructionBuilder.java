@@ -38,4 +38,13 @@ public interface InstructionBuilder {
         return new RectangleBuilder();
     }
 
+    /**
+     * Creates a new builder for {@link Instruction#DRAW_TEXTURE}.
+     * @return Instruction Builder
+     */
+    @NotNull
+    static TextureBuilder texture() {
+        return new TextureBuilder();
+    }
+
 }
