@@ -141,10 +141,7 @@ public final class Instruction implements Serializable {
 
     @Override
     public String toString() {
-        return "Instruction{" +
-                "id='" + id + '\'' +
-                ", parameters=" + parameters +
-                '}';
+        return "Instruction(\"" + id + "\") {" + parameters + '}';
     }
 
     // Instruction Creation
