@@ -2,11 +2,18 @@ import groovy.json.JsonSlurper
 import java.net.*
 
 plugins {
-    kotlin("jvm") version "1.9.24"
+    kotlin("jvm") version "2.0.0"
 
     java
     jacoco
     `maven-publish`
+
+    // Mod
+    id("fabric-loom") version "1.6-SNAPSHOT" apply false
+    id("net.minecraftforge.gradle") version "6.0.25" apply false
+    id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
+    id("org.spongepowered.mixin") version "0.7.+" apply false
+    id("com.modrinth.minotaur") version "2.+" apply false
 }
 
 val docs = listOf(

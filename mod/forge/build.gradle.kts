@@ -1,8 +1,8 @@
 plugins {
-    id("net.minecraftforge.gradle") version "6.0.25"
-    id("org.parchmentmc.librarian.forgegradle") version "1.+"
-    id("org.spongepowered.mixin") version "0.7.+"
-    id("com.modrinth.minotaur") version "2.+"
+    id("net.minecraftforge.gradle")
+    id("org.parchmentmc.librarian.forgegradle")
+    id("org.spongepowered.mixin")
+    id("com.modrinth.minotaur")
 }
 
 description = "Forge Mod for SocketMC Client-side Implementation"

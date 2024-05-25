@@ -3,8 +3,8 @@
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
 
 plugins {
-    id("fabric-loom") version "1.6-SNAPSHOT"
-    id("com.modrinth.minotaur") version "2.+"
+    id("fabric-loom")
+    id("com.modrinth.minotaur")
 }
 
 description = "Fabric Mod for SocketMC Client-side Implementation"
