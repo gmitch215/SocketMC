@@ -6,3 +6,6 @@ contact_links:
   - name: Jenkins
     url: https://ci.codemc.io/job/gmitch215/job/SocketMC/
     about: View the Jenkins builds for SocketMC
+  - name: Trello
+    url: https://trello.com/b/29CtpNlW/socketmc
+    about: View the Trello board for SocketMC
