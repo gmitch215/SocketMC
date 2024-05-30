@@ -1,14 +1,12 @@
-package me.gamercoder215.socketmc.screen.ui;
+package me.gamercoder215.socketmc.screen;
 
-import me.gamercoder215.socketmc.util.Sizeable;
+import me.gamercoder215.socketmc.util.Position;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.Serializable;
 
 /**
  * Represents an object that can be positioned and rendered on the screen.
  */
-public interface Positionable extends Serializable {
+public interface Positionable extends Narratable {
 
     /**
      * Gets the x-coordinate of the object.
@@ -59,14 +57,14 @@ public interface Positionable extends Serializable {
     void setHeight(int height);
 
     /**
-     * Sets the position and size of this object to match a {@link Sizeable}.
-     * @param sizeable the sizeable to use
+     * Sets the position and size of this object to match a {@link Position}.
+     * @param position the position to use
      */
-    default void setSize(@NotNull Sizeable sizeable) {
-        setX(sizeable.getX());
-        setY(sizeable.getY());
-        setWidth(sizeable.getWidth());
-        setHeight(sizeable.getHeight());
+    default void setSize(@NotNull Position position) {
+        setX(position.getX());
+        setY(position.getY());
+        setWidth(position.getWidth());
+        setHeight(position.getHeight());
     }
 
 }
