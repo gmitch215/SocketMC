@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction.util;
 
+import me.gamercoder215.socketmc.util.render.text.Text;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;
@@ -10,8 +11,15 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class SpigotText extends Text {
 
-    private BaseComponent component = new TextComponent("");
-    private int alpha;
+    /**
+     * The text content for this text element.
+     */
+    protected BaseComponent component = new TextComponent("");
+
+    /**
+     * The alpha value for the color in this text element.
+     */
+    protected int alpha;
 
     /**
      * Constructs a new, empty text element.
@@ -30,8 +38,12 @@ public final class SpigotText extends Text {
      * Constructs a new text element.
      * @param component Component for Text
      * @param alpha Color Alpha Value
+     * @throws IllegalArgumentException if component is null or the alpha value is not between 0 and 255
      */
-    public SpigotText(@NotNull BaseComponent component, int alpha) {
+    public SpigotText(@NotNull BaseComponent component, int alpha) throws IllegalArgumentException {
+        if (component == null) throw new IllegalArgumentException("Component cannot be null");
+        if (alpha < 0 || alpha > 255) throw new IllegalArgumentException("Alpha must be between 0 and 255");
+
         this.component = component;
         this.alpha = alpha;
     }
@@ -81,6 +93,16 @@ public final class SpigotText extends Text {
     @Override
     public String toJSON() {
         return ComponentSerializer.toString(component);
+    }
+
+    /**
+     * Constructs a new text element with the given text content.
+     * @param component Text Component
+     * @return Text Element
+     */
+    @NotNull
+    public static SpigotText from(@NotNull BaseComponent component) {
+        return new SpigotText(component);
     }
 
 }
