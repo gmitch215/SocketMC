@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.instruction.util;
+package me.gamercoder215.socketmc.util;
 
 import org.jetbrains.annotations.NotNull;
 

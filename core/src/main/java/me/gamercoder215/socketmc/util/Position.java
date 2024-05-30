@@ -1,11 +1,16 @@
 package me.gamercoder215.socketmc.util;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * Utility class for sizeable and placeable objects.
  */
-public final class Sizeable {
+public final class Position implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1168470204360680611L;
 
     private int x, y, width, height;
 
@@ -14,7 +19,7 @@ public final class Sizeable {
      * @param width the width
      * @param height the height
      */
-    public Sizeable(int width, int height) {
+    public Position(int width, int height) {
         this(0, 0, width, height);
     }
 
@@ -26,7 +31,7 @@ public final class Sizeable {
      * @param height the height
      * @throws IllegalArgumentException if coordinates or dimensions are negative
      */
-    public Sizeable(int x, int y, int width, int height) throws IllegalArgumentException {
+    public Position(int x, int y, int width, int height) throws IllegalArgumentException {
         if (width < 0 || height < 0) throw new IllegalArgumentException("Width and height must be non-negative");
         if (x < 0 || y < 0) throw new IllegalArgumentException("X and Y coordinates must be non-negative");
 
@@ -160,8 +165,8 @@ public final class Sizeable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Sizeable sizeable)) return false;
-        return x == sizeable.x && y == sizeable.y && width == sizeable.width && height == sizeable.height;
+        if (!(o instanceof Position position)) return false;
+        return x == position.x && y == position.y && width == position.width && height == position.height;
     }
 
     @Override
