@@ -1,8 +1,5 @@
 package me.gamercoder215.socketmc.screen.ui;
 
-import me.gamercoder215.socketmc.instruction.util.Text;
-import org.jetbrains.annotations.NotNull;
-
 import java.io.Serial;
 
 /**
@@ -18,19 +15,33 @@ public abstract class AbstractButton extends AbstractWidget {
     public static final int DEFAULT_WIDTH = 150;
 
     /**
+     * The default width of a small button.
+     */
+    public static final int SMALL_WIDTH = 120;
+
+    /**
+     * The default width of a big button.
+     */
+    public static final int BIG_WIDTH = 200;
+
+    /**
      * The default height of a button.
      */
     public static final int DEFAULT_HEIGHT = 20;
 
     /**
+     * The default width and height spacing between buttons.
+     */
+    public static final int DEFAULT_SPACING = 8;
+
+    /**
      * Constructs a new button using the default dimesions.
      * @param x the x-coordinate
      * @param y the y-coordinate
-     * @param message the text message
-     * @throws IllegalArgumentException if coordinates are negative, or message is null
+     * @throws IllegalArgumentException if coordinates are negative
      */
-    protected AbstractButton(int x, int y, @NotNull Text message) throws IllegalArgumentException {
-        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, message);
+    protected AbstractButton(int x, int y) throws IllegalArgumentException {
+        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     }
 
     /**
@@ -39,10 +50,9 @@ public abstract class AbstractButton extends AbstractWidget {
      * @param y the y-coordinate
      * @param width the width
      * @param height the height
-     * @param message the text message
-     * @throws IllegalArgumentException if coordinates or dimensions are negative, or message is null
+     * @throws IllegalArgumentException if coordinates or dimensions are negative
      */
-    protected AbstractButton(int x, int y, int width, int height, @NotNull Text message) throws IllegalArgumentException {
-        super(x, y, width, height, message);
+    protected AbstractButton(int x, int y, int width, int height) throws IllegalArgumentException {
+        super(x, y, width, height);
     }
 }

@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.screen.ui;
 
 import me.gamercoder215.socketmc.instruction.Instruction;
-import me.gamercoder215.socketmc.instruction.util.Text;
+import me.gamercoder215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -9,12 +9,12 @@ import java.io.Serial;
 /**
  * Represents a button that sends an instruction when clicked.
  */
-public final class SendInstructionButton extends AbstractButton {
+public final class SendInstructionButton extends AbstractTextButton {
 
     @Serial
     private static final long serialVersionUID = 6366512250407097760L;
 
-    private final Instruction instruction;
+    private Instruction instruction;
 
     /**
      * Constructs a new button using the default dimensions.
@@ -26,8 +26,8 @@ public final class SendInstructionButton extends AbstractButton {
      */
     public SendInstructionButton(int x, int y, @NotNull Text message, @NotNull Instruction instruction) throws IllegalArgumentException {
         super(x, y, message);
-        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
 
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
         this.instruction = instruction;
     }
 
@@ -43,8 +43,8 @@ public final class SendInstructionButton extends AbstractButton {
      */
     public SendInstructionButton(int x, int y, int width, int height, @NotNull Text message, @NotNull Instruction instruction) throws IllegalArgumentException {
         super(x, y, width, height, message);
-        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
 
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
         this.instruction = instruction;
     }
 
@@ -55,5 +55,15 @@ public final class SendInstructionButton extends AbstractButton {
     @NotNull
     public Instruction getInstruction() {
         return instruction;
+    }
+
+    /**
+     * Sets the instruction to send when this button is clicked.
+     * @param instruction the instruction
+     * @throws IllegalArgumentException if instruction is null
+     */
+    public void setInstruction(@NotNull Instruction instruction) throws IllegalArgumentException {
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
+        this.instruction = instruction;
     }
 }

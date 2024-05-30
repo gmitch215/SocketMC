@@ -1,17 +1,19 @@
 package me.gamercoder215.socketmc.screen.ui;
 
-import me.gamercoder215.socketmc.instruction.util.Text;
+import me.gamercoder215.socketmc.screen.util.Tooltip;
+import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.util.render.text.Text;
+import me.gamercoder215.socketmc.screen.Positionable;
 import me.gamercoder215.socketmc.util.SerializableConsumer;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serial;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
- * Represents a Widget on the screen.
+ * Represents a Widget on the screen. Legal for implementation.
  */
 public abstract class AbstractWidget implements Positionable {
 
@@ -23,10 +25,46 @@ public abstract class AbstractWidget implements Positionable {
     @Serial
     private static final long serialVersionUID = -8273686084189110401L;
 
-    private int x, y, width, height;
-    private String messageJSON;
+    /**
+     * The x-coordinate of this widget.
+     */
+    protected int x;
+
+    /**
+     * The y-coordinate of this widget.
+     */
+    protected int y;
+
+    /**
+     * The width of this widget.
+     */
+    protected int width;
+
+    /**
+     * The height of this widget.
+     */
+    protected int height;
+
+    /**
+     * The narration message JSON for this widget.
+     */
+    protected String narrationMessageJSON;
+
+    /**
+     * The tooltip for this widget.
+     */
+    @Nullable
+    protected Tooltip tooltip;
 
     private final Set<SerializableConsumer<AbstractWidget>> onClickListeners = new HashSet<>();
+
+    /**
+     * Constructs a new widget.
+     * @param position the position
+     */
+    protected AbstractWidget(@NotNull Position position) {
+        this(position.getX(), position.getY(), position.getWidth(), position.getHeight());
+    }
 
     /**
      * Constructs a new widget.
@@ -34,86 +72,94 @@ public abstract class AbstractWidget implements Positionable {
      * @param y the y-coordinate
      * @param width the width
      * @param height the height
-     * @param message the text message
-     * @throws IllegalArgumentException if coordinates or dimensions are negative, or message is null
+     * @throws IllegalArgumentException if coordinates or dimensions are negative
      */
-    protected AbstractWidget(int x, int y, int width, int height, @NotNull Text message) throws IllegalArgumentException {
+    protected AbstractWidget(int x, int y, int width, int height) throws IllegalArgumentException {
         if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates must be non-negative");
         if (width < 0 || height < 0) throw new IllegalArgumentException("Width and height must be non-negative");
-        if (message == null) throw new IllegalArgumentException("Message cannot be null");
 
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.messageJSON = message.toJSON();
     }
 
     @Override
-    public int getX() {
+    public final int getX() {
         return x;
     }
 
     @Override
-    public void setX(int x) {
+    public final void setX(int x) {
         this.x = x;
     }
 
     @Override
-    public int getY() {
+    public final int getY() {
         return y;
     }
 
     @Override
-    public void setY(int y) {
+    public final void setY(int y) {
         this.y = y;
     }
 
     @Override
-    public int getWidth() {
+    public final int getWidth() {
         return width;
     }
 
     @Override
-    public void setWidth(int width) {
+    public final void setWidth(int width) {
         this.width = width;
     }
 
     @Override
-    public int getHeight() {
+    public final int getHeight() {
         return height;
     }
 
     @Override
-    public void setHeight(int height) {
+    public final void setHeight(int height) {
         this.height = height;
     }
 
-    /**
-     * Gets the message JSON for this widget.
-     * @return the message in JSON format
-     */
-    @NotNull
-    public String getMessageJSON() {
-        return messageJSON;
+    @Override
+    public final String getNarrationMessageJSON() {
+        return narrationMessageJSON;
     }
 
     /**
-     * Sets the message JSON for this widget.
-     * @param messageJSON the message in JSON format
+     * Sets the narration message JSON for this widget.
+     * @param narrationMessageJSON the narration message in JSON format
      */
-    public void setMessageJSON(@NotNull String messageJSON) {
-        if (messageJSON == null) throw new IllegalArgumentException("Message cannot be null");
-        this.messageJSON = messageJSON;
+    public void setNarrationMessageJSON(@NotNull String narrationMessageJSON) {
+        this.narrationMessageJSON = narrationMessageJSON;
     }
 
     /**
-     * Gets the message for this widget.
-     * @param message the message
+     * Sets the narration message for this widget.
+     * @param narrationMessage the narration message
      */
-    public void setMessage(@NotNull Text message) {
-        if (message == null) throw new IllegalArgumentException("Message cannot be null");
-        this.messageJSON = message.toJSON();
+    public void setNarrationMessage(@NotNull Text narrationMessage) {
+        this.narrationMessageJSON = narrationMessage.toJSON();
+    }
+
+    /**
+     * Gets the tooltip for this widget.
+     * @return Widget Tooltip
+     */
+    @Nullable
+    public Tooltip getTooltip() {
+        return tooltip;
+    }
+
+    /**
+     * Sets the tooltip for this widget.
+     * @param tooltip Widget Tooltip
+     */
+    public void setTooltip(@Nullable Tooltip tooltip) {
+        this.tooltip = tooltip;
     }
 
     /**
