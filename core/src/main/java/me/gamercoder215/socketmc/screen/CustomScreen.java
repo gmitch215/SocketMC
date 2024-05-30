@@ -1,8 +1,8 @@
 package me.gamercoder215.socketmc.screen;
 
-import me.gamercoder215.socketmc.instruction.util.Text;
-import me.gamercoder215.socketmc.screen.ui.Positionable;
+import me.gamercoder215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.Serial;
 import java.util.ArrayList;
@@ -11,11 +11,12 @@ import java.util.List;
 /**
  * Represents a custom screen to be displayed on the client's screen.
  */
-public final class CustomScreen extends Screen {
+public final class CustomScreen extends AbstractScreen {
     @Serial
     private static final long serialVersionUID = 2958020867211288488L;
 
     private String titleJSON;
+    private String narrationMessageJSON;
     private final List<Positionable> children = new ArrayList<>();
 
     /**
@@ -48,6 +49,31 @@ public final class CustomScreen extends Screen {
     public void setTitle(@NotNull Text title) {
         if (title == null) throw new IllegalArgumentException("Title cannot be null");
         this.titleJSON = title.toJSON();
+    }
+
+    @Override
+    public String getNarrationMessageJSON() {
+        if (narrationMessageJSON == null) return titleJSON;
+        return narrationMessageJSON;
+    }
+
+    /**
+     * Sets the narration message of this screen.
+     * @param narrationMessageJSON the narration message in JSON format
+     */
+    public void setNarrationMessageJSON(@Nullable String narrationMessageJSON) {
+        this.narrationMessageJSON = narrationMessageJSON;
+    }
+
+    /**
+     * Sets the narration message of this screen.
+     * @param narrationMessage the narration message
+     */
+    public void setNarrationMessage(@Nullable Text narrationMessage) {
+        if (narrationMessage == null)
+            this.narrationMessageJSON = null;
+        else
+            this.narrationMessageJSON = narrationMessage.toJSON();
     }
 
     /**

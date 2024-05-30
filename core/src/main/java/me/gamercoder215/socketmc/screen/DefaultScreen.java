@@ -1,6 +1,5 @@
 package me.gamercoder215.socketmc.screen;
 
-import me.gamercoder215.socketmc.instruction.util.Text;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -12,7 +11,7 @@ import java.util.Set;
 /**
  * Represents default screens built-in to the client.
  */
-public final class DefaultScreen extends Screen {
+public final class DefaultScreen extends AbstractScreen {
     @Serial
     private static final long serialVersionUID = 8336967742008601990L;
 
