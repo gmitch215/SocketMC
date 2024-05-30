@@ -1,6 +1,6 @@
 package me.gamercoder215.socketmc.instruction
 
-import me.gamercoder215.socketmc.instruction.util.Text
+import me.gamercoder215.socketmc.util.render.text.Text
 import me.gamercoder215.socketmc.screen.ui.AbstractButton
 import me.gamercoder215.socketmc.screen.ui.SendInstructionButton
 
