@@ -47,6 +47,8 @@ You can download them from the following locations:
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gmitch215/SocketMC)
 [![Static Badge](https://img.shields.io/badge/documentation-javadoc-yellow)](https://socketmc.gmitch215.xyz/)
+[![Static Badge](https://img.shields.io/badge/wiki-github-dgreen)](https://github.com/gmitch215/SocketMC/wiki)
+[![Static Badge](https://img.shields.io/badge/detailed_wiki-gitbook-dgreen)](https://docs.gmitch215.xyz/socketmc/)
 
 <details>
     <summary>Maven</summary>
