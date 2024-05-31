@@ -6,6 +6,15 @@ import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
+import me.gamercoder215.socketmc.events.screen.AsyncPlayerChangeScreenEvent;
+import me.gamercoder215.socketmc.events.screen.AsyncPlayerClickButtonEvent;
+import me.gamercoder215.socketmc.events.screen.AsyncPlayerEditTextEvent;
+import me.gamercoder215.socketmc.events.screen.AsyncPlayerToggleCheckboxEvent;
+import me.gamercoder215.socketmc.screen.AbstractScreen;
+import me.gamercoder215.socketmc.screen.ui.AbstractButton;
+import me.gamercoder215.socketmc.screen.ui.AbstractWidget;
+import me.gamercoder215.socketmc.screen.ui.CheckboxButton;
+import me.gamercoder215.socketmc.screen.ui.EditTextWidget;
 import me.gamercoder215.socketmc.util.input.Action;
 import me.gamercoder215.socketmc.util.input.Key;
 import me.gamercoder215.socketmc.util.input.MouseButton;
@@ -34,7 +43,7 @@ final class EventFactory {
     // Event Factory
 
     private static final List<BiFunction<SocketPlayer, Map<String, Object>, SocketEvent>> factory = List.of(
-            // PlayerPressKeyEvent
+            // PlayerPressKeyEvent - 0
             (p, params) -> {
                 int key = (int) params.get("key");
                 int flags = (int) params.get("flags");
@@ -42,27 +51,57 @@ final class EventFactory {
 
                 return new AsyncPlayerPressKeyEvent(p, Key.fromCode(key), Action.values()[action], flags);
             },
-            // PlayerMoveMouseEvent
+            // PlayerMoveMouseEvent - 1
             (p, params) -> {
                 double x = (double) params.get("x");
                 double y = (double) params.get("y");
 
                 return new AsyncPlayerMoveMouseEvent(p, x, y);
             },
-            // PlayerScrollMouseEvent
+            // PlayerScrollMouseEvent - 2
             (p, params) -> {
                 double x = (double) params.get("x");
                 double y = (double) params.get("y");
 
                 return new AsyncPlayerScrollMouseEvent(p, x, y);
             },
-            // PlayerClickMouseEvent
+            // PlayerClickMouseEvent - 3
             (p, params) -> {
                 int button = (int) params.get("button");
                 int action = (int) params.get("action");
                 int flags = (int) params.get("mods");
 
                 return new AsyncPlayerClickMouseEvent(p, MouseButton.values()[button], Action.values()[action], flags);
+            },
+            // PlayerChangeScreenEvent - 4
+            (p, params) -> {
+                AbstractScreen oldScreen = (AbstractScreen) params.get("old");
+                AbstractScreen newScreen = (AbstractScreen) params.get("new");
+
+                return new AsyncPlayerChangeScreenEvent(oldScreen, newScreen, p);
+            },
+            // PlayerClickButtonEvent - 5
+            (p, params) -> {
+                AbstractButton button = (AbstractButton) params.get("button");
+                AbstractScreen screen = (AbstractScreen) params.get("screen");
+
+                return new AsyncPlayerClickButtonEvent(button, screen, p);
+            },
+            // PlayerToggleCheckboxEvent - 6
+            (p, params) -> {
+                CheckboxButton button = (CheckboxButton) params.get("button");
+                AbstractScreen screen = (AbstractScreen) params.get("screen");
+                boolean state = (boolean) params.get("state");
+
+                return new AsyncPlayerToggleCheckboxEvent(button, state, screen, p);
+            },
+            // PlayerEditTextEvent - 7
+            (p, params) -> {
+                EditTextWidget widget = (EditTextWidget) params.get("widget");
+                AbstractScreen screen = (AbstractScreen) params.get("screen");
+                String text = (String) params.get("text");
+
+                return new AsyncPlayerEditTextEvent(widget, text, screen, p);
             }
     );
 
