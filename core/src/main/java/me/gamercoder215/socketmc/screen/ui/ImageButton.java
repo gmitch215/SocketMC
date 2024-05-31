@@ -46,6 +46,7 @@ public final class ImageButton extends AbstractButton {
      * @param x the x-coordinate
      * @param y the y-coordinate
      * @param sprite the sprite
+     * @param message the message
      * @throws IllegalArgumentException if coordinates are negative, or message/sprite is null
      */
     public ImageButton(int x, int y, @NotNull Sprite sprite, @NotNull Text message) throws IllegalArgumentException {
@@ -62,10 +63,28 @@ public final class ImageButton extends AbstractButton {
      * @param width the width
      * @param height the height
      * @param sprite the sprite
+     * @param message the message
      * @throws IllegalArgumentException if coordinates or dimensions are negative, or sprite is null
      */
     public ImageButton(int x, int y, int width, int height, @NotNull Sprite sprite, @NotNull Text message) throws IllegalArgumentException {
         super(x, y, width, height, message);
+        if (sprite == null) throw new IllegalArgumentException("Sprite cannot be null");
+
+        this.sprite = sprite;
+    }
+
+    /**
+     * Constructs a new button.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param width the width
+     * @param height the height
+     * @param sprite the sprite
+     * @param messageJSON the message in JSON format
+     * @throws IllegalArgumentException if coordinates or dimensions are negative, or sprite is null
+     */
+    public ImageButton(int x, int y, int width, int height, @NotNull Sprite sprite, @NotNull String messageJSON) throws IllegalArgumentException {
+        super(x, y, width, height, messageJSON);
         if (sprite == null) throw new IllegalArgumentException("Sprite cannot be null");
 
         this.sprite = sprite;

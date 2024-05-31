@@ -42,6 +42,7 @@ public abstract class AbstractButton extends AbstractTextWidget {
      * Constructs a new button using the default dimesions.
      * @param x the x-coordinate
      * @param y the y-coordinate
+     * @param message the text message
      * @throws IllegalArgumentException if coordinates are negative, or message is null
      */
     protected AbstractButton(int x, int y, @NotNull Text message) throws IllegalArgumentException {
@@ -54,6 +55,7 @@ public abstract class AbstractButton extends AbstractTextWidget {
      * @param y the y-coordinate
      * @param width the width
      * @param height the height
+     * @param message the text message
      * @throws IllegalArgumentException if coordinates or dimensions are negative, or message is null
      */
     protected AbstractButton(int x, int y, int width, int height, @NotNull Text message) throws IllegalArgumentException {

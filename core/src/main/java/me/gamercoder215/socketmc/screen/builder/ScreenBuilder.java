@@ -6,6 +6,7 @@ import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.TextButton;
 import me.gamercoder215.socketmc.screen.ui.FocusedTextWidget;
+import me.gamercoder215.socketmc.screen.ui.TextWidget;
 import me.gamercoder215.socketmc.util.render.text.PlainText;
 import me.gamercoder215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;

@@ -54,6 +54,11 @@ public final class Tooltip implements Narratable {
         this.tooltipJSON = tooltip.toJSON();
     }
 
+    /**
+     * Sets the tooltip message JSON for this Tooltip.
+     * @param tooltipJSON Tooltip Message JSON
+     * @throws IllegalArgumentException if tooltipJSON is null
+     */
     public void setTooltipJSON(@NotNull String tooltipJSON) throws IllegalArgumentException {
         if (tooltipJSON == null) throw new IllegalArgumentException("tooltipJSON cannot be null");
         this.tooltipJSON = tooltipJSON;
