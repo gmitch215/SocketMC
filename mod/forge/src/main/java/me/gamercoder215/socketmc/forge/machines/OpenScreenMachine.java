@@ -18,7 +18,11 @@ import static me.gamercoder215.socketmc.forge.ForgeSocketMC.minecraft;
 @InstructionId(Instruction.OPEN_SCREEN)
 public final class OpenScreenMachine implements Machine {
 
-    private static Screen defaultScreen(@NotNull DefaultScreen screen, @Nullable Screen lastScreen) {
+    public static final OpenScreenMachine MACHINE = new OpenScreenMachine();
+
+    private OpenScreenMachine() {};
+
+     static Screen defaultScreen(@NotNull DefaultScreen screen, @Nullable Screen lastScreen) {
         return switch (screen.getIdentifier()) {
             case "title" -> new TitleScreen();
             case "pause" -> new PauseScreen(true);
