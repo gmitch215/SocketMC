@@ -61,9 +61,9 @@ public final class Sprite implements Serializable {
     private static final long serialVersionUID = -2456183342398330796L;
 
     private Identifier enabled;
-    private Identifier enabledFocused;
+    private Identifier enabledHovered;
     private Identifier disabled;
-    private Identifier disabledFocused;
+    private Identifier disabledHovered;
 
     /**
      * Constructs a new Sprite using {@link Identifier#minecraft(String)}.
@@ -77,12 +77,12 @@ public final class Sprite implements Serializable {
     /**
      * Constructs a new Sprite using {@link Identifier#minecraft(String)}.
      * @param enabled Sprite to display when Enabled
-     * @param enabledFocused Sprite to display when Enabled, and mouse is hovering
+     * @param enabledHovered Sprite to display when Enabled, and mouse is hovering
      * @param disabled Sprite to display when Disabled
-     * @param disabledFocused Sprite to display when Disabled, and mouse is hovering
+     * @param disabledHovered Sprite to display when Disabled, and mouse is hovering
      */
-    public Sprite(@NotNull String enabled, @NotNull String enabledFocused, @NotNull String disabled, @NotNull String disabledFocused) {
-        this(Identifier.minecraft(enabled), Identifier.minecraft(enabledFocused), Identifier.minecraft(disabled), Identifier.minecraft(disabledFocused));
+    public Sprite(@NotNull String enabled, @NotNull String enabledHovered, @NotNull String disabled, @NotNull String disabledHovered) {
+        this(Identifier.minecraft(enabled), Identifier.minecraft(enabledHovered), Identifier.minecraft(disabled), Identifier.minecraft(disabledHovered));
     }
 
     /**
@@ -97,22 +97,22 @@ public final class Sprite implements Serializable {
     /**
      * Constructs a new Sprite.
      * @param enabled Sprite to display when Enabled
-     * @param enabledFocused Sprite to display when Enabled, and mouse is hovering
+     * @param enabledHovered Sprite to display when Enabled, and mouse is hovering
      * @param disabled Sprite to display when Disabled
-     * @param disabledFocused Sprite to display when Disabled, and mouse is hovering
+     * @param disabledHovered Sprite to display when Disabled, and mouse is hovering
      * @throws IllegalArgumentException if any Identifier is null
      */
-    public Sprite(@NotNull Identifier enabled, @NotNull Identifier enabledFocused, @NotNull Identifier disabled, @NotNull Identifier disabledFocused)
+    public Sprite(@NotNull Identifier enabled, @NotNull Identifier enabledHovered, @NotNull Identifier disabled, @NotNull Identifier disabledHovered)
             throws IllegalArgumentException {
         if (enabled == null) throw new IllegalArgumentException("Enabled Identifier cannot be null");
-        if (enabledFocused == null) throw new IllegalArgumentException("Enabled Focused Identifier cannot be null");
+        if (enabledHovered == null) throw new IllegalArgumentException("Enabled Focused Identifier cannot be null");
         if (disabled == null) throw new IllegalArgumentException("Disabled Identifier cannot be null");
-        if (disabledFocused == null) throw new IllegalArgumentException("Disabled Focused Identifier cannot be null");
+        if (disabledHovered == null) throw new IllegalArgumentException("Disabled Focused Identifier cannot be null");
 
         this.enabled = enabled;
-        this.enabledFocused = enabledFocused;
+        this.enabledHovered = enabledHovered;
         this.disabled = disabled;
-        this.disabledFocused = disabledFocused;
+        this.disabledHovered = disabledHovered;
     }
 
     /**
@@ -139,18 +139,18 @@ public final class Sprite implements Serializable {
      * @return Sprite Enabled Focused Identifier
      */
     @NotNull
-    public Identifier getEnabledFocused() {
-        return enabledFocused;
+    public Identifier getEnabledHovered() {
+        return enabledHovered;
     }
 
     /**
      * Sets the Identifier for the Sprite when Enabled, and mouse is hovering.
-     * @param enabledFocused Sprite Enabled Focused Identifier
+     * @param enabledHovered Sprite Enabled Focused Identifier
      * @throws IllegalArgumentException if enabledFocused is null
      */
-    public void setEnabledFocused(@NotNull Identifier enabledFocused) throws IllegalArgumentException {
-        if (enabledFocused == null) throw new IllegalArgumentException("Enabled Focused Identifier cannot be null");
-        this.enabledFocused = enabledFocused;
+    public void setEnabledHovered(@NotNull Identifier enabledHovered) throws IllegalArgumentException {
+        if (enabledHovered == null) throw new IllegalArgumentException("Enabled Hovered Identifier cannot be null");
+        this.enabledHovered = enabledHovered;
     }
 
     /**
@@ -177,18 +177,18 @@ public final class Sprite implements Serializable {
      * @return Sprite Disabled Focused Identifier
      */
     @NotNull
-    public Identifier getDisabledFocused() {
-        return disabledFocused;
+    public Identifier getDisabledHovered() {
+        return disabledHovered;
     }
 
     /**
      * Sets the Identifier for the Sprite when Disabled, and mouse is hovering.
-     * @param disabledFocused Sprite Disabled Focused Identifier
+     * @param disabledHovered Sprite Disabled Focused Identifier
      * @throws IllegalArgumentException if disabledFocused is null
      */
     @NotNull
-    public void setDisabledFocused(@NotNull Identifier disabledFocused) throws IllegalArgumentException {
-        if (disabledFocused == null) throw new IllegalArgumentException("Disabled Focused Identifier cannot be null");
-        this.disabledFocused = disabledFocused;
+    public void setDisabledHovered(@NotNull Identifier disabledHovered) throws IllegalArgumentException {
+        if (disabledHovered == null) throw new IllegalArgumentException("Disabled Hovered Identifier cannot be null");
+        this.disabledHovered = disabledHovered;
     }
 }
