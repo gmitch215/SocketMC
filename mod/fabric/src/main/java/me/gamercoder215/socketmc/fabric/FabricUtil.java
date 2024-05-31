@@ -17,8 +17,25 @@ public final class FabricUtil {
         return Component.Serializer.fromJson(json, minecraft.level.registryAccess());
     }
 
+    public static String toJson(Component component) {
+        return Component.Serializer.toJson(component, minecraft.level.registryAccess());
+    }
+
+    public static Identifier fromMinecraft(ResourceLocation resourceLocation) {
+        return new Identifier(resourceLocation.getNamespace(), resourceLocation.getPath());
+    }
+
     public static ResourceLocation toMinecraft(Identifier identifier) {
         return new ResourceLocation(identifier.getNamespace(), identifier.getPath());
+    }
+
+    public static Sprite fromMinecraft(WidgetSprites widgetSprites) {
+        return new Sprite(
+                fromMinecraft(widgetSprites.enabled()),
+                fromMinecraft(widgetSprites.enabledFocused()),
+                fromMinecraft(widgetSprites.disabled()),
+                fromMinecraft(widgetSprites.disabledFocused())
+        );
     }
 
     public static WidgetSprites toMinecraft(Sprite sprite) {
@@ -27,6 +44,13 @@ public final class FabricUtil {
                 toMinecraft(sprite.getEnabledHovered()),
                 toMinecraft(sprite.getDisabled()),
                 toMinecraft(sprite.getDisabledHovered())
+        );
+    }
+
+    public static Tooltip fromMinecraft(net.minecraft.client.gui.components.Tooltip tooltip) {
+        return new Tooltip(
+                toJson(tooltip.message),
+                toJson(tooltip.narration)
         );
     }
 
