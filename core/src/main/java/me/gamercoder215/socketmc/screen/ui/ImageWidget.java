@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.screen.ui;
 
 import me.gamercoder215.socketmc.util.Identifier;
-import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -19,13 +19,13 @@ public final class ImageWidget extends AbstractWidget {
 
     /**
      * Constructs a new image widget.
-     * @param position the position
+     * @param bounds the bounds
      * @param type the type of image
      * @param location the location of the image
      * @throws IllegalArgumentException if the type or location are null
      */
-    public ImageWidget(@NotNull Position position, @NotNull Type type, @NotNull Identifier location) throws IllegalArgumentException {
-        this(position.getX(), position.getY(), position.getWidth(), position.getHeight(), type, location);
+    public ImageWidget(@NotNull ElementBounds bounds, @NotNull Type type, @NotNull Identifier location) throws IllegalArgumentException {
+        this(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), type, location);
     }
 
     /**
@@ -77,13 +77,13 @@ public final class ImageWidget extends AbstractWidget {
 
     /**
      * Constructs a new image widget with {@link Type#TEXTURE}.
-     * @param position the position of the widget
+     * @param bounds the bounds of the widget
      * @param location the location of the image
      * @return Image Widget
      */
     @NotNull
-    public static ImageWidget texture(@NotNull Position position, @NotNull Identifier location) throws IllegalArgumentException {
-        return new ImageWidget(position, Type.TEXTURE, location);
+    public static ImageWidget texture(@NotNull ElementBounds bounds, @NotNull Identifier location) throws IllegalArgumentException {
+        return new ImageWidget(bounds, Type.TEXTURE, location);
     }
 
     /**
@@ -103,14 +103,14 @@ public final class ImageWidget extends AbstractWidget {
 
     /**
      * Constructs a new image widget with {@link Type#SPRITE}.
-     * @param position the position of the widget
+     * @param bounds the bounds of the widget
      * @param location the location of the image
      * @return Image Widget
      * @throws IllegalArgumentException if the location is null
      */
     @NotNull
-    public static ImageWidget sprite(@NotNull Position position, @NotNull Identifier location) throws IllegalArgumentException {
-        return new ImageWidget(position, Type.SPRITE, location);
+    public static ImageWidget sprite(@NotNull ElementBounds bounds, @NotNull Identifier location) throws IllegalArgumentException {
+        return new ImageWidget(bounds, Type.SPRITE, location);
     }
 
     /**

@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.screen.ui;
 
 import me.gamercoder215.socketmc.util.render.text.Text;
-import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -9,7 +9,7 @@ import java.io.Serial;
 /**
  * Represents a button that displays text.
  */
-public final class TextButton extends AbstractTextButton {
+public final class TextButton extends AbstractButton {
 
     @Serial
     private static final long serialVersionUID = -7187903535622563653L;
@@ -27,11 +27,11 @@ public final class TextButton extends AbstractTextButton {
 
     /**
      * Constructs a new text button.
-     * @param position the position to use
+     * @param bounds the bounds to use
      * @param message the text message
      */
-    public TextButton(@NotNull Position position, @NotNull Text message) {
-        this(position.getX(), position.getY(), position.getWidth(), position.getHeight(), message);
+    public TextButton(@NotNull ElementBounds bounds, @NotNull Text message) {
+        this(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), message);
     }
 
     /**

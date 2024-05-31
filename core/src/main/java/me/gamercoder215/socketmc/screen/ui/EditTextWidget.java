@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.screen.ui;
 
 import me.gamercoder215.socketmc.util.render.text.Text;
-import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -16,12 +16,12 @@ public final class EditTextWidget extends AbstractTextWidget {
 
     /**
      * Constructs a new edit text widget.
-     * @param position the position
+     * @param bounds the bounds
      * @param message the text message
      * @throws IllegalArgumentException if message is null
      */
-    public EditTextWidget(@NotNull Position position, @NotNull Text message) throws IllegalArgumentException {
-        super(position, message);
+    public EditTextWidget(@NotNull ElementBounds bounds, @NotNull Text message) throws IllegalArgumentException {
+        super(bounds, message);
     }
 
     /**

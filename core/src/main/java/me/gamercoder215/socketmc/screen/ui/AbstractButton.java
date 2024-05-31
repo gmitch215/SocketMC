@@ -1,11 +1,15 @@
 package me.gamercoder215.socketmc.screen.ui;
 
+import me.gamercoder215.socketmc.util.render.text.Text;
+import org.jetbrains.annotations.NotNull;
+
 import java.io.Serial;
 
 /**
  * Represents a Button on the screen.
  */
-public abstract class AbstractButton extends AbstractWidget {
+public abstract class AbstractButton extends AbstractTextWidget {
+
     @Serial
     private static final long serialVersionUID = -6994558317982834270L;
 
@@ -38,10 +42,10 @@ public abstract class AbstractButton extends AbstractWidget {
      * Constructs a new button using the default dimesions.
      * @param x the x-coordinate
      * @param y the y-coordinate
-     * @throws IllegalArgumentException if coordinates are negative
+     * @throws IllegalArgumentException if coordinates are negative, or message is null
      */
-    protected AbstractButton(int x, int y) throws IllegalArgumentException {
-        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    protected AbstractButton(int x, int y, @NotNull Text message) throws IllegalArgumentException {
+        this(x, y, DEFAULT_WIDTH, DEFAULT_HEIGHT, message);
     }
 
     /**
@@ -50,9 +54,22 @@ public abstract class AbstractButton extends AbstractWidget {
      * @param y the y-coordinate
      * @param width the width
      * @param height the height
-     * @throws IllegalArgumentException if coordinates or dimensions are negative
+     * @throws IllegalArgumentException if coordinates or dimensions are negative, or message is null
      */
-    protected AbstractButton(int x, int y, int width, int height) throws IllegalArgumentException {
-        super(x, y, width, height);
+    protected AbstractButton(int x, int y, int width, int height, @NotNull Text message) throws IllegalArgumentException {
+        super(x, y, width, height, message);
+    }
+
+    /**
+     * Constructs a new button.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param width the width
+     * @param height the height
+     * @param messageJSON the text message in JSON format
+     * @throws IllegalArgumentException if coordinates or dimensions are negative, or message is null
+     */
+    protected AbstractButton(int x, int y, int width, int height, @NotNull String messageJSON) throws IllegalArgumentException {
+        super(x, y, width, height, messageJSON);
     }
 }

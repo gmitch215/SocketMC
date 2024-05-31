@@ -1,9 +1,8 @@
 package me.gamercoder215.socketmc.screen.ui;
 
-import me.gamercoder215.socketmc.screen.util.Tooltip;
-import me.gamercoder215.socketmc.util.Position;
-import me.gamercoder215.socketmc.util.render.text.Text;
 import me.gamercoder215.socketmc.screen.Positionable;
+import me.gamercoder215.socketmc.screen.util.Tooltip;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import me.gamercoder215.socketmc.util.SerializableConsumer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +12,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Represents a Widget on the screen. Legal for implementation.
+ * Represents a Widget on the screen.
+ * <strong>This class is not legal for implementation!</strong>
  */
 public abstract class AbstractWidget implements Positionable {
 
@@ -46,11 +46,6 @@ public abstract class AbstractWidget implements Positionable {
     protected int height;
 
     /**
-     * The narration message JSON for this widget.
-     */
-    protected String narrationMessageJSON;
-
-    /**
      * The tooltip for this widget.
      */
     @Nullable
@@ -60,10 +55,10 @@ public abstract class AbstractWidget implements Positionable {
 
     /**
      * Constructs a new widget.
-     * @param position the position
+     * @param bounds the bounds
      */
-    protected AbstractWidget(@NotNull Position position) {
-        this(position.getX(), position.getY(), position.getWidth(), position.getHeight());
+    protected AbstractWidget(@NotNull ElementBounds bounds) {
+        this(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     }
 
     /**
@@ -125,40 +120,12 @@ public abstract class AbstractWidget implements Positionable {
     }
 
     @Override
-    public final String getNarrationMessageJSON() {
-        return narrationMessageJSON;
-    }
-
-    /**
-     * Sets the narration message JSON for this widget.
-     * @param narrationMessageJSON the narration message in JSON format
-     */
-    public void setNarrationMessageJSON(@NotNull String narrationMessageJSON) {
-        this.narrationMessageJSON = narrationMessageJSON;
-    }
-
-    /**
-     * Sets the narration message for this widget.
-     * @param narrationMessage the narration message
-     */
-    public void setNarrationMessage(@NotNull Text narrationMessage) {
-        this.narrationMessageJSON = narrationMessage.toJSON();
-    }
-
-    /**
-     * Gets the tooltip for this widget.
-     * @return Widget Tooltip
-     */
-    @Nullable
-    public Tooltip getTooltip() {
+    public final Tooltip getTooltip() {
         return tooltip;
     }
 
-    /**
-     * Sets the tooltip for this widget.
-     * @param tooltip Widget Tooltip
-     */
-    public void setTooltip(@Nullable Tooltip tooltip) {
+    @Override
+    public final void setTooltip(@Nullable Tooltip tooltip) {
         this.tooltip = tooltip;
     }
 

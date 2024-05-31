@@ -9,7 +9,7 @@ import java.io.Serial;
 /**
  * Represents a button that sends an instruction when clicked.
  */
-public final class SendInstructionButton extends AbstractTextButton {
+public final class SendInstructionButton extends AbstractButton {
 
     @Serial
     private static final long serialVersionUID = 6366512250407097760L;

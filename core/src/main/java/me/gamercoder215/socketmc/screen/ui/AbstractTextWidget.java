@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.screen.ui;
 
 import me.gamercoder215.socketmc.util.render.text.Text;
-import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.Serial;
@@ -18,12 +18,12 @@ public abstract class AbstractTextWidget extends AbstractWidget {
 
     /**
      * Constructs a new text widget.
-     * @param position the position
+     * @param bounds the bounds
      * @param message the text message
      * @throws IllegalArgumentException if message is null
      */
-    public AbstractTextWidget(@NotNull Position position, @NotNull Text message) throws IllegalArgumentException {
-        this(position.getX(), position.getY(), position.getWidth(), position.getHeight(), message);
+    public AbstractTextWidget(@NotNull ElementBounds bounds, @NotNull Text message) throws IllegalArgumentException {
+        this(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), message);
     }
 
     /**
