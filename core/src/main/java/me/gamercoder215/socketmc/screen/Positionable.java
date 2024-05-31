@@ -1,12 +1,16 @@
 package me.gamercoder215.socketmc.screen;
 
-import me.gamercoder215.socketmc.util.Position;
+import me.gamercoder215.socketmc.screen.util.Tooltip;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.io.Serializable;
 
 /**
  * Represents an object that can be positioned and rendered on the screen.
  */
-public interface Positionable extends Narratable {
+public interface Positionable extends Serializable {
 
     /**
      * Gets the x-coordinate of the object.
@@ -57,14 +61,27 @@ public interface Positionable extends Narratable {
     void setHeight(int height);
 
     /**
-     * Sets the position and size of this object to match a {@link Position}.
-     * @param position the position to use
+     * Sets the position and size of this object to match a {@link ElementBounds}.
+     * @param bounds the bounds to use
      */
-    default void setSize(@NotNull Position position) {
-        setX(position.getX());
-        setY(position.getY());
-        setWidth(position.getWidth());
-        setHeight(position.getHeight());
+    default void setSize(@NotNull ElementBounds bounds) {
+        setX(bounds.getX());
+        setY(bounds.getY());
+        setWidth(bounds.getWidth());
+        setHeight(bounds.getHeight());
     }
+
+    /**
+     * Gets the tooltip for this widget.
+     * @return Widget Tooltip
+     */
+    @Nullable
+    Tooltip getTooltip();
+
+    /**
+     * Sets the tooltip for this widget.
+     * @param tooltip Widget Tooltip
+     */
+    void setTooltip(@Nullable Tooltip tooltip);
 
 }
