@@ -104,4 +104,13 @@ public class PlainText extends Text {
     public String toJSON() {
         return "{\"text\":\"" + text + "\",\"color\":\"" + Integer.toHexString(color).substring(2) + "\"}";
     }
+
+    /**
+     * Creates a new text element with empty text content.
+     * @return Empty Text Element
+     */
+    @NotNull
+    public static PlainText empty() {
+        return new PlainText("");
+    }
 }
