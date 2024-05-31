@@ -26,7 +26,7 @@ public enum DrawingMode {
     TRIANGLE_STRIP,
 
     /**
-     * The first element requires three vertices forming the first triangle. Each additional vertex forms a new triangle with the first vertex and the last two vertices.
+     * The first element requires three vertices forming the first triangle. Each additional vertex forms a new triangle with the first vertex and the last vertex.
      */
     TRIANGLE_FAN,
 
