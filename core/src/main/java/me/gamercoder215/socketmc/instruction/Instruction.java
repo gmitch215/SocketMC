@@ -879,23 +879,6 @@ public final class Instruction implements Serializable {
     }
 
     /**
-     * Creates a {@link #PLAY_AUDIO} instruction.
-     * @param file Path to Audio File
-     * @return Play Audio Instruction
-     */
-    @NotNull
-    public static Instruction playAudio(@NotNull File file) {
-        if (file == null) throw new IllegalArgumentException("File cannot be null");
-        if (!file.exists()) throw new IllegalArgumentException("File does not exist");
-
-        try {
-            return playAudio(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Failed to read audio file", e);
-        }
-    }
-
-    /**
      * Creates a {@link #DRAW_BUFFER} instruction.
      * @param buffer Render Buffer
      * @param duration Time Duration
@@ -921,6 +904,23 @@ public final class Instruction implements Serializable {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_BUFFER, List.of(buffer, millis));
+    }
+
+    /**
+     * Creates a {@link #PLAY_AUDIO} instruction.
+     * @param file Path to Audio File
+     * @return Play Audio Instruction
+     */
+    @NotNull
+    public static Instruction playAudio(@NotNull File file) {
+        if (file == null) throw new IllegalArgumentException("File cannot be null");
+        if (!file.exists()) throw new IllegalArgumentException("File does not exist");
+
+        try {
+            return playAudio(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Failed to read audio file", e);
+        }
     }
 
     /**
