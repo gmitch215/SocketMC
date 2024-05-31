@@ -12,6 +12,13 @@ public class AsyncPlayerEditTextEvent extends AsyncPlayerElementEvent {
 
     private final String text;
 
+    /**
+     * Constructs a new AsyncPlayerEditTextEvent.
+     * @param element The element that the player edited.
+     * @param text The text that the player entered.
+     * @param screen The screen that the element is on.
+     * @param player The player that edited the element.
+     */
     public AsyncPlayerEditTextEvent(@NotNull EditTextWidget element, @NotNull String text, @NotNull AbstractScreen screen, @NotNull SocketPlayer player) {
         super(element, screen, player);
         this.text = text;
