@@ -66,13 +66,20 @@ You can download them from the following locations:
     </repositories>
     
     <dependencies>
+        <!-- Include Core Module -->
+        <dependency>
+          <groupId>me.gamercoder215.socketmc</groupId>
+          <artifactId>socketmc-core</artifactId>
+          <version>[VERSION]</version>
+        </dependency>
+        
         <dependency>
             <groupId>me.gamercoder215.socketmc</groupId>
             <artifactId>socketmc-spigot</artifactId>
             <version>[VERSION]</version>
         </dependency>
         
-        <!-- Alternatively, use the Paper Build -->
+        <!-- Alternatively, use the Paper Build instead of Spigot -->
         <dependency>
             <groupId>me.gamercoder215.socketmc</groupId>
             <artifactId>socketmc-paper</artifactId>
@@ -93,6 +100,8 @@ repositories {
 }
 
 dependencies {
+    // Include Core Module
+    implementation 'me.gamercoder215.socketmc:socketmc-core:[VERSION]'
     implementation 'me.gamercoder215.socketmc:socketmc-spigot:[VERSION]'
     
     // Alternatively, use the Paper Build
@@ -110,6 +119,8 @@ repositories {
 }
 
 dependencies {
+    // Include Core Module
+    implementation("me.gamercoder215.socketmc:socketmc-core:[VERSION]")
     implementation("me.gamercoder215.socketmc:socketmc-spigot:[VERSION]")
     
     // Alternatively, use the Paper Build
