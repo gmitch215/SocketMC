@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.*
 
 plugins {
@@ -141,7 +142,15 @@ subprojects {
         }
 
         compileKotlin {
-            kotlinOptions.jvmTarget = jdk.toString()
+            compilerOptions {
+                jvmTarget.set(JvmTarget.fromTarget(jdk.toString()))
+            }
+        }
+
+        javadoc {
+            options {
+                showFromProtected()
+            }
         }
 
         jacocoTestReport {
@@ -168,8 +177,9 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = jdk
-        targetCompatibility = jdk
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(jdk.toString()))
+        }
     }
 
     dependencies {
