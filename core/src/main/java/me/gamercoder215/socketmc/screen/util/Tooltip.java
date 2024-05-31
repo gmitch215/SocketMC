@@ -25,8 +25,9 @@ public final class Tooltip implements Narratable {
     /**
      * Constructs a new Tooltip.
      * @param tooltip Tooltip Message
+     * @throws IllegalArgumentException if tooltip is null
      */
-    public Tooltip(@NotNull Text tooltip) {
+    public Tooltip(@NotNull Text tooltip) throws IllegalArgumentException {
         this(tooltip, tooltip);
     }
 
@@ -34,10 +35,28 @@ public final class Tooltip implements Narratable {
      * Constructs a new Tooltip.
      * @param tooltip Tooltip Message
      * @param narratableMessage Narration Message
+     * @throws IllegalArgumentException if tooltip or narratableMessage is null
      */
-    public Tooltip(@NotNull Text tooltip, @NotNull Text narratableMessage) {
+    public Tooltip(@NotNull Text tooltip, @NotNull Text narratableMessage) throws IllegalArgumentException {
+        if (tooltip == null) throw new IllegalArgumentException("tooltip cannot be null");
+        if (narratableMessage == null) throw new IllegalArgumentException("narratableMessage cannot be null");
+
         this.tooltipJSON = tooltip.toJSON();
         this.narrationMessageJSON = narratableMessage.toJSON();
+    }
+
+    /**
+     * Constructs a new Tooltip.
+     * @param tooltipJSON Tooltip Message JSON
+     * @param narrationMessageJSON Narration Message JSON
+     * @throws IllegalArgumentException if tooltipJSON or narrationMessageJSON is null
+     */
+    public Tooltip(@NotNull String tooltipJSON, @NotNull String narrationMessageJSON) throws IllegalArgumentException {
+        if (tooltipJSON == null) throw new IllegalArgumentException("tooltipJSON cannot be null");
+        if (narrationMessageJSON == null) throw new IllegalArgumentException("narrationMessageJSON cannot be null");
+
+        this.tooltipJSON = tooltipJSON;
+        this.narrationMessageJSON = narrationMessageJSON;
     }
 
     @NotNull

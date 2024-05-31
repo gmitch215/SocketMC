@@ -8,7 +8,7 @@ import java.io.Serial;
 
 /**
  * <p>Represents a Checkbox Button.</p>
- * <p>{@link #getWidth()} and {@link #getHeight()} are determined by the client, so their values are set to {@code -1}.</p>
+ * <p>{@link #getWidth()} and {@link #getHeight()} are determined by the client, so their values are set to {@code -1} and are ignored.</p>
  */
 public final class CheckboxButton extends AbstractButton {
 
@@ -44,5 +44,16 @@ public final class CheckboxButton extends AbstractButton {
      */
     public CheckboxButton(int x, int y, @NotNull Text message) throws IllegalArgumentException {
         super(x, y, -1, -1, message);
+    }
+
+    /**
+     * Constructs a new checkbox.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param messageJSON the text message in JSON format
+     * @throws IllegalArgumentException if coordinates are negative, or message is null
+     */
+    public CheckboxButton(int x, int y, @NotNull String messageJSON) throws IllegalArgumentException {
+        super(x, y, -1, -1, messageJSON);
     }
 }

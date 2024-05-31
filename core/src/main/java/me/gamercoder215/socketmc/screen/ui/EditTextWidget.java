@@ -36,4 +36,17 @@ public final class EditTextWidget extends AbstractTextWidget {
     public EditTextWidget(int x, int y, int width, int height, @NotNull Text message) throws IllegalArgumentException {
         super(x, y, width, height, message);
     }
+
+    /**
+     * Constructs a new edit text widget.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param width the width
+     * @param height the height
+     * @param messageJSON the text message in JSON format
+     * @throws IllegalArgumentException if message is null
+     */
+    public EditTextWidget(int x, int y, int width, int height, @NotNull String messageJSON) throws IllegalArgumentException {
+        super(x, y, width, height, messageJSON);
+    }
 }

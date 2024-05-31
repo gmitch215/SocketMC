@@ -49,6 +49,23 @@ public final class SendInstructionButton extends AbstractButton {
     }
 
     /**
+     * Constructs a new button.
+     * @param x the x-coordinate
+     * @param y the y-coordinate
+     * @param width the width
+     * @param height the height
+     * @param messageJSON the text message in JSON format
+     * @param instruction the instruction to send
+     * @throws IllegalArgumentException if coordinates or dimensions are negative, or message/instruction is null
+     */
+    public SendInstructionButton(int x, int y, int width, int height, @NotNull String messageJSON, @NotNull Instruction instruction) throws IllegalArgumentException {
+        super(x, y, width, height, messageJSON);
+
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
+        this.instruction = instruction;
+    }
+
+    /**
      * Gets the instruction to send when this button is clicked.
      * @return Instruction
      */
