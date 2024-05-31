@@ -7,7 +7,7 @@ import java.util.Objects;
 /**
  * Utility class for sizeable and placeable objects.
  */
-public final class Position implements Serializable {
+public final class ElementBounds implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1168470204360680611L;
@@ -15,23 +15,23 @@ public final class Position implements Serializable {
     private int x, y, width, height;
 
     /**
-     * Constructs a new sizeable object at (0, 0).
+     * Constructs new bounds at (0, 0).
      * @param width the width
      * @param height the height
      */
-    public Position(int width, int height) {
+    public ElementBounds(int width, int height) {
         this(0, 0, width, height);
     }
 
     /**
-     * Constructs a new sizeable object.
+     * Constructs new bounds.
      * @param x the x-coordinate
      * @param y the y-coordinate
      * @param width the width
      * @param height the height
      * @throws IllegalArgumentException if coordinates or dimensions are negative
      */
-    public Position(int x, int y, int width, int height) throws IllegalArgumentException {
+    public ElementBounds(int x, int y, int width, int height) throws IllegalArgumentException {
         if (width < 0 || height < 0) throw new IllegalArgumentException("Width and height must be non-negative");
         if (x < 0 || y < 0) throw new IllegalArgumentException("X and Y coordinates must be non-negative");
 
@@ -42,7 +42,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the x-coordinate of the object.
+     * Gets the x-coordinate of the bounds.
      * @return the x-coordinate
      */
     public int getX() {
@@ -50,7 +50,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Sets the x-coordinate of the object.
+     * Sets the x-coordinate of the bounds.
      * @param x the x-coordinate
      */
     public void setX(int x) {
@@ -59,7 +59,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the y-coordinate of the object.
+     * Gets the y-coordinate of the bounds.
      * @return the y-coordinate
      */
     public int getY() {
@@ -67,7 +67,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Sets the y-coordinate of the object.
+     * Sets the y-coordinate of the bounds.
      * @param y the y-coordinate
      */
     public void setY(int y) {
@@ -86,7 +86,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the width of the object.
+     * Gets the width of the bounds.
      * @return the width
      */
     public int getWidth() {
@@ -94,7 +94,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Sets the width of the object.
+     * Sets the width of the bounds.
      * @param width the width
      */
     public void setWidth(int width) {
@@ -103,7 +103,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the height of the object.
+     * Gets the height of the bounds.
      * @return the height
      */
     public int getHeight() {
@@ -111,7 +111,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Sets the height of the object.
+     * Sets the height of the bounds.
      * @param height the height
      */
     public void setHeight(int height) {
@@ -147,7 +147,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the x-coordinate of the center of the object.
+     * Gets the x-coordinate of the center of the bounds.
      * @return the x-coordinate of the center
      */
     public int getCenterX() {
@@ -155,7 +155,7 @@ public final class Position implements Serializable {
     }
 
     /**
-     * Gets the y-coordinate of the center of the object.
+     * Gets the y-coordinate of the center of the bounds.
      * @return the y-coordinate of the center
      */
     public int getCenterY() {
@@ -165,8 +165,8 @@ public final class Position implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Position position)) return false;
-        return x == position.x && y == position.y && width == position.width && height == position.height;
+        if (!(o instanceof ElementBounds bounds)) return false;
+        return x == bounds.x && y == bounds.y && width == bounds.width && height == bounds.height;
     }
 
     @Override
@@ -176,7 +176,7 @@ public final class Position implements Serializable {
 
     @Override
     public String toString() {
-        return "Sizeable{" +
+        return "ElementBounds{" +
                 "x=" + x +
                 ", y=" + y +
                 ", width=" + width +
