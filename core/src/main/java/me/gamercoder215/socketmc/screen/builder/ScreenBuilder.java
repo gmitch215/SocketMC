@@ -1,12 +1,11 @@
 package me.gamercoder215.socketmc.screen.builder;
 
-import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.screen.CustomScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
 import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.TextButton;
-import me.gamercoder215.socketmc.screen.ui.TextWidget;
+import me.gamercoder215.socketmc.screen.ui.FocusedTextWidget;
 import me.gamercoder215.socketmc.util.render.text.PlainText;
 import me.gamercoder215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -59,6 +58,20 @@ public final class ScreenBuilder {
     @NotNull
     public ScreenBuilder element(@NotNull Positionable element) {
         screen.addChild(element);
+        return this;
+    }
+
+    /**
+     * Adds a new element to the screen.
+     * @param widget Constructor for a {@link FocusedTextWidget}
+     * @return this class, for chaining
+     */
+    @NotNull
+    public ScreenBuilder focusedTextWidget(@NotNull Consumer<FocusedTextWidgetBuilder> widget) {
+        FocusedTextWidgetBuilder builder = FocusedTextWidgetBuilder.builder();
+        widget.accept(builder);
+
+        screen.addChild(builder.build());
         return this;
     }
 
@@ -139,7 +152,7 @@ public final class ScreenBuilder {
      */
     @NotNull
     public static ScreenBuilder builder() {
-        return new ScreenBuilder(new CustomScreen(new PlainText("")));
+        return new ScreenBuilder(new CustomScreen(PlainText.empty()));
     }
 
     /**
