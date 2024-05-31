@@ -1,6 +1,7 @@
 package me.gamercoder215.socketmc.screen.builder;
 
 import me.gamercoder215.socketmc.screen.ui.AbstractTextWidget;
+import me.gamercoder215.socketmc.screen.ui.AbstractWidget;
 import me.gamercoder215.socketmc.util.render.text.PlainText;
 import me.gamercoder215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
@@ -11,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
  * @param <T> The type of widget to build.
  */
 @SuppressWarnings("unchecked")
-public abstract class WidgetWithTextBuilder<B extends WidgetBuilder<B, T>, T extends AbstractTextWidget> extends WidgetBuilder<B, T> {
+public abstract class WidgetWithTextBuilder<B extends WidgetBuilder<B, T>, T extends AbstractWidget> extends WidgetBuilder<B, T> {
 
     String messageJSON;
 
