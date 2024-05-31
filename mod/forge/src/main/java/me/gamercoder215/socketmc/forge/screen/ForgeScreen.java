@@ -18,7 +18,6 @@ public final class ForgeScreen extends Screen {
 
     public ForgeScreen(CustomScreen handle, Screen previousScreen) {
         super(ForgeUtil.fromJson(handle.getTitleJSON()));
-
         this.handle = handle;
         this.previousScreen = previousScreen;
     }
@@ -32,7 +31,7 @@ public final class ForgeScreen extends Screen {
     public void init() {
         List<Positionable> children = handle.getChildren();
         for (Positionable child: children)
-            addRenderableWidget(ForgeScreenUtil.convert(child));
+            addRenderableWidget(ForgeScreenUtil.toMinecraft(child));
     }
 
     @Override

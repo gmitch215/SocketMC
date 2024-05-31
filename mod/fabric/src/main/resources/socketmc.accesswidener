@@ -2,3 +2,22 @@ accessWidener v2 named
 
 # Connection
 accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
+
+# Tooltip
+accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/components/Tooltip narration Lnet/minecraft/network/chat/Component;
+
+# ImageWidget$Sprite
+accessible class net/minecraft/client/gui/components/ImageWidget$Sprite
+accessible field net/minecraft/client/gui/components/ImageWidget$Sprite sprite Lnet/minecraft/resources/ResourceLocation;
+
+# ImageWidget$Texture
+accessible class net/minecraft/client/gui/components/ImageWidget$Texture
+accessible field net/minecraft/client/gui/components/ImageWidget$Texture texture Lnet/minecraft/resources/ResourceLocation;
+
+# FocusableTextWidget
+accessible field net/minecraft/client/gui/components/FocusableTextWidget alwaysShowBorder Z
+accessible field net/minecraft/client/gui/components/FocusableTextWidget padding I
+
+# ImageButton
+accessible field net/minecraft/client/gui/components/ImageButton sprites Lnet/minecraft/client/gui/components/WidgetSprites;
