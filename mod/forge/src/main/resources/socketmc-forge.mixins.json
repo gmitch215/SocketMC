@@ -8,6 +8,7 @@
     "GuiMixin",
 
     "events.PlayerPressKeyEvent",
-    "events.PlayerMouseInputEvent"
+    "events.PlayerMouseInputEvent",
+    "events.PlayerChangeScreenEvent"
   ]
 }

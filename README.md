@@ -47,6 +47,8 @@ You can download them from the following locations:
 
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/gmitch215/SocketMC)
 [![Static Badge](https://img.shields.io/badge/documentation-javadoc-yellow)](https://socketmc.gmitch215.xyz/)
+[![Static Badge](https://img.shields.io/badge/wiki-github-dgreen)](https://github.com/gmitch215/SocketMC/wiki)
+[![Static Badge](https://img.shields.io/badge/detailed_wiki-gitbook-dgreen)](https://docs.gmitch215.xyz/socketmc/)
 
 <details>
     <summary>Maven</summary>
@@ -64,13 +66,20 @@ You can download them from the following locations:
     </repositories>
     
     <dependencies>
+        <!-- Include Core Module -->
+        <dependency>
+          <groupId>me.gamercoder215.socketmc</groupId>
+          <artifactId>socketmc-core</artifactId>
+          <version>[VERSION]</version>
+        </dependency>
+        
         <dependency>
             <groupId>me.gamercoder215.socketmc</groupId>
             <artifactId>socketmc-spigot</artifactId>
             <version>[VERSION]</version>
         </dependency>
         
-        <!-- Alternatively, use the Paper Build -->
+        <!-- Alternatively, use the Paper Build instead of Spigot -->
         <dependency>
             <groupId>me.gamercoder215.socketmc</groupId>
             <artifactId>socketmc-paper</artifactId>
@@ -91,6 +100,8 @@ repositories {
 }
 
 dependencies {
+    // Include Core Module
+    implementation 'me.gamercoder215.socketmc:socketmc-core:[VERSION]'
     implementation 'me.gamercoder215.socketmc:socketmc-spigot:[VERSION]'
     
     // Alternatively, use the Paper Build
@@ -108,6 +119,8 @@ repositories {
 }
 
 dependencies {
+    // Include Core Module
+    implementation("me.gamercoder215.socketmc:socketmc-core:[VERSION]")
     implementation("me.gamercoder215.socketmc:socketmc-spigot:[VERSION]")
     
     // Alternatively, use the Paper Build

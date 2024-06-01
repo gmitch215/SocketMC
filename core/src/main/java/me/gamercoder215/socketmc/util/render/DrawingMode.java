@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.instruction.util.render;
+package me.gamercoder215.socketmc.util.render;
 
 /**
  * Represents the drawing mode for a shape.
@@ -26,7 +26,7 @@ public enum DrawingMode {
     TRIANGLE_STRIP,
 
     /**
-     * The first element requires three vertices forming the first triangle. Each additional vertex forms a new triangle with the first vertex and the last two vertices.
+     * The first element requires three vertices forming the first triangle. Each additional vertex forms a new triangle with the first vertex and the last vertex.
      */
     TRIANGLE_FAN,
 

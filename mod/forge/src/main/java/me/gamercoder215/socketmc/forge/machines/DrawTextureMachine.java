@@ -3,7 +3,7 @@ package me.gamercoder215.socketmc.forge.machines;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
-import me.gamercoder215.socketmc.instruction.util.Identifier;
+import me.gamercoder215.socketmc.util.Identifier;
 import me.gamercoder215.socketmc.util.LifecycleMap;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;

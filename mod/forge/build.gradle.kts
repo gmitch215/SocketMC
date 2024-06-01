@@ -15,11 +15,13 @@ dependencies {
 
     minecraft("net.minecraftforge:forge:$minecraft-50.0.13")
 
-    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
+    annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 }
 
 minecraft {
     mappings("parchment", "$parchment-$minecraft")
+
+    accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
 }
 
 mixin {

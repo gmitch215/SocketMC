@@ -1,7 +1,7 @@
 package me.gamercoder215.socketmc.instruction.builder;
 
 import me.gamercoder215.socketmc.instruction.Instruction;
-import me.gamercoder215.socketmc.instruction.util.Identifier;
+import me.gamercoder215.socketmc.util.Identifier;
 import org.jetbrains.annotations.NotNull;
 
 /**

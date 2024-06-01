@@ -33,7 +33,7 @@ dependencies {
         modImplementation(fabricApi.module(it, "$fabric+$minecraft"))
     }
 
-    annotationProcessor("org.spongepowered:mixin:0.8.5:processor")
+    annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 }
 
 loom {

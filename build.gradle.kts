@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.*
 
 plugins {
@@ -48,7 +49,7 @@ tasks {
 
 allprojects {
     val mc = "1.20.6"
-    val pr = "0.1.1"
+    val pr = "0.1.2"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
@@ -141,7 +142,15 @@ subprojects {
         }
 
         compileKotlin {
-            kotlinOptions.jvmTarget = jdk.toString()
+            compilerOptions {
+                jvmTarget.set(JvmTarget.fromTarget(jdk.toString()))
+            }
+        }
+
+        javadoc {
+            options {
+                showFromProtected()
+            }
         }
 
         jacocoTestReport {
@@ -168,8 +177,9 @@ subprojects {
     }
 
     java {
-        sourceCompatibility = jdk
-        targetCompatibility = jdk
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(jdk.toString()))
+        }
     }
 
     dependencies {

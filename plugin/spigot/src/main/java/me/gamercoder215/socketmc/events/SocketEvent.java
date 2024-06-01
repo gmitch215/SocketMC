@@ -54,4 +54,9 @@ public abstract class SocketEvent extends Event {
     public static HandlerList getHandlerList() {
         return HANDLERS;
     }
+
+    @Override
+    public String toString() {
+        return getEventName() + "{" + getPlayer().getName() + "}";
+    }
 }

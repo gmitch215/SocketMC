@@ -1,8 +1,9 @@
 package me.gamercoder215.socketmc.instruction;
 
-import me.gamercoder215.socketmc.instruction.util.Identifier;
-import me.gamercoder215.socketmc.instruction.util.Text;
-import me.gamercoder215.socketmc.instruction.util.render.RenderBuffer;
+import me.gamercoder215.socketmc.screen.AbstractScreen;
+import me.gamercoder215.socketmc.util.Identifier;
+import me.gamercoder215.socketmc.util.render.text.Text;
+import me.gamercoder215.socketmc.util.render.RenderBuffer;
 import me.gamercoder215.socketmc.log.AuditLog;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -75,6 +76,16 @@ public final class Instruction implements Serializable {
      * Instruction to open an empty book and quill GUI on the client's screen, allowing for long text input.
      */
     public static final String OPEN_BOOK_AND_QUILL = "open_book_and_quill";
+
+    /**
+     * Instruction to open a GUI screen on the client's screen.
+     */
+    public static final String OPEN_SCREEN = "open_screen";
+
+    /**
+     * Instruction to close the current GUI screen on the client's screen.
+     */
+    public static final String CLOSE_SCREEN = "close_screen";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -868,23 +879,6 @@ public final class Instruction implements Serializable {
     }
 
     /**
-     * Creates a {@link #PLAY_AUDIO} instruction.
-     * @param file Path to Audio File
-     * @return Play Audio Instruction
-     */
-    @NotNull
-    public static Instruction playAudio(@NotNull File file) {
-        if (file == null) throw new IllegalArgumentException("File cannot be null");
-        if (!file.exists()) throw new IllegalArgumentException("File does not exist");
-
-        try {
-            return playAudio(new FileInputStream(file));
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException("Failed to read audio file", e);
-        }
-    }
-
-    /**
      * Creates a {@link #DRAW_BUFFER} instruction.
      * @param buffer Render Buffer
      * @param duration Time Duration
@@ -910,6 +904,23 @@ public final class Instruction implements Serializable {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_BUFFER, List.of(buffer, millis));
+    }
+
+    /**
+     * Creates a {@link #PLAY_AUDIO} instruction.
+     * @param file Path to Audio File
+     * @return Play Audio Instruction
+     */
+    @NotNull
+    public static Instruction playAudio(@NotNull File file) {
+        if (file == null) throw new IllegalArgumentException("File cannot be null");
+        if (!file.exists()) throw new IllegalArgumentException("File does not exist");
+
+        try {
+            return playAudio(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("Failed to read audio file", e);
+        }
     }
 
     /**
@@ -1082,6 +1093,27 @@ public final class Instruction implements Serializable {
     @NotNull
     public static Instruction openBookAndQuill() {
         return new Instruction(OPEN_BOOK_AND_QUILL, List.of());
+    }
+
+    /**
+     * Creates a {@link #OPEN_SCREEN} instruction.
+     * @param screen Screen to Open
+     * @return Open Screen Instruction
+     */
+    @NotNull
+    public static Instruction openScreen(@NotNull AbstractScreen screen) {
+        if (screen == null) throw new IllegalArgumentException("Screen cannot be null");
+
+        return new Instruction(OPEN_SCREEN, List.of(screen));
+    }
+
+    /**
+     * Creates a {@link #CLOSE_SCREEN} instruction.
+     * @return Close Screen Instruction
+     */
+    @NotNull
+    public static Instruction closeScreen() {
+        return new Instruction(CLOSE_SCREEN, List.of());
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

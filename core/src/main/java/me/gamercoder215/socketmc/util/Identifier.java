@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.instruction.util;
+package me.gamercoder215.socketmc.util;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,7 +7,10 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Represents a Namespaced Identifier.
+ * <p>Represents a Namespaced Identifier.</p>
+ * <p>Identifiers are often used to locate files on the client, used for displaying information. For example:</p>
+ * <pre>{@code new Identifier("textures/gui/title/realms.png")}</pre>
+ * <p>This Identifier links to {@code "textures/gui/title/realms.png"}, which is the Realms Logo.</p>
  */
 public final class Identifier implements Serializable {
 

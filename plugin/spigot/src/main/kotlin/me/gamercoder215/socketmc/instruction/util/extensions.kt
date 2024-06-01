@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction.util
 
+import me.gamercoder215.socketmc.util.Identifier
 import org.bukkit.NamespacedKey
 
 // Identifier
@@ -9,4 +10,5 @@ import org.bukkit.NamespacedKey
  * @param key The [NamespacedKey] to create the [Identifier] from.
  * @return The created [Identifier].
  */
-fun Identifier(key: NamespacedKey): Identifier = Identifier(key.namespace, key.key)
+fun Identifier(key: NamespacedKey): Identifier =
+    Identifier(key.namespace, key.key)

@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.instruction.util;
+package me.gamercoder215.socketmc.util.render.text;
 
 /**
  * Represents a text element to be displayed on the client's screen.
@@ -10,7 +10,10 @@ public abstract class Text {
      */
     public static final int FONT_HEIGHT = 9;
 
-    private boolean dropShadow;
+    /**
+     * Whether this text element has a drop shadow.
+     */
+    protected boolean dropShadow;
 
     /**
      * Constructs a new text element.

@@ -5,7 +5,8 @@ import me.gamercoder215.socketmc.spigot.SocketPlayer;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an input event that can be modified using a keyboard modifier (Shift, Ctrl, Caps Lock, etc.)
+ * <p>Represents an input event that can be modified using a keyboard modifier (Shift, Ctrl, Caps Lock, etc.).</p>
+ * <p>Input events hook directly into the internal KeyboardHandler and are therefore called before any other click or input-related events.</p>
  */
 public abstract class AsyncModifiedInputEvent extends SocketEvent {
 

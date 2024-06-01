@@ -1,6 +1,7 @@
 package me.gamercoder215.socketmc.fabric.machines;
 
 import com.mojang.blaze3d.vertex.Tesselator;
+import me.gamercoder215.socketmc.fabric.FabricUtil;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
@@ -31,7 +32,7 @@ public final class DrawTextMachine implements Machine {
     public void onInstruction(@NotNull Instruction instruction) {
         int x = instruction.parameter(0, Integer.class);
         int y = instruction.parameter(1, Integer.class);
-        Component c = Component.Serializer.fromJson(instruction.parameter(2, String.class), minecraft.level.registryAccess());
+        Component c = FabricUtil.fromJson(instruction.parameter(2, String.class));
         int color = instruction.parameter(3, Integer.class);
         boolean dropShadow = instruction.parameter(4, Boolean.class);
         long millis = instruction.parameter(5, Long.class);
