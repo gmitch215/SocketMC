@@ -1,6 +1,7 @@
 package me.gamercoder215.socketmc.screen.builder;
 
 import me.gamercoder215.socketmc.screen.ui.AbstractWidget;
+import me.gamercoder215.socketmc.util.ElementBounds;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -44,6 +45,23 @@ public abstract class WidgetBuilder<B extends WidgetBuilder<B, T>, T extends Abs
     }
 
     /**
+     * Sets the position of the widget.
+     * @param x The x position.
+     * @param y The y position.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if x or y is negative
+     */
+    @NotNull
+    public B pos(int x, int y) throws IllegalArgumentException {
+        if (x < 0) throw new IllegalArgumentException("x cannot be negative");
+        if (y < 0) throw new IllegalArgumentException("y cannot be negative");
+
+        this.x = x;
+        this.y = y;
+        return (B) this;
+    }
+
+    /**
      * Sets the width of the widget.
      * @param width The width.
      * @return this class, for chaining
@@ -69,6 +87,49 @@ public abstract class WidgetBuilder<B extends WidgetBuilder<B, T>, T extends Abs
 
         this.height = height;
         return (B) this;
+    }
+
+    /**
+     * Sets the size of the widget.
+     * @param width The width.
+     * @param height The height.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if width or height is negative
+     */
+    @NotNull
+    public B size(int width, int height) throws IllegalArgumentException {
+        if (width < 0) throw new IllegalArgumentException("width cannot be negative");
+        if (height < 0) throw new IllegalArgumentException("height cannot be negative");
+
+        this.width = width;
+        this.height = height;
+        return (B) this;
+    }
+
+    /**
+     * Sets the bounds of the widget.
+     * @param x The x position.
+     * @param y The y position.
+     * @param width The width.
+     * @param height The height.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if x, y, width, or height is negative
+     */
+    @NotNull
+    public B bounds(int x, int y, int width, int height) throws IllegalArgumentException {
+        return pos(x, y).size(width, height);
+    }
+
+    /**
+     * Sets the bounds of the widget.
+     * @param bounds The bounds.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if bounds is null
+     */
+    @NotNull
+    public B bounds(@NotNull ElementBounds bounds) throws IllegalArgumentException {
+        if (bounds == null) throw new IllegalArgumentException("bounds cannot be null");
+        return bounds(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
     }
 
     /**
