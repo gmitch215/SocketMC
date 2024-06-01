@@ -19,12 +19,15 @@ public class PlayerChangeScreenEvent {
 
     @Inject(method = "setScreen", at = @At("HEAD"))
     public void onScreenChange(Screen screen, CallbackInfo ci) {
-        AbstractScreen oldScreen = FabricScreenUtil.fromMinecraft(minecraft.screen);
-        AbstractScreen newScreen = FabricScreenUtil.fromMinecraft(screen);
+        if (!FabricSocketMC.eventsEnabled) return;
 
-        if (oldScreen != null && newScreen != null) {
-             FabricSocketMC.sendEvent(4, Map.of("old", oldScreen, "new", newScreen));
-        }
+        AbstractScreen oldScreen = FabricScreenUtil.fromMinecraft(minecraft.screen);
+        if (oldScreen == null) return;
+
+        AbstractScreen newScreen = FabricScreenUtil.fromMinecraft(screen);
+        if (newScreen == null) return;
+
+        FabricSocketMC.sendEvent(4, Map.of("old", oldScreen, "new", newScreen));
     }
 
 }

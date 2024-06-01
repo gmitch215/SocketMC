@@ -19,6 +19,8 @@ public class PlayerChangeScreenEvent {
 
     @Inject(method = "setScreen", at = @At("HEAD"))
     public void onScreenChange(Screen screen, CallbackInfo ci) {
+        if (!ForgeSocketMC.eventsEnabled) return;
+
         AbstractScreen oldScreen = ForgeScreenUtil.fromMinecraft(minecraft.screen);
         AbstractScreen newScreen = ForgeScreenUtil.fromMinecraft(screen);
 
