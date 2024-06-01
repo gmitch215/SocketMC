@@ -8,7 +8,10 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class TextButtonBuilder extends WidgetWithTextBuilder<TextButtonBuilder, TextButton> {
 
-    TextButtonBuilder() {}
+    TextButtonBuilder() {
+        width = TextButton.DEFAULT_WIDTH;
+        height = TextButton.DEFAULT_HEIGHT;
+    }
 
     @Override
     public TextButton build() {

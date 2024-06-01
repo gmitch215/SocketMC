@@ -13,7 +13,10 @@ public final class ImageButtonBuilder extends WidgetBuilder<ImageButtonBuilder, 
     Sprite sprite;
     String messageJSON;
 
-    ImageButtonBuilder() {}
+    ImageButtonBuilder() {
+        width = ImageButton.DEFAULT_WIDTH;
+        height = ImageButton.DEFAULT_HEIGHT;
+    }
 
     /**
      * Sets the sprite for the button.
