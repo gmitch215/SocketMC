@@ -12,7 +12,6 @@ import me.gamercoder215.socketmc.events.screen.AsyncPlayerEditTextEvent;
 import me.gamercoder215.socketmc.events.screen.AsyncPlayerToggleCheckboxEvent;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.ui.AbstractButton;
-import me.gamercoder215.socketmc.screen.ui.AbstractWidget;
 import me.gamercoder215.socketmc.screen.ui.CheckboxButton;
 import me.gamercoder215.socketmc.screen.ui.EditTextWidget;
 import me.gamercoder215.socketmc.util.input.Action;
