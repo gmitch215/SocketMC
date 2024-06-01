@@ -88,4 +88,9 @@ public final class DefaultScreen extends AbstractScreen {
 
         return screens;
     }
+
+    @Override
+    public String toString() {
+        return "DefaultScreen{'" + identifier + "'}";
+    }
 }

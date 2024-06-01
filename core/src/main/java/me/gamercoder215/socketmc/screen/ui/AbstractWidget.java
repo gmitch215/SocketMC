@@ -144,4 +144,9 @@ public abstract class AbstractWidget implements Positionable {
     public void clearListeners() {
         onClickListeners.clear();
     }
+
+    @Override
+    public final String toString() {
+        return getClass().getSimpleName() + "@ [" + x + ", " + y + "] (" + width + "px * " + height + "px)";
+    }
 }

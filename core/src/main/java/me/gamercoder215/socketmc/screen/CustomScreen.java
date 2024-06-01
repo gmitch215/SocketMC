@@ -109,4 +109,13 @@ public final class CustomScreen extends AbstractScreen {
     public List<Positionable> getChildren() {
         return List.copyOf(children);
     }
+
+    @Override
+    public String toString() {
+        return "CustomScreen{" +
+                "title='" + titleJSON + '\'' +
+                ", narrationMessage='" + narrationMessageJSON + '\'' +
+                ", children=" + children +
+                '}';
+    }
 }
