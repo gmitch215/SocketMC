@@ -102,7 +102,7 @@ public class PlainText extends Text {
 
     @Override
     public String toJSON() {
-        return "{\"text\":\"" + text + "\",\"color\":\"" + Integer.toHexString(color).substring(2) + "\"}";
+        return "{\"text\":\"" + text + "\",\"color\":\"#" + Integer.toHexString(color).substring(2) + "\"}";
     }
 
     /**
