@@ -16,6 +16,7 @@ import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -26,7 +27,9 @@ public final class FabricScreenUtil {
 
     private FabricScreenUtil() {}
 
-    public static AbstractScreen fromMinecraft(@NotNull Screen screen) {
+    public static AbstractScreen fromMinecraft(Screen screen) {
+        if (screen == null) return null;
+
         AbstractScreen s0 = findDefault(screen);
         if (s0 == null) {
             if (screen instanceof FabricScreen fabric) s0 = fabric.handle;
@@ -35,7 +38,9 @@ public final class FabricScreenUtil {
         return s0;
     }
 
-    public static DefaultScreen findDefault(@NotNull Screen screen) {
+    public static DefaultScreen findDefault(Screen screen) {
+        if (screen == null) return null;
+
         return switch (screen) {
             case TitleScreen ignored -> DefaultScreen.TITLE;
             case PauseScreen ignored -> DefaultScreen.PAUSE;
@@ -49,20 +54,28 @@ public final class FabricScreenUtil {
 
     static final Button.OnPress BUTTON_PRESS_EVENT = b -> {
         AbstractScreen s0 = fromMinecraft(minecraft.screen);
+        if (s0 == null) return;
+
         FabricSocketMC.sendEvent(5, Map.of("screen", s0, "button", fromMinecraft(b)));
     };
 
     static final Checkbox.OnValueChange CHECKBOX_CHANGE_EVENT = (b, state) -> {
         AbstractScreen s0 = fromMinecraft(minecraft.screen);
+        if (s0 == null) return;
+
         FabricSocketMC.sendEvent(6, Map.of("screen", s0, "button", fromMinecraft(b), "state", state));
     };
 
     static final BiConsumer<EditBox, String> EDIT_BOX_EVENT = (w, s) -> {
         AbstractScreen s0 = fromMinecraft(minecraft.screen);
+        if (s0 == null) return;
+
         FabricSocketMC.sendEvent(7, Map.of("screen", s0, "widget", fromMinecraft(w), "text", s));
     };
 
-    public static AbstractWidget toMinecraft(@NotNull Positionable renderable) {
+    public static AbstractWidget toMinecraft(Positionable renderable) {
+        if (renderable == null) return null;
+
         int x = renderable.getX();
         int y = renderable.getY();
         int width = renderable.getWidth();
@@ -115,7 +128,9 @@ public final class FabricScreenUtil {
         return w0;
     }
 
-    public static Positionable fromMinecraft(@NotNull AbstractWidget renderable) {
+    public static Positionable fromMinecraft(AbstractWidget renderable) {
+        if (renderable == null) return null;
+
         int x = renderable.getX();
         int y = renderable.getY();
         int width = renderable.getWidth();
