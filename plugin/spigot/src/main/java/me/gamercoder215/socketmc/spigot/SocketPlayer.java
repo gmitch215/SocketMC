@@ -40,7 +40,7 @@ public final class SocketPlayer {
         this.player = p;
 
         try {
-            Field connection = ServerCommonPacketListenerImpl.class.getDeclaredField("c");
+            Field connection = ServerCommonPacketListenerImpl.class.getDeclaredField("e");
             connection.setAccessible(true);
             this.channel = ((Connection) connection.get(((CraftPlayer) p).getHandle().connection)).channel;
         } catch (ReflectiveOperationException e) {
