@@ -120,6 +120,7 @@ public final class ForgeScreenUtil {
                     new net.minecraft.client.gui.components.ImageButton(x, y, width, height, ForgeUtil.toMinecraft(button.getSprite()), BUTTON_PRESS_EVENT);
             case CheckboxButton button -> Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
             case SendInstructionButton button -> new ForgeSendInstructionButton(x, y, width, height, message, button.getInstruction());
+            case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
 
             case null, default -> throw new AssertionError("Unexpected value: " + renderable);
         };
@@ -148,6 +149,7 @@ public final class ForgeScreenUtil {
             // Buttons
             case net.minecraft.client.gui.components.ImageButton button -> new ImageButton(x, y, width, height, ForgeUtil.fromMinecraft(button.sprites));
             case ForgeSendInstructionButton button -> new SendInstructionButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()), button.instruction);
+            case LockIconButton button -> new LockButton(x, y);
             case Button button -> new TextButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, ForgeUtil.toJson(button.getMessage()));
 

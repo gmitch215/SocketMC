@@ -120,6 +120,7 @@ public final class FabricScreenUtil {
                     new net.minecraft.client.gui.components.ImageButton(x, y, width, height, FabricUtil.toMinecraft(button.getSprite()), BUTTON_PRESS_EVENT);
             case CheckboxButton button -> Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
             case SendInstructionButton button -> new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
+            case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
 
             case null, default -> throw new AssertionError("Unexpected value: " + renderable);
         };
@@ -148,6 +149,7 @@ public final class FabricScreenUtil {
             // Buttons
             case net.minecraft.client.gui.components.ImageButton button -> new ImageButton(x, y, width, height, FabricUtil.fromMinecraft(button.sprites));
             case FabricSendInstructionButton button -> new SendInstructionButton(x, y, width, height, FabricUtil.toJson(button.getMessage()), button.instruction);
+            case LockIconButton button -> new LockButton(x, y);
             case Button button -> new TextButton(x, y, width, height, FabricUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, FabricUtil.toJson(button.getMessage()));
 
