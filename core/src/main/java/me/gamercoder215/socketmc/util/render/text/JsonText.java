@@ -32,6 +32,15 @@ public final class JsonText extends Text {
     }
 
     /**
+     * Creates an empty JsonText object.
+     * @return JsonText object
+     */
+    @NotNull
+    public static JsonText empty() {
+        return new JsonText("{}");
+    }
+
+    /**
      * Creates a new JsonText object with the given JSON string. This method does not perform JSON validation.
      * @param json JSON string
      * @return JsonText object
