@@ -3,6 +3,7 @@ package me.gamercoder215.socketmc.fabric;
 import me.gamercoder215.socketmc.screen.util.Sprite;
 import me.gamercoder215.socketmc.screen.util.Tooltip;
 import me.gamercoder215.socketmc.util.Identifier;
+import me.gamercoder215.socketmc.util.render.text.JsonText;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -21,6 +22,11 @@ public final class FabricUtil {
     public static String toJson(Component component) {
         if (component == null) return "";
         return Component.Serializer.toJson(component, minecraft.level.registryAccess());
+    }
+
+    public static JsonText toText(Component component) {
+        if (component == null) return JsonText.empty();
+        return JsonText.raw(toJson(component));
     }
 
     public static Identifier fromMinecraft(ResourceLocation resourceLocation) {
