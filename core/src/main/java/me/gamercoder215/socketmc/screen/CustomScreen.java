@@ -79,9 +79,12 @@ public final class CustomScreen extends AbstractScreen {
     /**
      * Adds a child to this screen.
      * @param child the child element
+     * @throws IllegalArgumentException if the child is null or if an element already exists at the same position
      */
-    public void addChild(@NotNull Positionable child) {
+    public void addChild(@NotNull Positionable child) throws IllegalArgumentException {
         if (child == null) throw new IllegalArgumentException("Child cannot be null");
+        if (children.stream().anyMatch(c -> c.inSamePosition(child))) throw new IllegalArgumentException("An element already exists at this position (" + child.getX() + ", " + child.getY() + ")");
+
         children.add(child);
     }
 

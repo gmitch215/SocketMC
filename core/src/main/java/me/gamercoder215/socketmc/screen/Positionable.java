@@ -84,4 +84,13 @@ public interface Positionable extends Serializable {
      */
     void setTooltip(@Nullable Tooltip tooltip);
 
+    /**
+     * Checks if this object is in the same position as another object.
+     * @param other the other object
+     * @return true if the objects are in the same position
+     */
+    default boolean inSamePosition(@NotNull Positionable other) {
+        return getX() == other.getX() && getY() == other.getY();
+    }
+
 }

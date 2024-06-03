@@ -9,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.Serial;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -148,5 +149,19 @@ public abstract class AbstractWidget implements Positionable {
     @Override
     public final String toString() {
         return getClass().getSimpleName() + "@ [" + x + ", " + y + "] (" + width + "px * " + height + "px)";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof AbstractWidget that)) return false;
+
+        return x == that.x && y == that.y && width == that.width && height == that.height;
+    }
+
+    @Override
+    public final int hashCode() {
+        return Objects.hash(x, y, width, height);
     }
 }
