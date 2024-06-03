@@ -43,9 +43,12 @@ public final class ForgeScreen extends Screen {
     @Override
     public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         switch (handle.getBackground()) {
-            case MENU -> renderMenuBackground(graphics);
             case DEFAULT -> super.renderBackground(graphics, mouseX, mouseY, partialTick);
-            case PANORAMA -> renderPanorama(graphics, partialTick);
+            case PANORAMA -> {
+                renderPanorama(graphics, partialTick);
+                renderBlurredBackground(partialTick);
+                renderMenuBackground(graphics);
+            }
             case TRANSPARENT -> renderTransparentBackground(graphics);
         }
     }

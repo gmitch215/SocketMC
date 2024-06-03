@@ -21,3 +21,18 @@ accessible field net/minecraft/client/gui/components/FocusableTextWidget padding
 
 # ImageButton
 accessible field net/minecraft/client/gui/components/ImageButton sprites Lnet/minecraft/client/gui/components/WidgetSprites;
+
+# AlertScreen
+accessible field net/minecraft/client/gui/screens/AlertScreen messageText Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/AlertScreen okButton Lnet/minecraft/network/chat/Component;
+
+# DisconnectedScreen
+accessible field net/minecraft/client/gui/screens/DisconnectedScreen reason Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/DisconnectedScreen buttonText Lnet/minecraft/network/chat/Component;
+
+# DeathScreen
+accessible field net/minecraft/client/gui/screens/DeathScreen causeOfDeath Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/DeathScreen hardcore Z
+
+# ErrorScreen
+accessible field net/minecraft/client/gui/screens/ErrorScreen message Lnet/minecraft/network/chat/Component;

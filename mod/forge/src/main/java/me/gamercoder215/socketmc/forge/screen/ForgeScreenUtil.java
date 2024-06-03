@@ -9,6 +9,7 @@ import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.*;
 import me.gamercoder215.socketmc.screen.util.Tooltip;
+import me.gamercoder215.socketmc.util.render.text.JsonText;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
@@ -48,6 +49,38 @@ public final class ForgeScreenUtil {
             case ShareToLanScreen ignored -> DefaultScreen.SHARE_TO_LAN;
             case AdvancementsScreen ignored -> DefaultScreen.ADVANCEMENTS;
             case StatsScreen ignored -> DefaultScreen.STATS;
+
+            case AlertScreen s -> {
+                JsonText title = ForgeUtil.toText(s.getTitle());
+                JsonText message = ForgeUtil.toText(s.messageText);
+                JsonText button = ForgeUtil.toText(s.okButton);
+
+                yield DefaultScreen.alert(title, message);
+            }
+            case DisconnectedScreen s -> {
+                JsonText title = ForgeUtil.toText(s.getTitle());
+                JsonText reason = ForgeUtil.toText(s.reason);
+                JsonText button = ForgeUtil.toText(s.buttonText);
+
+                yield DefaultScreen.disconnected(title, reason);
+            }
+            case GenericMessageScreen s -> {
+                JsonText message = ForgeUtil.toText(s.getTitle());
+
+                yield DefaultScreen.message(message);
+            }
+            case DeathScreen s -> {
+                JsonText cause = ForgeUtil.toText(s.causeOfDeath);
+                boolean hardcore = s.hardcore;
+
+                yield DefaultScreen.death(cause, hardcore);
+            }
+            case ErrorScreen s -> {
+                JsonText title = ForgeUtil.toText(s.getTitle());
+                JsonText message = ForgeUtil.toText(s.message);
+
+                yield DefaultScreen.error(title, message);
+            }
             default -> null;
         };
     }
