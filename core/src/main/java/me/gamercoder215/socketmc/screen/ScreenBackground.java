@@ -16,13 +16,8 @@ public enum ScreenBackground {
     TRANSPARENT,
 
     /**
-     * Uses the panorama on the title screen.
+     * Uses the solid texture background. Used in the options screen.
      */
-    PANORAMA,
-
-    /**
-     * Uses the menu background. Used in the options screen.
-     */
-    MENU
+    PANORAMA
 
 }
