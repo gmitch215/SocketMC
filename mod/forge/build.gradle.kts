@@ -41,6 +41,10 @@ tasks {
             expand(project.properties)
         }
     }
+
+    named("modrinth") {
+        dependsOn("reobfJar")
+    }
 }
 
 modrinth {
@@ -51,7 +55,7 @@ modrinth {
     versionNumber.set(version.toString())
     versionType.set(project.ext["version_type"].toString())
 
-    uploadFile.set(tasks.jar)
+    uploadFile.set(tasks.jar.get().archiveFile.get().asFile)
     gameVersions.add(project.ext["minecraft_version"].toString())
     changelog.set(project.ext["changelog"].toString())
 
