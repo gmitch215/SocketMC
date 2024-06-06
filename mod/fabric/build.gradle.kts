@@ -34,6 +34,9 @@ dependencies {
     }
 
     annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
+
+    // API Hooks
+    modImplementation("com.terraformersmc:modmenu:9.0.0")
 }
 
 loom {
