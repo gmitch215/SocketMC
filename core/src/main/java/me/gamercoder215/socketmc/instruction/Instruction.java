@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction;
 
+import me.gamercoder215.socketmc.config.ModPermission;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.util.Identifier;
 import me.gamercoder215.socketmc.util.render.text.Text;
@@ -30,6 +31,7 @@ import java.util.Objects;
  *     <li>Instructions are serializable and can be sent over the network as byte arrays.</li>
  *     <li>All X, Y, Height, Width, and other measurements used in drawing instructions are in pixels.</li>
  *     <li>Players render things on the screen based on their own FPS (Frames Per Second), hence the provision of timed renderings in milliseconds.</li>
+ *     <li>SocketMC v0.1.3 introduced a permission system that allows or disallows specific types of Instructions. If permission is not given, the Instruction will <i>silently</i> fail.</li>
  * </ul>
  */
 public final class Instruction implements Serializable {
@@ -39,52 +41,62 @@ public final class Instruction implements Serializable {
     /**
      * Instruction to verify SocketMC is present. This then enables events to be sent from the client to the server, if not already enabled.
      */
+    @InstructionPermission(ModPermission.REQUIRED)
     public static final String PING = "ping";
 
     /**
      * Instruction to draw text on the client's screen.
      */
+    @InstructionPermission(ModPermission.DRAW_HUD)
     public static final String DRAW_TEXT = "draw_text";
 
     /**
      * Instruction to draw a rectangle on the client's screen.
      */
+    @InstructionPermission(ModPermission.DRAW_HUD)
     public static final String DRAW_SHAPE = "draw_shape";
 
     /**
      * Instruction to play audio on the client's device. This supports all audio formats supported by the client, according to its JDK. Most commonly is {@code .wav} and {@code .au}.
      * @see AudioSystem#getAudioFileTypes()
      */
+    @InstructionPermission(ModPermission.USE_AUDIO)
     public static final String PLAY_AUDIO = "play_audio";
 
     /**
      * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      */
+    @InstructionPermission(ModPermission.DRAW_HUD)
     public static final String DRAW_BUFFER = "draw_buffer";
 
     /**
      * Instruction to log a message in the client's logs. This is not the same thing as the {@link AuditLog} API.
      */
+    @InstructionPermission(ModPermission.REQUIRED)
     public static final String LOG_MESSAGE = "log";
 
     /**
      * Instruction to draw a texture on the client's screen.
      */
+    @InstructionPermission(ModPermission.DRAW_HUD)
     public static final String DRAW_TEXTURE = "draw_texture";
 
     /**
      * Instruction to open an empty book and quill GUI on the client's screen, allowing for long text input.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String OPEN_BOOK_AND_QUILL = "open_book_and_quill";
 
     /**
      * Instruction to open a GUI screen on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String OPEN_SCREEN = "open_screen";
 
     /**
      * Instruction to close the current GUI screen on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String CLOSE_SCREEN = "close_screen";
 
     @Serial
