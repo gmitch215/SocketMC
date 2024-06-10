@@ -87,6 +87,7 @@ allprojects {
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.parchmentmc.org")
         maven("https://maven.terraformersmc.com/")
+        maven("https://libraries.minecraft.net/")
     }
 
     publishing {
