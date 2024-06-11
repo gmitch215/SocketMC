@@ -33,3 +33,8 @@ java {
     withJavadocJar()
     withSourcesJar()
 }
+
+// Bundled with Minecraft
+dependencies {
+    compileOnly("org.joml:joml:1.10.5")
+}
