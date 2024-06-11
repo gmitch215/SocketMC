@@ -13,9 +13,12 @@ public enum ModPermission {
     REQUIRED(true, false),
 
     /**
-     * Permission to draw on the HUD.
+     * <p>Permission to manage the GUI.</p>
+     * <p>This permission includes everything used to manage what you see, confined to the game's operations. For example,
+     * this permission includes drawing on the HUD, and managing the player's perspective camera.</p>
+     * <p>Everything included in {@link #USE_SCREENS} is ignored by this permission.</p>
      */
-    DRAW_HUD(true),
+    USE_GUI(true),
 
     /**
      * Permission to open and close default and user-generated screens.
@@ -26,6 +29,17 @@ public enum ModPermission {
      * Permission to use the audio system.
      */
     USE_AUDIO(true),
+
+    /**
+     * Permission to open {@code http://} and {@code https://} links.
+     */
+    OPEN_LINKS(true),
+
+    /**
+     * <p>Permission to use external applications and integrations.</p>
+     * <p>This permission also grants using non-web links speciifed by {@link #OPEN_LINKS}, such as {@code mailto:} links.</p>
+     */
+    EXTERNAL_APPLICATIONS(false)
 
     ;
 
