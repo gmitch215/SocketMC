@@ -11,6 +11,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ public final class FabricSocketMC implements ClientModInitializer {
         // Events
         FabricEvents events = new FabricEvents();
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> events.onDisconnect());
+        ServerTickEvents.END_SERVER_TICK.register(client -> events.tick());
 
         // Events - Machines
         HudRenderCallback.EVENT.register((graphics, delta) -> {

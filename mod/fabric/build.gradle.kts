@@ -28,7 +28,8 @@ dependencies {
     setOf(
         "fabric-api-base",
         "fabric-networking-api-v1",
-        "fabric-rendering-v1"
+        "fabric-rendering-v1",
+        "fabric-lifecycle-events-v1"
     ).forEach {
         modImplementation(fabricApi.module(it, "$fabric+$minecraft"))
     }

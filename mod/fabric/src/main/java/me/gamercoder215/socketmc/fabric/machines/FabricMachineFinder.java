@@ -29,7 +29,8 @@ public final class FabricMachineFinder {
             DrawTextureMachine.class,
             OpenBookAndQuillMachine.class,
             OpenScreenMachine.class,
-            CloseScreenMachine.class
+            CloseScreenMachine.class,
+            RenderingMachine.class
     );
 
     public static Machine getMachine(@NotNull String id) {

@@ -47,13 +47,13 @@ public final class Instruction implements Serializable {
     /**
      * Instruction to draw text on the client's screen.
      */
-    @InstructionPermission(ModPermission.DRAW_HUD)
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_TEXT = "draw_text";
 
     /**
      * Instruction to draw a rectangle on the client's screen.
      */
-    @InstructionPermission(ModPermission.DRAW_HUD)
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_SHAPE = "draw_shape";
 
     /**
@@ -66,7 +66,7 @@ public final class Instruction implements Serializable {
     /**
      * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      */
-    @InstructionPermission(ModPermission.DRAW_HUD)
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_BUFFER = "draw_buffer";
 
     /**
@@ -78,7 +78,7 @@ public final class Instruction implements Serializable {
     /**
      * Instruction to draw a texture on the client's screen.
      */
-    @InstructionPermission(ModPermission.DRAW_HUD)
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_TEXTURE = "draw_texture";
 
     /**
@@ -98,6 +98,12 @@ public final class Instruction implements Serializable {
      */
     @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String CLOSE_SCREEN = "close_screen";
+
+    /**
+     * Instruction to modify the functionality of a specific client renderer.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String RENDERER = "renderer";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1126,6 +1132,20 @@ public final class Instruction implements Serializable {
     @NotNull
     public static Instruction closeScreen() {
         return new Instruction(CLOSE_SCREEN, List.of());
+    }
+
+    /**
+     * Creates a {@link #RENDERER} instruction.
+     * @param instruction Render Instruction to use
+     * @return Renderer Instruction
+     * @throws IllegalArgumentException If the render instruction is null, or sub-ordinal is {@code -1}
+     */
+    @NotNull
+    public static Instruction renderer(@NotNull RenderInstruction instruction) throws IllegalArgumentException {
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
+        if (instruction.getSubOrdinal() == -1) throw new IllegalArgumentException("Please specify a rendering operation");
+
+        return new Instruction(RENDERER, List.of(instruction));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

@@ -3,6 +3,8 @@ accessWidener v2 named
 # Connection
 accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
 
+## Screen API
+
 # Tooltip
 accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;
 accessible field net/minecraft/client/gui/components/Tooltip narration Lnet/minecraft/network/chat/Component;
@@ -36,3 +38,11 @@ accessible field net/minecraft/client/gui/screens/DeathScreen hardcore Z
 
 # ErrorScreen
 accessible field net/minecraft/client/gui/screens/ErrorScreen message Lnet/minecraft/network/chat/Component;
+
+## Rendering API
+
+# Minecraft
+accessible field net/minecraft/client/Minecraft pausePartialTick F
+
+# GameRenderer
+accessible method net/minecraft/client/renderer/GameRenderer renderItemInHand (Lnet/minecraft/client/Camera;FLorg/joml/Matrix4f;)V
