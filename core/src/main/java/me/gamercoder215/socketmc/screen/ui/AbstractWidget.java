@@ -52,7 +52,7 @@ public abstract class AbstractWidget implements Positionable {
     @Nullable
     protected Tooltip tooltip;
 
-    private final Set<SerializableConsumer<AbstractWidget>> onClickListeners = new HashSet<>();
+    private final Set<SerializableConsumer<Positionable>> onClickListeners = new HashSet<>();
 
     /**
      * Constructs a new widget.
@@ -130,20 +130,19 @@ public abstract class AbstractWidget implements Positionable {
         this.tooltip = tooltip;
     }
 
-    /**
-     * Adds an on-click listener to this widget.
-     * @param listener the listener
-     * @see SerializableConsumer
-     */
-    public void onClick(@NotNull SerializableConsumer<AbstractWidget> listener) {
+    @Override
+    public void onClick(@NotNull SerializableConsumer<Positionable> listener) {
         onClickListeners.add(listener);
     }
 
-    /**
-     * Clears all listeners from this widget.
-     */
+    @Override
     public void clearListeners() {
         onClickListeners.clear();
+    }
+
+    @Override
+    public Set<SerializableConsumer<Positionable>> getListeners() {
+        return Set.copyOf(onClickListeners);
     }
 
     @Override
