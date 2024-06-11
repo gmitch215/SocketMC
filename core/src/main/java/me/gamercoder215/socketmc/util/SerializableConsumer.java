@@ -35,7 +35,7 @@ import java.util.function.Consumer;
  * Instead, you should use a {@link SerializableConsumer} like this:
  *
  * <pre>{@code
- * String s = "";
+ * String str = "";
  *
  * SerializableConsumer<String> consumer = s -> {
  *     s = s + "Hello, World!";
@@ -43,8 +43,8 @@ import java.util.function.Consumer;
  *     s = s + "Goodbye, World!";
  * };
  *
- * consumer.accept(s);
- * System.out.println(s); // Prints "Hello, World! Goodbye, World!"
+ * consumer.accept(str);
+ * System.out.println(str); // Prints "Hello, World! Goodbye, World!"
  * }</pre>
  *
  * If you need to perform an operation that is not serializable using a {@link SerializableConsumer} (e.g. with Screens), try utilizing other methods such as the Event or Instruction API.
