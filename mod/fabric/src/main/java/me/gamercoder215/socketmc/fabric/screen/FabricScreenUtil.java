@@ -16,8 +16,6 @@ import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -133,8 +131,10 @@ public final class FabricScreenUtil {
             }
             case ImageWidget widget -> {
                 net.minecraft.client.gui.components.ImageWidget w = switch (widget.getType()) {
-                    case TEXTURE -> net.minecraft.client.gui.components.ImageWidget.texture(width, height, FabricUtil.toMinecraft(widget.getLocation()), width, height);
-                    case SPRITE -> net.minecraft.client.gui.components.ImageWidget.sprite(width, height, FabricUtil.toMinecraft(widget.getLocation()));
+                    case TEXTURE ->
+                            net.minecraft.client.gui.components.ImageWidget.texture(width, height, FabricUtil.toMinecraft(widget.getLocation()), width, height);
+                    case SPRITE ->
+                            net.minecraft.client.gui.components.ImageWidget.sprite(width, height, FabricUtil.toMinecraft(widget.getLocation()));
                 };
                 w.setPosition(x, y);
 
@@ -151,14 +151,20 @@ public final class FabricScreenUtil {
             case TextButton button -> Button.builder(message, BUTTON_PRESS_EVENT).bounds(x, y, width, height).build();
             case ImageButton button ->
                     new net.minecraft.client.gui.components.ImageButton(x, y, width, height, FabricUtil.toMinecraft(button.getSprite()), BUTTON_PRESS_EVENT);
-            case CheckboxButton button -> Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
-            case SendInstructionButton button -> new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
+            case CheckboxButton button ->
+                    Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
+            case SendInstructionButton button ->
+                    new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
             case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
 
             case null, default -> throw new AssertionError("Unexpected value: " + renderable);
         };
 
         w0.setTooltip(FabricUtil.toMinecraft(tooltip));
+
+        FabricWidget f0 = (FabricWidget) w0;
+        f0.socketMC$addClickListeners(renderable.getListeners());
+
         return w0;
     }
 
@@ -190,6 +196,10 @@ public final class FabricScreenUtil {
         };
 
         w0.setTooltip(tooltip);
+
+        FabricWidget f0 = (FabricWidget) renderable;
+        f0.socketMC$getClickListeners().forEach(w0::onClick);
+
         return w0;
     }
 

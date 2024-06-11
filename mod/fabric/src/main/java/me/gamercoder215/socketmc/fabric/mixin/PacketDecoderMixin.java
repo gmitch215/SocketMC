@@ -8,6 +8,7 @@ import me.gamercoder215.socketmc.fabric.machines.FabricMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketDecoder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +18,7 @@ import java.util.List;
 
 import static me.gamercoder215.socketmc.fabric.FabricSocketMC.minecraft;
 
-@Mixin(targets = "net.minecraft.network.PacketDecoder")
+@Mixin(PacketDecoder.class)
 public class PacketDecoderMixin {
 
     @Inject(method = "decode", at = @At("HEAD"), cancellable = true)

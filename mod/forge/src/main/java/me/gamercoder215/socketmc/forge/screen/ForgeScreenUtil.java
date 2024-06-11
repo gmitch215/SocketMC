@@ -158,7 +158,11 @@ public final class ForgeScreenUtil {
             case null, default -> throw new AssertionError("Unexpected value: " + renderable);
         };
 
-        if (tooltip != null) w0.setTooltip(ForgeUtil.toMinecraft(tooltip));
+        w0.setTooltip(ForgeUtil.toMinecraft(tooltip));
+
+        ForgeWidget f0 = (ForgeWidget) w0;
+        f0.socketMC$addClickListeners(renderable.getListeners());
+
         return w0;
     }
 
@@ -189,7 +193,11 @@ public final class ForgeScreenUtil {
             case null, default -> throw new AssertionError("Unexpected value: " + renderable);
         };
 
-        if (tooltip != null) w0.setTooltip(tooltip);
+        w0.setTooltip(tooltip);
+
+        ForgeWidget f0 = (ForgeWidget) renderable;
+        f0.socketMC$getClickListeners().forEach(w0::onClick);
+
         return w0;
     }
 
