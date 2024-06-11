@@ -31,7 +31,7 @@ public final class FabricScreen extends Screen {
     @Override
     public void init() {
         List<Positionable> children = handle.getChildren();
-        for (Positionable child: children)
+        for (Positionable child : children)
             addRenderableWidget(FabricScreenUtil.toMinecraft(child));
     }
 
