@@ -15,6 +15,8 @@ import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -110,6 +112,18 @@ public final class Instruction implements Serializable {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_BEACON_BEAM = "draw_beacon_beam";
+
+    /**
+     * Instruction to open an external link in the client's browser.
+     */
+    @InstructionPermission(ModPermission.OPEN_LINKS)
+    public static final String OPEN_LINK = "open_link";
+
+    /**
+     * Instruction to open an external address in the client's default email application.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String MAILTO = "mailto";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1308,6 +1322,48 @@ public final class Instruction implements Serializable {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), yOffset, beamRadius, glowRadius, millis));
+    }
+
+    /**
+     * Creates a {@link #OPEN_LINK} instruction.
+     * @param uri URI to Open
+     * @return Open Link Instruction
+     * @throws IllegalArgumentException If the URL is null
+     */
+    @NotNull
+    public static Instruction openLink(@NotNull URI uri) throws IllegalArgumentException {
+        if (uri == null) throw new IllegalArgumentException("URI cannot be null");
+
+        return new Instruction(OPEN_LINK, List.of(uri));
+    }
+
+    /**
+     * Creates a {@link #MAILTO} instruction.
+     * @param email Email Address
+     * @return Mailto Instruction
+     * @throws IllegalArgumentException If the email is null, or not a valid email address
+     * @see InstructionUtil#isEmailAddress(String)
+     */
+    @NotNull
+    public static Instruction mailto(@NotNull String email) throws IllegalArgumentException {
+        if (email == null) throw new IllegalArgumentException("Email cannot be null");
+        if (!InstructionUtil.isEmailAddress(email)) throw new IllegalArgumentException("Email must be a valid email address");
+
+        return mailto(URI.create("mailto:" + email));
+    }
+
+    /**
+     * Creates a {@link #MAILTO} instruction.
+     * @param mailto Mailto URI
+     * @return Mailto Instruction
+     * @throws IllegalArgumentException If the URI is null or not a {@code mailto:} URI
+     */
+    @NotNull
+    public static Instruction mailto(@NotNull URI mailto) throws IllegalArgumentException {
+        if (mailto == null) throw new IllegalArgumentException("Email cannot be null");
+        if (mailto.getScheme() == null || !mailto.getScheme().equals("mailto")) throw new IllegalArgumentException("URI must be a mailto: URI");
+
+        return new Instruction(MAILTO, List.of(mailto));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

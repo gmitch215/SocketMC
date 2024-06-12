@@ -32,6 +32,7 @@ public final class InstructionUtil {
      */
     public static boolean isEmailAddress(@Nullable String email) {
         if (email == null) return false;
+        if (email.isBlank()) return false;
 
         return VALID_EMAIL_ADDRESS.matcher(email).matches();
     }
