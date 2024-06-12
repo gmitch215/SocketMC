@@ -105,6 +105,12 @@ public final class Instruction implements Serializable {
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String RENDERER = "renderer";
 
+    /**
+     * Instruction to draw a beacon beam in the world.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String DRAW_BEACON_BEAM = "draw_beacon_beam";
+
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
 
@@ -1146,6 +1152,162 @@ public final class Instruction implements Serializable {
         if (instruction.getSubOrdinal() == -1) throw new IllegalArgumentException("Please specify a rendering operation");
 
         return new Instruction(RENDERER, List.of(instruction));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, 0xF9FFFE, 0, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), 0, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, yOffset, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (yOffset < 0) throw new IllegalArgumentException("Y Offset cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), yOffset, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param beamRadius Beam Radius (default: {@code 0.2F})
+     * @param glowRadius Glow Radius (default: {@code 0.25F})
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the radii are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, float beamRadius, float glowRadius, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, yOffset, beamRadius, glowRadius, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color
+     * @param yOffset Y Offset for Beam
+     * @param beamRadius Beam Radius
+     * @param glowRadius Glow Radius
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the radii are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, float beamRadius, float glowRadius, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (yOffset < 0) throw new IllegalArgumentException("Y Offset cannot be negative");
+        if (beamRadius < 0 || glowRadius < 0) throw new IllegalArgumentException("Radius cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), yOffset, beamRadius, glowRadius, millis));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

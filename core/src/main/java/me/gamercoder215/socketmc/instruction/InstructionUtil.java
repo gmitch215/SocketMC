@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction;
 
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
@@ -33,6 +34,19 @@ public final class InstructionUtil {
         if (email == null) return false;
 
         return VALID_EMAIL_ADDRESS.matcher(email).matches();
+    }
+
+    /**
+     * Parses a color integer into an array of floats representing the RGB values.
+     * @param color The color integer to parse.
+     * @return An array of floats representing the RGB values.
+     */
+    @NotNull
+    public static float[] parseColor(int color) {
+        int r = (color & 0xFF0000) >> 16;
+        int g = (color & 0xFF00) >> 8;
+        int b = (color & 0xFF);
+        return new float[] {r / 255.0F, g / 255.0F, b / 255.0F};
     }
 
 }

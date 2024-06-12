@@ -24,7 +24,8 @@ public final class ForgeMachineFinder {
             OpenBookAndQuillMachine.class,
             OpenScreenMachine.class,
             CloseScreenMachine.class,
-            RenderingMachine.class
+            RenderingMachine.class,
+            DrawBeaconBeamMachine.class
     );
 
     public static Machine getMachine(@NotNull String id) {

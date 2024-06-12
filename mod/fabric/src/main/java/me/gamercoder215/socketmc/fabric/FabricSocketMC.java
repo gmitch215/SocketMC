@@ -2,10 +2,7 @@ package me.gamercoder215.socketmc.fabric;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
-import me.gamercoder215.socketmc.fabric.machines.DrawBufferMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawShapeMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawTextMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawTextureMachine;
+import me.gamercoder215.socketmc.fabric.machines.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -45,6 +42,7 @@ public final class FabricSocketMC implements ClientModInitializer {
             DrawShapeMachine.frameTick(graphics, delta);
             DrawBufferMachine.frameTick(graphics, delta);
             DrawTextureMachine.frameTick(graphics, delta);
+            DrawBeaconBeamMachine.frameTick(graphics, delta);
         });
     }
 
