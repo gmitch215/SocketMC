@@ -35,14 +35,16 @@ tasks {
 
         options {
             require(this is StandardJavadocDocletOptions)
+            showFromProtected()
 
             overview = "core/src/main/javadoc/overview.html"
 
-            showFromProtected()
-
-            links("https://hub.spigotmc.org/javadocs/spigot/")
-            links("https://netty.io/5.0/api/")
-            links("https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/")
+            links(
+                "https://hub.spigotmc.org/javadocs/spigot/",
+                "https://netty.io/5.0/api/",
+                "https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/",
+                "https://jd.advntr.dev/api/4.17.0/"
+            )
         }
     }
 }

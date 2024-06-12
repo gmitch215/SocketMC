@@ -2,10 +2,11 @@ package me.gamercoder215.socketmc.fabric.mixin;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import me.gamercoder215.socketmc.SocketMC;
 import me.gamercoder215.socketmc.fabric.FabricAuditLog;
-import me.gamercoder215.socketmc.fabric.FabricSocketMC;
 import me.gamercoder215.socketmc.fabric.machines.FabricMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
+import me.gamercoder215.socketmc.machines.MachineFinder;
 import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.PacketDecoder;
@@ -40,16 +41,16 @@ public class PacketDecoderMixin {
 
                 minecraft.execute(() -> {
                     try {
-                        FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
-                        FabricSocketMC.LOGGER.info(FabricAuditLog.CLIENT_RECEIVED_MESSAGE, i, i0.length);
+                        MachineFinder.getMachine(FabricMachineFinder.MACHINES, i.getId()).onInstruction(i);
+                        SocketMC.LOGGER.info(FabricAuditLog.CLIENT_RECEIVED_MESSAGE, i, i0.length);
                         FabricAuditLog.INSTANCE.logReceived(i, p);
                     } catch (Exception e) {
-                        FabricSocketMC.print(e);
+                        SocketMC.print(e);
                     }
                 });
             }
         } catch (Exception e) {
-            FabricSocketMC.print(e);
+            SocketMC.print(e);
         }
     }
 

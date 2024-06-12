@@ -5,6 +5,7 @@ import me.gamercoder215.socketmc.forge.ForgeUtil;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.DefaultScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
+import me.gamercoder215.socketmc.screen.ScreenWidget;
 import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.*;
@@ -160,7 +161,7 @@ public final class ForgeScreenUtil {
 
         w0.setTooltip(ForgeUtil.toMinecraft(tooltip));
 
-        ForgeWidget f0 = (ForgeWidget) w0;
+        ScreenWidget f0 = (ScreenWidget) w0;
         f0.socketMC$addClickListeners(renderable.getListeners());
 
         return w0;
@@ -195,7 +196,7 @@ public final class ForgeScreenUtil {
 
         w0.setTooltip(tooltip);
 
-        ForgeWidget f0 = (ForgeWidget) renderable;
+        ScreenWidget f0 = (ScreenWidget) renderable;
         f0.socketMC$getClickListeners().forEach(w0::onClick);
 
         return w0;

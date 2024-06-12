@@ -16,6 +16,7 @@ val fabric = "0.98.0"
 
 dependencies {
     api(project(":socketmc-core"))
+    api(project(":socketmc-shared"))
 
     minecraft("com.mojang:minecraft:$minecraft")
     mappings(loom.layered {
@@ -47,6 +48,7 @@ loom {
 tasks {
     jar {
         from(project(":socketmc-core").sourceSets["main"].output)
+        from(project(":socketmc-shared").sourceSets["main"].output)
     }
 
     processResources {

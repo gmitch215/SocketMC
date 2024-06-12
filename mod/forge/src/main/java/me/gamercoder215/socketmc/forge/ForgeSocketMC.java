@@ -2,6 +2,7 @@ package me.gamercoder215.socketmc.forge;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
+import me.gamercoder215.socketmc.SocketMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,9 +16,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 @Mod("socketmc")
-public final class ForgeSocketMC {
+public final class ForgeSocketMC implements SocketMC {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("SocketMC");
     public static boolean eventsEnabled = false;
 
     public static Minecraft minecraft;
@@ -27,18 +27,6 @@ public final class ForgeSocketMC {
 
         // Events
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
-    }
-
-    public static void print(Throwable t) {
-        LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());
-        LOGGER.error("-----------");
-        LOGGER.error(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.error("  {}", element.toString());
-
-        if (t.getCause() != null) {
-            LOGGER.error("Caused by:");
-            print(t.getCause());
-        }
     }
 
     public static void sendEvent(int id, Map<String, Object> params) {
@@ -60,7 +48,7 @@ public final class ForgeSocketMC {
             if (!future.isSuccess())
                 throw new IOException("Failed to send event", future.cause());
         } catch (IOException | InterruptedException e) {
-            print(e);
+            SocketMC.print(e);
         }
     }
 

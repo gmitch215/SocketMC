@@ -1,8 +1,8 @@
 package me.gamercoder215.socketmc.fabric.mixin;
 
 import me.gamercoder215.socketmc.fabric.screen.FabricScreenUtil;
-import me.gamercoder215.socketmc.fabric.screen.FabricWidget;
 import me.gamercoder215.socketmc.screen.Positionable;
+import me.gamercoder215.socketmc.screen.ScreenWidget;
 import me.gamercoder215.socketmc.util.ReflectionUtil;
 import me.gamercoder215.socketmc.util.SerializableConsumer;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -17,7 +17,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Mixin(AbstractWidget.class)
-public class AbstractWidgetMixin implements FabricWidget {
+public class AbstractWidgetMixin implements ScreenWidget {
 
     @Unique
     private final Set<SerializableConsumer<Positionable>> socketMC$clickListeners = new HashSet<>();

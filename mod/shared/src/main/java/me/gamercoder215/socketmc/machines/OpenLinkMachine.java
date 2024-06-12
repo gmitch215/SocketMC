@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.fabric.machines;
+package me.gamercoder215.socketmc.machines;
 
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;

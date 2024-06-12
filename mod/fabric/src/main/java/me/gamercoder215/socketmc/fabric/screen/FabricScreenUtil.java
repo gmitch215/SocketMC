@@ -5,6 +5,7 @@ import me.gamercoder215.socketmc.fabric.FabricUtil;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.DefaultScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
+import me.gamercoder215.socketmc.screen.ScreenWidget;
 import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.*;
@@ -162,7 +163,7 @@ public final class FabricScreenUtil {
 
         w0.setTooltip(FabricUtil.toMinecraft(tooltip));
 
-        FabricWidget f0 = (FabricWidget) w0;
+        ScreenWidget f0 = (ScreenWidget) w0;
         f0.socketMC$addClickListeners(renderable.getListeners());
 
         return w0;
@@ -197,7 +198,7 @@ public final class FabricScreenUtil {
 
         w0.setTooltip(tooltip);
 
-        FabricWidget f0 = (FabricWidget) renderable;
+        ScreenWidget f0 = (ScreenWidget) renderable;
         f0.socketMC$getClickListeners().forEach(w0::onClick);
 
         return w0;

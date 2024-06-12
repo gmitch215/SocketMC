@@ -3,7 +3,7 @@ rootProject.name = "SocketMC"
 include(":socketmc-core")
 project(":socketmc-core").projectDir = rootDir.resolve("core")
 
-listOf("fabric", "forge").forEach {
+listOf("shared", "fabric", "forge").forEach {
     include(":socketmc-$it")
     project(":socketmc-$it").projectDir = rootDir.resolve("mod/$it")
 }

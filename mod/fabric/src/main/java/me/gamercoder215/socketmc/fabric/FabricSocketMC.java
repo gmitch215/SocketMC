@@ -2,6 +2,7 @@ package me.gamercoder215.socketmc.fabric;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
+import me.gamercoder215.socketmc.SocketMC;
 import me.gamercoder215.socketmc.fabric.machines.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
@@ -20,9 +21,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public final class FabricSocketMC implements ClientModInitializer {
+public final class FabricSocketMC implements SocketMC, ClientModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("SocketMC");
     public static boolean eventsEnabled = false;
 
     public static Minecraft minecraft;
@@ -46,18 +46,6 @@ public final class FabricSocketMC implements ClientModInitializer {
         });
     }
 
-    public static void print(Throwable t) {
-        LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());
-        LOGGER.error("-----------");
-        LOGGER.error(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.error("  {}", element.toString());
-
-        if (t.getCause() != null) {
-            LOGGER.error("Caused by:");
-            print(t.getCause());
-        }
-    }
-
     public static void sendEvent(int id, Map<String, Object> params) {
         if (!eventsEnabled) return;
         if (minecraft.player == null) return;
@@ -78,7 +66,7 @@ public final class FabricSocketMC implements ClientModInitializer {
             if (!future.isSuccess())
                 throw new IOException("Failed to send event", future.cause());
         } catch (IOException | InterruptedException e) {
-            print(e);
+            SocketMC.print(e);
         }
     }
 

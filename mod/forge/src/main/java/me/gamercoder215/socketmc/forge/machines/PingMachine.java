@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.forge.machines;
 
+import me.gamercoder215.socketmc.SocketMC;
 import me.gamercoder215.socketmc.forge.ForgeSocketMC;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Instruction;
@@ -15,7 +16,7 @@ public final class PingMachine implements Machine {
 
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
-        ForgeSocketMC.LOGGER.info("Received ping instruction");
+        SocketMC.LOGGER.info("Received ping instruction");
 
         if (!ForgeSocketMC.eventsEnabled)
             ForgeSocketMC.eventsEnabled = true;

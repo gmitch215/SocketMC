@@ -1,6 +1,6 @@
-package me.gamercoder215.socketmc.fabric.machines;
+package me.gamercoder215.socketmc.machines;
 
-import me.gamercoder215.socketmc.fabric.FabricSocketMC;
+import me.gamercoder215.socketmc.SocketMC;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
@@ -16,7 +16,7 @@ public final class LogMessageMachine implements Machine {
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         String message = instruction.parameter(0, String.class);
-        FabricSocketMC.LOGGER.info("[Log Instruction] {}", message);
+        SocketMC.LOGGER.info("[Log Instruction] {}", message);
     }
 
 }

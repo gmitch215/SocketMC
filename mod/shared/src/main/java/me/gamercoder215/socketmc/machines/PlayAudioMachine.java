@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.fabric.machines;
+package me.gamercoder215.socketmc.machines;
 
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
@@ -14,7 +14,7 @@ public final class PlayAudioMachine implements Machine {
     public static final PlayAudioMachine MACHINE = new PlayAudioMachine();
 
     private PlayAudioMachine() {}
-    
+
     @Override
     public void onInstruction(@NotNull Instruction instruction) throws Exception {
         byte[] data = instruction.parameter(0, byte[].class);

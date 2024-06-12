@@ -1,6 +1,5 @@
-package me.gamercoder215.socketmc.instruction.util;
+package me.gamercoder215.socketmc.util.render.text;
 
-import me.gamercoder215.socketmc.util.render.text.Text;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.chat.ComponentSerializer;

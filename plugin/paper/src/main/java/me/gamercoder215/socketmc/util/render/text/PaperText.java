@@ -1,6 +1,5 @@
-package me.gamercoder215.socketmc.instruction.util;
+package me.gamercoder215.socketmc.util.render.text;
 
-import me.gamercoder215.socketmc.util.render.text.Text;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import org.jetbrains.annotations.NotNull;

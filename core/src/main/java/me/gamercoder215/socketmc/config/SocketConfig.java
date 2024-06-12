@@ -22,7 +22,7 @@ public interface SocketConfig extends Serializable {
     /**
      * Gets whether the mod permission is enabled.
      * @param permission Mod Permission
-     * @return
+     * @return Whether the permission is enabled
      */
     boolean isPermissionEnabled(@NotNull ModPermission permission);
 

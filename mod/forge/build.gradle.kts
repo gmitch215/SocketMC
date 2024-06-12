@@ -12,6 +12,7 @@ val parchment = project.ext["parchment"].toString()
 
 dependencies {
     api(project(":socketmc-core"))
+    api(project(":socketmc-shared"))
 
     minecraft("net.minecraftforge:forge:$minecraft-50.0.13")
 
@@ -34,6 +35,7 @@ mixin {
 tasks {
     jar {
         from(project(":socketmc-core").sourceSets["main"].output)
+        from(project(":socketmc-shared").sourceSets["main"].output)
     }
 
     processResources {
