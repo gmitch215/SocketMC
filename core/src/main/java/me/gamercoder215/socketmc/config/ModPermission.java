@@ -15,7 +15,7 @@ public enum ModPermission {
     /**
      * <p>Permission to manage the GUI.</p>
      * <p>This permission includes everything used to manage what you see, confined to the game's operations. For example,
-     * this permission includes drawing on the HUD, and managing the player's perspective camera.</p>
+     * this permission includes drawing on the HUD, managing the player's perspective camera, and drawing objects in the world.</p>
      * <p>Everything included in {@link #USE_SCREENS} is ignored by this permission.</p>
      */
     USE_GUI(true),
