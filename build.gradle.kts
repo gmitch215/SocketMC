@@ -10,7 +10,7 @@ plugins {
     `maven-publish`
 
     // Mod
-    id("fabric-loom") version "1.7.0-alpha.5" apply false
+    id("fabric-loom") version "1.7.1" apply false
     id("net.minecraftforge.gradle") version "6.0.25" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
     id("org.spongepowered.mixin") version "0.7.+" apply false
@@ -138,6 +138,10 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     tasks {
+        clean {
+            delete("logs", "run")
+        }
+
         compileJava {
             options.encoding = "UTF-8"
             options.isDeprecation = false

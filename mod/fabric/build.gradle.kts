@@ -24,7 +24,7 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-$minecraft:$parchment@zip")
     })
 
-    modImplementation("net.fabricmc:fabric-loader:0.15.1")
+    modImplementation("net.fabricmc:fabric-loader:0.15.6")
 
     setOf(
         "fabric-api-base",
