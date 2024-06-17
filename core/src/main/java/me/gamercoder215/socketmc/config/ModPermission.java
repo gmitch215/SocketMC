@@ -1,6 +1,7 @@
 package me.gamercoder215.socketmc.config;
 
 import me.gamercoder215.socketmc.instruction.Instruction;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents the permissions for the SocketMC Mod.
@@ -53,6 +54,40 @@ public enum ModPermission {
     ModPermission(boolean defaultValue, boolean changeable) {
         this.changeable = changeable;
         this.defaultValue = defaultValue;
+    }
+
+    /**
+     * Gets whether the permission can be changed by the user.
+     * @return whether the permission can be changed by the user
+     */
+    public boolean isChangeable() {
+        return changeable;
+    }
+
+    /**
+     * Returns the default value of the permission.
+     * @return the default value of the permission
+     */
+    public boolean getDefaultValue() {
+        return defaultValue;
+    }
+
+    /**
+     * Returns the translation key for the permission.
+     * @return the key for the permission
+     */
+    @NotNull
+    public String getKey() {
+        return "gui.socketmc.permission." + name().toLowerCase();
+    }
+
+    /**
+     * Returns the translation key for the permission's tooltip.
+     * @return the tooltip for the permission
+     */
+    @NotNull
+    public String getTooltip() {
+        return "gui.socketmc.permission." + name().toLowerCase() + ".tooltip";
     }
 
 }
