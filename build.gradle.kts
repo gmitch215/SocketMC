@@ -139,7 +139,7 @@ subprojects {
 
     tasks {
         clean {
-            delete("logs", "run")
+            delete("logs")
         }
 
         compileJava {
