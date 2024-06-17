@@ -12,8 +12,6 @@ import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -30,6 +28,7 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
     @Override
     public void onInitializeClient() {
         minecraft = Minecraft.getInstance();
+        GAME_DIRECTORY.set(minecraft.gameDirectory);
 
         // Events
         FabricEvents events = new FabricEvents();

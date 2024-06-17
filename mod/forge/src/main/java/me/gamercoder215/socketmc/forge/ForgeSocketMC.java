@@ -24,6 +24,7 @@ public final class ForgeSocketMC implements SocketMC {
 
     public ForgeSocketMC() {
         minecraft = Minecraft.getInstance();
+        GAME_DIRECTORY.set(minecraft.gameDirectory);
 
         // Events
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
