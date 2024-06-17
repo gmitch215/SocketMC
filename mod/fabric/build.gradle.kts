@@ -30,7 +30,10 @@ dependencies {
         "fabric-api-base",
         "fabric-networking-api-v1",
         "fabric-rendering-v1",
-        "fabric-lifecycle-events-v1"
+        "fabric-lifecycle-events-v1",
+        "fabric-resource-loader-v0",
+        "fabric-screen-api-v1",
+        "fabric-key-binding-api-v1"
     ).forEach {
         modImplementation(fabricApi.module(it, "$fabric+$minecraft"))
     }
@@ -38,11 +41,20 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 
     // API Hooks
-    modImplementation("com.terraformersmc:modmenu:9.0.0")
+    modImplementation("com.terraformersmc:modmenu:10.0.0-beta.1")
 }
 
 loom {
     accessWidenerPath = file("src/main/resources/socketmc.accesswidener")
+
+    runs {
+        named("client") {
+            client()
+            configName = "Fabric Client"
+            ideConfigGenerated(true)
+            runDir = "run"
+        }
+    }
 }
 
 tasks {
