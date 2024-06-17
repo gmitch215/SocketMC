@@ -4,11 +4,9 @@ import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.List;
 import java.util.logging.Level;
 
 /**
@@ -121,6 +119,52 @@ public abstract class AuditLog {
     public void logReceived(@NotNull Instruction received, @NotNull SocketPlugin sender) {
         String msg = "Received instruction from " + sender.getPluginName() + " v" + sender.getPluginVersion() + "\": " + received;
         log(msg);
+    }
+
+    /**
+     * Reads the audit log and returns it as a string.
+     * @return The audit log as a string.
+     */
+    @NotNull
+    public List<String> readLog() {
+        try {
+            File log = getCurrentFile();
+            if (!log.exists()) log.createNewFile();
+
+            BufferedReader reader = new BufferedReader(new FileReader(log));
+            return reader.lines().toList();
+        } catch (IOException e) {
+            throw new FailedAuditException("Failed to read audit log", e);
+        }
+    }
+
+    /**
+     * Reads the audit log and returns it as a string, limited to the specified number of lines.
+     * @param lines The number of lines to read, starting from the latest entry.
+     * @return The audit log as a string, limited to the specified number of lines.
+     */
+    @NotNull
+    public List<String> readLog(int lines) {
+        List<String> log = readLog();
+
+        int size = log.size();
+        int start = Math.max(0, size - lines);
+        return log.subList(start, size);
+    }
+
+    /**
+     * Reads the audit log and returns it as a string, limited to the specified range of lines.
+     * @param startLine The starting line to read.
+     * @param endLine The ending line to read.
+     * @return The audit log as a string, limited to the specified range of lines.
+     * @throws IllegalArgumentException If {@code startLine} is greater than {@code endLine}.
+     */
+    @NotNull
+    public List<String> readLog(int startLine, int endLine) throws IllegalArgumentException {
+        if (startLine > endLine) throw new IllegalArgumentException("startLine must be less than or equal to endLine");
+
+        List<String> log = readLog();
+        return log.subList(startLine, Math.min(endLine, log.size()));
     }
 
 }
