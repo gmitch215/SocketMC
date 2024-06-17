@@ -1,6 +1,5 @@
 package me.gamercoder215.socketmc.spigot;
 
-import com.sun.source.util.Plugin;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -9,8 +8,8 @@ import java.io.*;
 import java.util.Objects;
 
 /**
- * Wrapper class around a {@link Plugin} object to be serialized and sent to the mod. Used for logging, settings, and other information purposes.
- * In the eventuality that a {@link Plugin} object is not available, use {@link #UNKNOWN}.
+ * Wrapper class around a Plugin interface to be serialized and sent to the mod. Used for logging, settings, and other information purposes.
+ * In the eventuality that a Plugin interface is not available, use {@link #UNKNOWN}.
  */
 public final class SocketPlugin implements Serializable {
 
