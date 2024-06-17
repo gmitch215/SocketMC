@@ -1,6 +1,7 @@
 {
   "schemaVersion": 1,
   "id": "${project.ext.id}",
+  "environment": "client",
   "version": "${project.version}",
   "entrypoints": {
     "client": [

@@ -23,6 +23,19 @@ minecraft {
     mappings("parchment", "$parchment-$minecraft")
 
     accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
+
+    runs {
+        create("client") {
+            workingDirectory = "run"
+            taskName = "runForgeClient"
+
+            mods {
+                create("modClientRun") {
+                    source(sourceSets["main"])
+                }
+            }
+        }
+    }
 }
 
 mixin {
