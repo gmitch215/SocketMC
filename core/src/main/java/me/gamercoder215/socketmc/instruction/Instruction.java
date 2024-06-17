@@ -193,6 +193,15 @@ public final class Instruction implements Serializable {
         return type.cast(parameters.getLast());
     }
 
+    /**
+     * Gets the permission required to execute this instruction.
+     * @return Instruction Permission
+     */
+    @NotNull
+    public ModPermission getPermission() {
+        return getPermission(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -234,6 +243,21 @@ public final class Instruction implements Serializable {
         }
 
         return ids.toArray(String[]::new);
+    }
+
+    /**
+     * Gets the permission required to execute an instruction by its ID.
+     * @param id Instruction ID
+     * @return Instruction Permission
+     */
+    @NotNull
+    public static ModPermission getPermission(@NotNull String id) {
+        try {
+            Field f = Instruction.class.getDeclaredField(id.toUpperCase());
+            return f.getAnnotation(InstructionPermission.class).value();
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to get permission for instruction: " + id, e);
+        }
     }
 
     // Instruction Creation
