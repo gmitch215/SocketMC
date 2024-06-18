@@ -39,6 +39,10 @@ accessible field net/minecraft/client/gui/screens/DeathScreen hardcore Z
 # ErrorScreen
 accessible field net/minecraft/client/gui/screens/ErrorScreen message Lnet/minecraft/network/chat/Component;
 
+# CycleButton
+accessible field net/minecraft/client/gui/components/CycleButton valueStringifier Ljava/util/function/Function;
+accessible field net/minecraft/client/gui/components/CycleButton values Lnet/minecraft/client/gui/components/CycleButton$ValueListSupplier;
+
 ## Rendering API
 
 # Minecraft

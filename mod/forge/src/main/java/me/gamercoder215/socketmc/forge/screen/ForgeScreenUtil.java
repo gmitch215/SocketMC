@@ -6,25 +6,27 @@ import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.DefaultScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
 import me.gamercoder215.socketmc.screen.ScreenWidget;
+import me.gamercoder215.socketmc.screen.ui.CycleButton;
 import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.*;
 import me.gamercoder215.socketmc.screen.util.Tooltip;
 import me.gamercoder215.socketmc.util.render.text.JsonText;
+import me.gamercoder215.socketmc.util.render.text.Text;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import static me.gamercoder215.socketmc.forge.ForgeSocketMC.minecraft;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public final class ForgeScreenUtil {
 
     private ForgeScreenUtil() {}
@@ -107,6 +109,13 @@ public final class ForgeScreenUtil {
         ForgeSocketMC.sendEvent(7, Map.of("screen", s0, "widget", fromMinecraft(w), "text", s));
     };
 
+    static final net.minecraft.client.gui.components.CycleButton.OnValueChange<Object> CYCLE_BUTTON_EVENT = (b, o) -> {
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
+        if (s0 == null) return;
+
+        ForgeSocketMC.sendEvent(8, Map.of("screen", s0, "button", fromMinecraft(b), "value", o));
+    };
+
     public static AbstractWidget toMinecraft(Positionable renderable) {
         if (renderable == null) return null;
 
@@ -155,6 +164,14 @@ public final class ForgeScreenUtil {
             case CheckboxButton button -> Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
             case SendInstructionButton button -> new ForgeSendInstructionButton(x, y, width, height, message, button.getInstruction());
             case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
+            case CycleButton button -> {
+                Function<Object, Component> stringifier = o -> ForgeUtil.fromJson(((Text) button.getStringifier().apply(o)).toJSON());
+
+                yield net.minecraft.client.gui.components.CycleButton
+                        .builder(stringifier)
+                        .withValues(button.getValues())
+                        .create(x, y, width, height, message, CYCLE_BUTTON_EVENT);
+            }
 
             case null, default -> null;
         };
@@ -191,6 +208,10 @@ public final class ForgeScreenUtil {
             case LockIconButton button -> new LockButton(x, y);
             case Button button -> new TextButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, ForgeUtil.toJson(button.getMessage()));
+            case net.minecraft.client.gui.components.CycleButton button -> {
+                Function<Object, Text> stringifier = o -> JsonText.raw(ForgeUtil.toJson((Component) button.valueStringifier.apply(o)));
+                yield new CycleButton(x, y, width, height, JsonText.raw(ForgeUtil.toJson(button.getMessage())), stringifier, button.values.getDefaultList());
+            }
 
             case null, default -> null;
         };
