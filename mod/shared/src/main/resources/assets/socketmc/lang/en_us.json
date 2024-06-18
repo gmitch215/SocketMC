@@ -2,5 +2,20 @@
   "gui.socketmc.title": "SocketMC",
   "gui.socketmc.permissions": "Mod Permissions",
   "gui.socketmc.audit_log": "Audit Log",
-  "gui.socketmc.open_audit_log": "Open Audit Log"
+  "gui.socketmc.open_audit_log": "Open Audit Log",
+  "gui.socketmc.no_logs": "No Logs Yet...",
+  "gui.socketmc.website": "Website",
+
+  "gui.socketmc.permission.required": "Required Permissions",
+  "gui.socketmc.permission.required.tooltip": "The permission for the mod to be enabled and work properly.",
+  "gui.socketmc.permission.use_gui": "Use GUI",
+  "gui.socketmc.permission.use_gui.tooltip": "Permission to manage the GUI. This permission includes everything used to manage what you see, confined to the game's operations, excluding screens.",
+  "gui.socketmc.permission.use_screens": "Use Screens",
+  "gui.socketmc.permission.use_screens.tooltip": "Permission to open and close default and user-generated screens.",
+  "gui.socketmc.permission.use_audio": "Use Audio",
+  "gui.socketmc.permission.use_audio.tooltip": "Permission to use the audio system.",
+  "gui.socketmc.permission.open_links": "Open Links",
+  "gui.socketmc.permission.open_links.tooltip": "Permission to open HTTP(S) links.",
+  "gui.socketmc.permission.external_applications": "External Applications",
+  "gui.socketmc.permission.external_applications.tooltip": "Permission to use external applications and integrations. Includes opening non-HTTP(S) links, such as 'mailto:' links."
 }
