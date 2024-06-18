@@ -5,10 +5,15 @@ import net.md_5.bungee.chat.ComponentSerializer;
 import org.bukkit.ChatColor;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serial;
+
 /**
  * Represents a text element to be displayed on the client's screen, built by a {@link String}. This class will automatically strip color codes from  {@link #getText()}.
  */
-public class BukkitText extends PlainText {
+public final class BukkitText extends PlainText {
+
+    @Serial
+    private static final long serialVersionUID = -4314124883799428436L;
 
     /**
      * Constructs a new, empty text element.

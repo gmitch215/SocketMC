@@ -2,10 +2,15 @@ package me.gamercoder215.socketmc.util.render.text;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serial;
+
 /**
  * Represents text formatted from a JSON string.
  */
 public final class JsonText extends Text {
+
+    @Serial
+    private static final long serialVersionUID = -5903273251734745980L;
 
     private String json;
 

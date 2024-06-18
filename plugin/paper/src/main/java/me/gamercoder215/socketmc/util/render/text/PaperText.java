@@ -4,10 +4,15 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.json.JSONComponentSerializer;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.Serial;
+
 /**
  * Represents a text element to be displayed on the client's screen, built by a {@link Component}.
  */
-public class PaperText extends Text {
+public final class PaperText extends Text {
+
+    @Serial
+    private static final long serialVersionUID = -6703514615845654180L;
 
     /**
      * The text content for this text element.

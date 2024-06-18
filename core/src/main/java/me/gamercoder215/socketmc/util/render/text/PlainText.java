@@ -3,11 +3,15 @@ package me.gamercoder215.socketmc.util.render.text;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
+import java.io.Serial;
 
 /**
  * Represents a text element with plain text.
  */
 public class PlainText extends Text {
+
+    @Serial
+    private static final long serialVersionUID = 4975001937148919701L;
 
     /**
      * The text content for this text element.
@@ -112,5 +116,15 @@ public class PlainText extends Text {
     @NotNull
     public static PlainText empty() {
         return new PlainText("");
+    }
+
+    /**
+     * Creates a new text element with the specified text content.
+     * @param text Text Content
+     * @return Text Element
+     */
+    @NotNull
+    public static PlainText of(@NotNull String text) {
+        return new PlainText(text);
     }
 }
