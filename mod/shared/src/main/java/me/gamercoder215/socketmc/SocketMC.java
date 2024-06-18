@@ -55,18 +55,22 @@ public interface SocketMC {
             }
 
             FileReader reader = new FileReader(config);
-            return GSON.fromJson(reader, JsonObject.class);
+
+            JsonObject o = GSON.fromJson(reader, JsonObject.class);
+            return o == null ? new JsonObject() : o;
         } catch (IOException e) {
             print(e);
             return new JsonObject();
         }
     }
 
-    static <T> T config(String path, Class<T> type) {
+    static <T> T config(String path, Class<T> type, T def) {
         JsonObject object = config();
-        if (!object.has(path)) return null;
+        if (object.isEmpty()) return def;
+        if (!object.has(path)) return def;
 
-        return GSON.fromJson(object.get(path), type);
+        T value = GSON.fromJson(object.get(path), type);
+        return value == null ? def : value;
     }
 
     static void writeConfig(Consumer<JsonObject> consumer) {
@@ -74,6 +78,7 @@ public interface SocketMC {
 
         consumer.accept(object);
         String out = GSON.toJson(object);
+        writeConfig(out);
     }
 
     static void writeConfig(String out) {
@@ -102,6 +107,7 @@ public interface SocketMC {
             if (plugins == null) plugins = new JsonObject();
 
             JsonObject data = GSON.toJsonTree(plugin).getAsJsonObject();
+            data.addProperty("last_updated", System.currentTimeMillis());
 
             plugins.add(plugin.getMainClass(), data);
             config.add(PLUGINS, plugins);
@@ -120,7 +126,7 @@ public interface SocketMC {
 
     static List<SocketPlugin> plugins() {
         JsonObject object = config();
-        if (!object.has(PLUGINS)) return List.of();
+        if (!object.has(PLUGINS)) return new ArrayList<>();
 
         List<SocketPlugin> plugins = new ArrayList<>();
         JsonObject plugins0 = object.getAsJsonObject(PLUGINS);
@@ -131,10 +137,11 @@ public interface SocketMC {
     }
 
     static boolean isPermissionEnabled(ModPermission permission) {
-        return config("permissions." + permission.name().toLowerCase(), Boolean.class);
+        return config("permissions." + permission.name().toLowerCase(), Boolean.class, permission.getDefaultValue());
     }
 
     static boolean isPermissionEnabled(SocketPlugin plugin, ModPermission permission) {
+        if (plugin == null) return isPermissionEnabled(permission);
         JsonObject config = config();
 
         JsonObject plugins = config.getAsJsonObject(PLUGINS);
@@ -149,12 +156,15 @@ public interface SocketMC {
 
     static void setPermissionEnabled(ModPermission permission, boolean value) {
         String key = "permissions." + permission.name().toLowerCase();
-        writeConfig(config -> {
-            if (value) config.addProperty(key, value); else config.remove(key);
-        });
+        writeConfig(config -> config.addProperty(key, value));
     }
 
     static void setPermissionEnabled(SocketPlugin plugin, ModPermission permission, boolean value) {
+        if (plugin == null) {
+            setPermissionEnabled(permission, value);
+            return;
+        }
+
         String key = "permissions." + permission.name().toLowerCase();
         writeConfig(config -> {
             JsonObject plugins = config.getAsJsonObject(PLUGINS);
