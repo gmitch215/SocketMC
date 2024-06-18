@@ -1,0 +1,3 @@
+files:
+  - source: core/src/main/resources/lang/*.json
+    translation: core/src/main/resources/lang/%locale%.json
