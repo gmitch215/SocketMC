@@ -75,7 +75,7 @@ public final class Instruction implements Serializable {
      * Instruction to log a message in the client's logs. This is not the same thing as the {@link AuditLog} API.
      */
     @InstructionPermission(ModPermission.REQUIRED)
-    public static final String LOG_MESSAGE = "log";
+    public static final String LOG_MESSAGE = "log_message";
 
     /**
      * Instruction to draw a texture on the client's screen.
