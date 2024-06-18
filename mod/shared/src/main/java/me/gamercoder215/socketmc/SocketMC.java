@@ -145,11 +145,11 @@ public interface SocketMC {
         JsonObject config = config();
 
         JsonObject plugins = config.getAsJsonObject(PLUGINS);
-        if (plugins == null) return false;
+        if (plugins == null) return isPermissionEnabled(permission);
 
         JsonObject plugin0 = plugins.getAsJsonObject(plugin.getMainClass());
-        if (plugin0 == null) return false;
-        if (!plugin0.has("permissions")) return false;
+        if (plugin0 == null) return isPermissionEnabled(permission);
+        if (!plugin0.has("permissions")) return isPermissionEnabled(permission);
 
         return plugin0.has("permissions." + permission.name().toLowerCase());
     }
