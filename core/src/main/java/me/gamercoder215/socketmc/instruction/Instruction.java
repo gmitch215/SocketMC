@@ -1,5 +1,6 @@
 package me.gamercoder215.socketmc.instruction;
 
+import me.gamercoder215.socketmc.config.ModPermission;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.util.Identifier;
 import me.gamercoder215.socketmc.util.render.text.Text;
@@ -14,6 +15,8 @@ import java.awt.*;
 import java.io.*;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.net.URI;
+import java.net.URL;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +33,7 @@ import java.util.Objects;
  *     <li>Instructions are serializable and can be sent over the network as byte arrays.</li>
  *     <li>All X, Y, Height, Width, and other measurements used in drawing instructions are in pixels.</li>
  *     <li>Players render things on the screen based on their own FPS (Frames Per Second), hence the provision of timed renderings in milliseconds.</li>
+ *     <li>SocketMC v0.1.3 introduced a permission system that allows or disallows specific types of Instructions. If permission is not given, the Instruction will <i>silently</i> fail.</li>
  * </ul>
  */
 public final class Instruction implements Serializable {
@@ -39,53 +43,87 @@ public final class Instruction implements Serializable {
     /**
      * Instruction to verify SocketMC is present. This then enables events to be sent from the client to the server, if not already enabled.
      */
+    @InstructionPermission(ModPermission.REQUIRED)
     public static final String PING = "ping";
 
     /**
      * Instruction to draw text on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_TEXT = "draw_text";
 
     /**
      * Instruction to draw a rectangle on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_SHAPE = "draw_shape";
 
     /**
      * Instruction to play audio on the client's device. This supports all audio formats supported by the client, according to its JDK. Most commonly is {@code .wav} and {@code .au}.
      * @see AudioSystem#getAudioFileTypes()
      */
+    @InstructionPermission(ModPermission.USE_AUDIO)
     public static final String PLAY_AUDIO = "play_audio";
 
     /**
      * Instruction to set the draw buffer for the client. This is used to draw complex shapes on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_BUFFER = "draw_buffer";
 
     /**
      * Instruction to log a message in the client's logs. This is not the same thing as the {@link AuditLog} API.
      */
-    public static final String LOG_MESSAGE = "log";
+    @InstructionPermission(ModPermission.REQUIRED)
+    public static final String LOG_MESSAGE = "log_message";
 
     /**
      * Instruction to draw a texture on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_TEXTURE = "draw_texture";
 
     /**
      * Instruction to open an empty book and quill GUI on the client's screen, allowing for long text input.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String OPEN_BOOK_AND_QUILL = "open_book_and_quill";
 
     /**
      * Instruction to open a GUI screen on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String OPEN_SCREEN = "open_screen";
 
     /**
      * Instruction to close the current GUI screen on the client's screen.
      */
+    @InstructionPermission(ModPermission.USE_SCREENS)
     public static final String CLOSE_SCREEN = "close_screen";
+
+    /**
+     * Instruction to modify the functionality of a specific client renderer.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String RENDERER = "renderer";
+
+    /**
+     * Instruction to draw a beacon beam in the world.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String DRAW_BEACON_BEAM = "draw_beacon_beam";
+
+    /**
+     * Instruction to open an external link in the client's browser.
+     */
+    @InstructionPermission(ModPermission.OPEN_LINKS)
+    public static final String OPEN_LINK = "open_link";
+
+    /**
+     * Instruction to open an external address in the client's default email application.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String MAILTO = "mailto";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -155,6 +193,15 @@ public final class Instruction implements Serializable {
         return type.cast(parameters.getLast());
     }
 
+    /**
+     * Gets the permission required to execute this instruction.
+     * @return Instruction Permission
+     */
+    @NotNull
+    public ModPermission getPermission() {
+        return getPermission(id);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -196,6 +243,21 @@ public final class Instruction implements Serializable {
         }
 
         return ids.toArray(String[]::new);
+    }
+
+    /**
+     * Gets the permission required to execute an instruction by its ID.
+     * @param id Instruction ID
+     * @return Instruction Permission
+     */
+    @NotNull
+    public static ModPermission getPermission(@NotNull String id) {
+        try {
+            Field f = Instruction.class.getDeclaredField(id.toUpperCase());
+            return f.getAnnotation(InstructionPermission.class).value();
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException("Failed to get permission for instruction: " + id, e);
+        }
     }
 
     // Instruction Creation
@@ -1114,6 +1176,218 @@ public final class Instruction implements Serializable {
     @NotNull
     public static Instruction closeScreen() {
         return new Instruction(CLOSE_SCREEN, List.of());
+    }
+
+    /**
+     * Creates a {@link #RENDERER} instruction.
+     * @param instruction Render Instruction to use
+     * @return Renderer Instruction
+     * @throws IllegalArgumentException If the render instruction is null, or sub-ordinal is {@code -1}
+     */
+    @NotNull
+    public static Instruction renderer(@NotNull RenderInstruction instruction) throws IllegalArgumentException {
+        if (instruction == null) throw new IllegalArgumentException("Instruction cannot be null");
+        if (instruction.getSubOrdinal() == -1) throw new IllegalArgumentException("Please specify a rendering operation");
+
+        return new Instruction(RENDERER, List.of(instruction));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, 0xF9FFFE, 0, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), 0, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, yOffset, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, or the color is null
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (yOffset < 0) throw new IllegalArgumentException("Y Offset cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), yOffset, 0.2F, 0.25F, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color (default: {@code 0xF9FFFE})
+     * @param yOffset Y Offset for Beam
+     * @param beamRadius Beam Radius (default: {@code 0.2F})
+     * @param glowRadius Glow Radius (default: {@code 0.25F})
+     * @param duration Time Duration
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the radii are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, float beamRadius, float glowRadius, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawBeaconBeam(x, y, z, height, color, yOffset, beamRadius, glowRadius, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_BEACON_BEAM} instruction.
+     * @param x X Coordinate for Beam
+     * @param y Y Coordinate for Beam
+     * @param z Z Coordinate for Beam
+     * @param height Height of Beam
+     * @param color Beam Color
+     * @param yOffset Y Offset for Beam
+     * @param beamRadius Beam Radius
+     * @param glowRadius Glow Radius
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Beacon Beam Instruction
+     * @throws IllegalArgumentException If the coordinates, dimensions, or duration are negative, the color is null, or the radii are negative
+     */
+    @NotNull
+    public static Instruction drawBeaconBeam(int x, int y, int z, int height, @NotNull Color color, int yOffset, float beamRadius, float glowRadius, long millis) throws IllegalArgumentException {
+        if (x < 0 || y < 0 || z < 0 || height < 0) throw new IllegalArgumentException("Coordinates and dimensions cannot be negative");
+        if (color == null) throw new IllegalArgumentException("Color cannot be null");
+        if (yOffset < 0) throw new IllegalArgumentException("Y Offset cannot be negative");
+        if (beamRadius < 0 || glowRadius < 0) throw new IllegalArgumentException("Radius cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_BEACON_BEAM, List.of(x, y, z, height, color.getRGB(), yOffset, beamRadius, glowRadius, millis));
+    }
+
+    /**
+     * Creates a {@link #OPEN_LINK} instruction.
+     * @param uri URI to Open
+     * @return Open Link Instruction
+     * @throws IllegalArgumentException If the URL is null
+     */
+    @NotNull
+    public static Instruction openLink(@NotNull URI uri) throws IllegalArgumentException {
+        if (uri == null) throw new IllegalArgumentException("URI cannot be null");
+
+        return new Instruction(OPEN_LINK, List.of(uri));
+    }
+
+    /**
+     * Creates a {@link #MAILTO} instruction.
+     * @param email Email Address
+     * @return Mailto Instruction
+     * @throws IllegalArgumentException If the email is null, or not a valid email address
+     * @see InstructionUtil#isEmailAddress(String)
+     */
+    @NotNull
+    public static Instruction mailto(@NotNull String email) throws IllegalArgumentException {
+        if (email == null) throw new IllegalArgumentException("Email cannot be null");
+        if (!InstructionUtil.isEmailAddress(email)) throw new IllegalArgumentException("Email must be a valid email address");
+
+        return mailto(URI.create("mailto:" + email));
+    }
+
+    /**
+     * Creates a {@link #MAILTO} instruction.
+     * @param mailto Mailto URI
+     * @return Mailto Instruction
+     * @throws IllegalArgumentException If the URI is null or not a {@code mailto:} URI
+     */
+    @NotNull
+    public static Instruction mailto(@NotNull URI mailto) throws IllegalArgumentException {
+        if (mailto == null) throw new IllegalArgumentException("Email cannot be null");
+        if (mailto.getScheme() == null || !mailto.getScheme().equals("mailto")) throw new IllegalArgumentException("URI must be a mailto: URI");
+
+        return new Instruction(MAILTO, List.of(mailto));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

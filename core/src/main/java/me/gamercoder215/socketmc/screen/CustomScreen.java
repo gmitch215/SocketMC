@@ -17,6 +17,8 @@ public final class CustomScreen extends AbstractScreen {
 
     private String titleJSON;
     private String narrationMessageJSON;
+    private ScreenBackground background = ScreenBackground.DEFAULT;
+
     private final List<Positionable> children = new ArrayList<>();
 
     /**
@@ -79,9 +81,12 @@ public final class CustomScreen extends AbstractScreen {
     /**
      * Adds a child to this screen.
      * @param child the child element
+     * @throws IllegalArgumentException if the child is null or if an element already exists at the same position
      */
-    public void addChild(@NotNull Positionable child) {
+    public void addChild(@NotNull Positionable child) throws IllegalArgumentException {
         if (child == null) throw new IllegalArgumentException("Child cannot be null");
+        if (children.stream().anyMatch(c -> c.inSamePosition(child))) throw new IllegalArgumentException("An element already exists at this position (" + child.getX() + ", " + child.getY() + ")");
+
         children.add(child);
     }
 
@@ -108,6 +113,25 @@ public final class CustomScreen extends AbstractScreen {
     @NotNull
     public List<Positionable> getChildren() {
         return List.copyOf(children);
+    }
+
+    /**
+     * Gets the background of this screen.
+     * @return Screen Background
+     */
+    @NotNull
+    public ScreenBackground getBackground() {
+        return background;
+    }
+
+    /**
+     * Sets the background of this screen.
+     * @param background Screen Background
+     * @throws IllegalArgumentException if the background is null
+     */
+    public void setBackground(@NotNull ScreenBackground background) throws IllegalArgumentException {
+        if (background == null) throw new IllegalArgumentException("Background cannot be null");
+        this.background = background;
     }
 
     @Override

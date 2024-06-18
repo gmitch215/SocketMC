@@ -3,3 +3,5 @@ build/
 .gradle/
 .kotlin/
 logs/
+.DS_Store
+run/

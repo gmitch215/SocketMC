@@ -1,0 +1,21 @@
+{
+  "gui.socketmc.title": "SocketMC",
+  "gui.socketmc.permissions": "Permisos de Mod",
+  "gui.socketmc.audit_log": "Registro de Auditoría",
+  "gui.socketmc.open_audit_log": "Abrir Registro de Auditoría",
+  "gui.socketmc.no_logs": "No hay Registros...",
+  "gui.socketmc.website": "Página Web",
+
+  "gui.socketmc.permission.required": "Permiso Requerido",
+  "gui.socketmc.permission.required.tooltip": "Este mod requiere permisos para funcionar correctamente.",
+  "gui.socketmc.permission.use_gui": "Usar GUI",
+  "gui.socketmc.permission.use_gui.tooltip": "Permiso para gestionar la GUI. Este permiso incluye todo lo que se utiliza para gestionar lo que ves, limitado a las operaciones del juego, excluyendo las pantallas.",
+  "gui.socketmc.permission.use_screens": "Usar Pantallas",
+  "gui.socketmc.permission.use_screens.tooltip": "Permiso para usar las pantallas en Minecraft.",
+  "gui.socketmc.permission.use_audio": "Usar Audio",
+  "gui.socketmc.permission.use_audio.tooltip": "Permiso para gestionar el audio. Este permiso incluye todo lo que se utiliza para gestionar el audio.",
+  "gui.socketmc.permission.open_links": "Abrir Enlaces",
+  "gui.socketmc.permission.open_links.tooltip": "Permiso para abrir enlaces en el navegador, como HTTP(S).",
+  "gui.socketmc.permission.external_applications": "Aplicaciones Externas",
+  "gui.socketmc.permission.external_applications.tooltip": "Permiso para abrir otros aplicaciones externas. Esto incluye enlaces que no están en el navegador, como 'mailto:'.",
+}

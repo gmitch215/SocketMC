@@ -38,6 +38,17 @@ public final class ScreenBuilder {
         return this;
     }
 
+    /**
+     * Sets the title of the screen.
+     * @param title The title of the screen.
+     * @return this class, for chaining
+     */
+    @NotNull
+    public ScreenBuilder title(@NotNull String title) {
+        screen.setTitle(new PlainText(title));
+        return this;
+    }
+
     // Builder - Widgets
 
     /**

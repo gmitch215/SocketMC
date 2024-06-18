@@ -5,24 +5,28 @@ import me.gamercoder215.socketmc.fabric.FabricUtil;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.DefaultScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
+import me.gamercoder215.socketmc.screen.ScreenWidget;
+import me.gamercoder215.socketmc.screen.ui.CycleButton;
 import me.gamercoder215.socketmc.screen.ui.ImageButton;
 import me.gamercoder215.socketmc.screen.ui.ImageWidget;
 import me.gamercoder215.socketmc.screen.ui.*;
 import me.gamercoder215.socketmc.screen.util.Tooltip;
+import me.gamercoder215.socketmc.util.render.text.JsonText;
+import me.gamercoder215.socketmc.util.render.text.Text;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
 import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
+import java.util.function.Function;
 
 import static me.gamercoder215.socketmc.fabric.FabricSocketMC.minecraft;
 
+@SuppressWarnings({"unchecked", "rawtypes"})
 public final class FabricScreenUtil {
 
     private FabricScreenUtil() {}
@@ -48,6 +52,38 @@ public final class FabricScreenUtil {
             case ShareToLanScreen ignored -> DefaultScreen.SHARE_TO_LAN;
             case AdvancementsScreen ignored -> DefaultScreen.ADVANCEMENTS;
             case StatsScreen ignored -> DefaultScreen.STATS;
+
+            case AlertScreen s -> {
+                JsonText title = FabricUtil.toText(s.getTitle());
+                JsonText message = FabricUtil.toText(s.messageText);
+                JsonText button = FabricUtil.toText(s.okButton);
+
+                yield DefaultScreen.alert(title, message);
+            }
+            case DisconnectedScreen s -> {
+                JsonText title = FabricUtil.toText(s.getTitle());
+                JsonText reason = FabricUtil.toText(s.reason);
+                JsonText button = FabricUtil.toText(s.buttonText);
+
+                yield DefaultScreen.disconnected(title, reason);
+            }
+            case GenericMessageScreen s -> {
+                JsonText message = FabricUtil.toText(s.getTitle());
+
+                yield DefaultScreen.message(message);
+            }
+            case DeathScreen s -> {
+                JsonText cause = FabricUtil.toText(s.causeOfDeath);
+                boolean hardcore = s.hardcore;
+
+                yield DefaultScreen.death(cause, hardcore);
+            }
+            case ErrorScreen s -> {
+                JsonText title = FabricUtil.toText(s.getTitle());
+                JsonText message = FabricUtil.toText(s.message);
+
+                yield DefaultScreen.error(title, message);
+            }
             default -> null;
         };
     }
@@ -71,6 +107,13 @@ public final class FabricScreenUtil {
         if (s0 == null) return;
 
         FabricSocketMC.sendEvent(7, Map.of("screen", s0, "widget", fromMinecraft(w), "text", s));
+    };
+
+    static final net.minecraft.client.gui.components.CycleButton.OnValueChange<Object> CYCLE_BUTTON_EVENT = (b, o) -> {
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
+        if (s0 == null) return;
+
+        FabricSocketMC.sendEvent(8, Map.of("screen", s0, "button", fromMinecraft(b), "value", o));
     };
 
     public static AbstractWidget toMinecraft(Positionable renderable) {
@@ -100,8 +143,10 @@ public final class FabricScreenUtil {
             }
             case ImageWidget widget -> {
                 net.minecraft.client.gui.components.ImageWidget w = switch (widget.getType()) {
-                    case TEXTURE -> net.minecraft.client.gui.components.ImageWidget.texture(width, height, FabricUtil.toMinecraft(widget.getLocation()), width, height);
-                    case SPRITE -> net.minecraft.client.gui.components.ImageWidget.sprite(width, height, FabricUtil.toMinecraft(widget.getLocation()));
+                    case TEXTURE ->
+                            net.minecraft.client.gui.components.ImageWidget.texture(width, height, FabricUtil.toMinecraft(widget.getLocation()), width, height);
+                    case SPRITE ->
+                            net.minecraft.client.gui.components.ImageWidget.sprite(width, height, FabricUtil.toMinecraft(widget.getLocation()));
                 };
                 w.setPosition(x, y);
 
@@ -118,13 +163,29 @@ public final class FabricScreenUtil {
             case TextButton button -> Button.builder(message, BUTTON_PRESS_EVENT).bounds(x, y, width, height).build();
             case ImageButton button ->
                     new net.minecraft.client.gui.components.ImageButton(x, y, width, height, FabricUtil.toMinecraft(button.getSprite()), BUTTON_PRESS_EVENT);
-            case CheckboxButton button -> Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
-            case SendInstructionButton button -> new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
+            case CheckboxButton button ->
+                    Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
+            case SendInstructionButton button ->
+                    new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
+            case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
+            case CycleButton button -> {
+                Function<Object, Component> stringifier = o -> FabricUtil.fromJson(((Text) button.getStringifier().apply(o)).toJSON());
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+                yield net.minecraft.client.gui.components.CycleButton
+                        .builder(stringifier)
+                        .withValues(button.getValues())
+                        .create(x, y, width, height, message, CYCLE_BUTTON_EVENT);
+            }
+
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(FabricUtil.toMinecraft(tooltip));
+
+        ScreenWidget f0 = (ScreenWidget) w0;
+        f0.socketMC$addClickListeners(renderable.getListeners());
+
         return w0;
     }
 
@@ -148,13 +209,23 @@ public final class FabricScreenUtil {
             // Buttons
             case net.minecraft.client.gui.components.ImageButton button -> new ImageButton(x, y, width, height, FabricUtil.fromMinecraft(button.sprites));
             case FabricSendInstructionButton button -> new SendInstructionButton(x, y, width, height, FabricUtil.toJson(button.getMessage()), button.instruction);
+            case LockIconButton button -> new LockButton(x, y);
             case Button button -> new TextButton(x, y, width, height, FabricUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, FabricUtil.toJson(button.getMessage()));
+            case net.minecraft.client.gui.components.CycleButton button -> {
+                Function<Object, Text> stringifier = o -> JsonText.raw(FabricUtil.toJson((Component) button.valueStringifier.apply(o)));
+                yield new CycleButton(x, y, width, height, JsonText.raw(FabricUtil.toJson(button.getMessage())), stringifier, button.values.getDefaultList());
+            }
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(tooltip);
+
+        ScreenWidget f0 = (ScreenWidget) renderable;
+        f0.socketMC$getClickListeners().forEach(w0::onClick);
+
         return w0;
     }
 

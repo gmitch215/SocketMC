@@ -12,6 +12,7 @@ val parchment = project.ext["parchment"].toString()
 
 dependencies {
     api(project(":socketmc-core"))
+    api(project(":socketmc-shared"))
 
     minecraft("net.minecraftforge:forge:$minecraft-50.0.13")
 
@@ -22,6 +23,19 @@ minecraft {
     mappings("parchment", "$parchment-$minecraft")
 
     accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
+
+    runs {
+        create("client") {
+            workingDirectory = "run"
+            taskName = "runForgeClient"
+
+            mods {
+                create("modClientRun") {
+                    source(sourceSets["main"])
+                }
+            }
+        }
+    }
 }
 
 mixin {
@@ -34,12 +48,17 @@ mixin {
 tasks {
     jar {
         from(project(":socketmc-core").sourceSets["main"].output)
+        from(project(":socketmc-shared").sourceSets["main"].output)
     }
 
     processResources {
         filesMatching("**/*.toml") {
             expand(project.properties)
         }
+    }
+
+    named("modrinth") {
+        dependsOn("reobfJar")
     }
 }
 
@@ -51,7 +70,7 @@ modrinth {
     versionNumber.set(version.toString())
     versionType.set(project.ext["version_type"].toString())
 
-    uploadFile.set(tasks.jar)
+    uploadFile.set(tasks.jar.get().archiveFile.get().asFile)
     gameVersions.add(project.ext["minecraft_version"].toString())
     changelog.set(project.ext["changelog"].toString())
 

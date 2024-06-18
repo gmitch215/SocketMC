@@ -2,19 +2,16 @@ package me.gamercoder215.socketmc.fabric;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
-import me.gamercoder215.socketmc.fabric.machines.DrawBufferMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawShapeMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawTextMachine;
-import me.gamercoder215.socketmc.fabric.machines.DrawTextureMachine;
+import me.gamercoder215.socketmc.SocketMC;
+import me.gamercoder215.socketmc.fabric.machines.*;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,9 +19,8 @@ import java.io.ObjectOutputStream;
 import java.util.Map;
 
 @Environment(EnvType.CLIENT)
-public final class FabricSocketMC implements ClientModInitializer {
+public final class FabricSocketMC implements SocketMC, ClientModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("SocketMC");
     public static boolean eventsEnabled = false;
 
     public static Minecraft minecraft;
@@ -32,10 +28,12 @@ public final class FabricSocketMC implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         minecraft = Minecraft.getInstance();
+        GAME_DIRECTORY.set(minecraft.gameDirectory);
 
         // Events
         FabricEvents events = new FabricEvents();
         ClientPlayConnectionEvents.DISCONNECT.register((handler, client) -> events.onDisconnect());
+        ServerTickEvents.END_SERVER_TICK.register(client -> events.tick());
 
         // Events - Machines
         HudRenderCallback.EVENT.register((graphics, delta) -> {
@@ -43,19 +41,8 @@ public final class FabricSocketMC implements ClientModInitializer {
             DrawShapeMachine.frameTick(graphics, delta);
             DrawBufferMachine.frameTick(graphics, delta);
             DrawTextureMachine.frameTick(graphics, delta);
+            DrawBeaconBeamMachine.frameTick(graphics, delta);
         });
-    }
-
-    public static void print(Throwable t) {
-        LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());
-        LOGGER.error("-----------");
-        LOGGER.error(t.getMessage());
-        for (StackTraceElement element : t.getStackTrace()) LOGGER.error("  {}", element.toString());
-
-        if (t.getCause() != null) {
-            LOGGER.error("Caused by:");
-            print(t.getCause());
-        }
     }
 
     public static void sendEvent(int id, Map<String, Object> params) {
@@ -78,7 +65,7 @@ public final class FabricSocketMC implements ClientModInitializer {
             if (!future.isSuccess())
                 throw new IOException("Failed to send event", future.cause());
         } catch (IOException | InterruptedException e) {
-            print(e);
+            SocketMC.print(e);
         }
     }
 

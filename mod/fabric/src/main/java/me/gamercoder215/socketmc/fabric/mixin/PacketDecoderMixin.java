@@ -2,12 +2,15 @@ package me.gamercoder215.socketmc.fabric.mixin;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
-import me.gamercoder215.socketmc.fabric.FabricAuditLog;
-import me.gamercoder215.socketmc.fabric.FabricSocketMC;
+import me.gamercoder215.socketmc.ModAuditLog;
+import me.gamercoder215.socketmc.SocketMC;
+import me.gamercoder215.socketmc.config.ModPermission;
 import me.gamercoder215.socketmc.fabric.machines.FabricMachineFinder;
 import me.gamercoder215.socketmc.instruction.Instruction;
+import me.gamercoder215.socketmc.machines.MachineFinder;
 import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.PacketDecoder;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -17,7 +20,7 @@ import java.util.List;
 
 import static me.gamercoder215.socketmc.fabric.FabricSocketMC.minecraft;
 
-@Mixin(targets = "net.minecraft.network.PacketDecoder")
+@Mixin(PacketDecoder.class)
 public class PacketDecoderMixin {
 
     @Inject(method = "decode", at = @At("HEAD"), cancellable = true)
@@ -39,16 +42,24 @@ public class PacketDecoderMixin {
 
                 minecraft.execute(() -> {
                     try {
-                        FabricMachineFinder.getMachine(i.getId()).onInstruction(i);
-                        FabricSocketMC.LOGGER.info(FabricAuditLog.CLIENT_RECEIVED_MESSAGE, i, i0.length);
-                        FabricAuditLog.INSTANCE.logReceived(i, p);
+                        ModPermission perm = i.getPermission();
+                        if (SocketMC.isPermissionEnabled(p, perm)) {
+                            MachineFinder.getMachine(FabricMachineFinder.MACHINES, i.getId()).onInstruction(i);
+                        } else {
+                            SocketMC.LOGGER.warn("Plugin {} tried to execute instruction {} without permission", p.getPluginName(), i.getId());
+                            ModAuditLog.INSTANCE.log("Plugin " + p.getPluginName() + " tried to execute instruction '" + i.getId() + "' without permission");
+                        }
+
+                        SocketMC.LOGGER.info(ModAuditLog.CLIENT_RECEIVED_MESSAGE, i, i0.length);
+                        SocketMC.addPlugin(p);
+                        ModAuditLog.INSTANCE.logReceived(i, p);
                     } catch (Exception e) {
-                        FabricSocketMC.print(e);
+                        SocketMC.print(e);
                     }
                 });
             }
         } catch (Exception e) {
-            FabricSocketMC.print(e);
+            SocketMC.print(e);
         }
     }
 

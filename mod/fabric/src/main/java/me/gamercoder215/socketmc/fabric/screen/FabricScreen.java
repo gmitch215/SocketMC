@@ -1,15 +1,14 @@
 package me.gamercoder215.socketmc.fabric.screen;
 
-import me.gamercoder215.socketmc.fabric.FabricSocketMC;
 import me.gamercoder215.socketmc.fabric.FabricUtil;
 import me.gamercoder215.socketmc.screen.CustomScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Map;
 
 public final class FabricScreen extends Screen {
 
@@ -32,13 +31,26 @@ public final class FabricScreen extends Screen {
     @Override
     public void init() {
         List<Positionable> children = handle.getChildren();
-        for (Positionable child: children)
+        for (Positionable child : children)
             addRenderableWidget(FabricScreenUtil.toMinecraft(child));
     }
 
     @Override
     public void onClose() {
         minecraft.setScreen(previousScreen);
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        switch (handle.getBackground()) {
+            case DEFAULT -> super.renderBackground(graphics, mouseX, mouseY, partialTick);
+            case PANORAMA -> {
+                renderPanorama(graphics, partialTick);
+                renderBlurredBackground(partialTick);
+                renderMenuBackground(graphics);
+            }
+            case TRANSPARENT -> renderTransparentBackground(graphics);
+        }
     }
 
 }

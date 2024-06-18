@@ -1,6 +1,6 @@
 package me.gamercoder215.socketmc.util
 
-// Sizeable
+// ElementBounds
 
 operator fun ElementBounds.unaryPlus(): ElementBounds =
     ElementBounds(+width, +height)

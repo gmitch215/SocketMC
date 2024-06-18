@@ -22,8 +22,8 @@ tasks {
 
         options {
             require(this is StandardJavadocDocletOptions)
+            showFromProtected()
 
-            links("https://hub.spigotmc.org/javadocs/spigot/")
             links("https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/")
         }
     }
@@ -32,4 +32,9 @@ tasks {
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+// Bundled with Minecraft
+dependencies {
+    compileOnly("org.joml:joml:1.10.5")
 }

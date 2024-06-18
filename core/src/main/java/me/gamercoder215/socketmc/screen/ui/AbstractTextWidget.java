@@ -84,4 +84,12 @@ public abstract class AbstractTextWidget extends AbstractWidget {
         if (message == null) throw new IllegalArgumentException("Message cannot be null");
         this.messageJSON = message.toJSON();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!super.equals(obj)) return false;
+
+        AbstractTextWidget that = (AbstractTextWidget) obj;
+        return messageJSON.equals(that.messageJSON);
+    }
 }

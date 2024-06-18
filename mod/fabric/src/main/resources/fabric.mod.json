@@ -1,10 +1,14 @@
 {
   "schemaVersion": 1,
   "id": "${project.ext.id}",
+  "environment": "client",
   "version": "${project.version}",
   "entrypoints": {
     "client": [
       "me.gamercoder215.socketmc.fabric.FabricSocketMC"
+    ],
+    "modmenu": [
+      "me.gamercoder215.socketmc.fabric.modmenu.SocketModMenu"
     ]
   },
 

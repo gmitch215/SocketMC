@@ -1,9 +1,6 @@
 package me.gamercoder215.socketmc.forge.mixin;
 
-import me.gamercoder215.socketmc.forge.machines.DrawBufferMachine;
-import me.gamercoder215.socketmc.forge.machines.DrawShapeMachine;
-import me.gamercoder215.socketmc.forge.machines.DrawTextMachine;
-import me.gamercoder215.socketmc.forge.machines.DrawTextureMachine;
+import me.gamercoder215.socketmc.forge.machines.*;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
 import org.spongepowered.asm.mixin.Mixin;
@@ -20,6 +17,7 @@ public class GuiMixin {
         DrawShapeMachine.frameTick(drawContext, tickDelta);
         DrawBufferMachine.frameTick(drawContext, tickDelta);
         DrawTextureMachine.frameTick(drawContext, tickDelta);
+        DrawBeaconBeamMachine.frameTick(drawContext, tickDelta);
     }
 
 }

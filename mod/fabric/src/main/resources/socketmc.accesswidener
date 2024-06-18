@@ -3,6 +3,8 @@ accessWidener v2 named
 # Connection
 accessible field net/minecraft/network/Connection channel Lio/netty/channel/Channel;
 
+## Screen API
+
 # Tooltip
 accessible field net/minecraft/client/gui/components/Tooltip message Lnet/minecraft/network/chat/Component;
 accessible field net/minecraft/client/gui/components/Tooltip narration Lnet/minecraft/network/chat/Component;
@@ -21,3 +23,30 @@ accessible field net/minecraft/client/gui/components/FocusableTextWidget padding
 
 # ImageButton
 accessible field net/minecraft/client/gui/components/ImageButton sprites Lnet/minecraft/client/gui/components/WidgetSprites;
+
+# AlertScreen
+accessible field net/minecraft/client/gui/screens/AlertScreen messageText Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/AlertScreen okButton Lnet/minecraft/network/chat/Component;
+
+# DisconnectedScreen
+accessible field net/minecraft/client/gui/screens/DisconnectedScreen reason Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/DisconnectedScreen buttonText Lnet/minecraft/network/chat/Component;
+
+# DeathScreen
+accessible field net/minecraft/client/gui/screens/DeathScreen causeOfDeath Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/DeathScreen hardcore Z
+
+# ErrorScreen
+accessible field net/minecraft/client/gui/screens/ErrorScreen message Lnet/minecraft/network/chat/Component;
+
+# CycleButton
+accessible field net/minecraft/client/gui/components/CycleButton valueStringifier Ljava/util/function/Function;
+accessible field net/minecraft/client/gui/components/CycleButton values Lnet/minecraft/client/gui/components/CycleButton$ValueListSupplier;
+
+## Rendering API
+
+# Minecraft
+accessible field net/minecraft/client/Minecraft pausePartialTick F
+
+# GameRenderer
+accessible method net/minecraft/client/renderer/GameRenderer renderItemInHand (Lnet/minecraft/client/Camera;FLorg/joml/Matrix4f;)V

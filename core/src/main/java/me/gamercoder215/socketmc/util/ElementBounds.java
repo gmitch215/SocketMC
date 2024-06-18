@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * Utility class for sizeable and placeable objects.
+ * Utility class for 2D sizeable and placeable objects.
  */
 public final class ElementBounds implements Serializable {
 

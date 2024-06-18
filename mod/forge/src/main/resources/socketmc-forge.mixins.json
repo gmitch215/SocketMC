@@ -6,6 +6,8 @@
   "client": [
     "PacketDecoderMixin",
     "GuiMixin",
+    "AbstractWidgetMixin",
+    "OnlineOptionsScreenMixin",
 
     "events.PlayerPressKeyEvent",
     "events.PlayerMouseInputEvent",

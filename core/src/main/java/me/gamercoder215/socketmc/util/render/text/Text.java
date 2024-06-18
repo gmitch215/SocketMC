@@ -1,14 +1,20 @@
 package me.gamercoder215.socketmc.util.render.text;
 
+import java.io.Serial;
+import java.io.Serializable;
+
 /**
  * Represents a text element to be displayed on the client's screen.
  */
-public abstract class Text {
+public abstract class Text implements Serializable {
 
     /**
      * The height of a single line of text, in pixels.
      */
     public static final int FONT_HEIGHT = 9;
+
+    @Serial
+    private static final long serialVersionUID = 3440974387463824806L;
 
     /**
      * Whether this text element has a drop shadow.

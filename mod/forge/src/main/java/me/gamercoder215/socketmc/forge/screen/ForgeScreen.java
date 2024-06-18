@@ -3,6 +3,7 @@ package me.gamercoder215.socketmc.forge.screen;
 import me.gamercoder215.socketmc.forge.ForgeUtil;
 import me.gamercoder215.socketmc.screen.CustomScreen;
 import me.gamercoder215.socketmc.screen.Positionable;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
@@ -30,13 +31,26 @@ public final class ForgeScreen extends Screen {
     @Override
     public void init() {
         List<Positionable> children = handle.getChildren();
-        for (Positionable child: children)
+        for (Positionable child : children)
             addRenderableWidget(ForgeScreenUtil.toMinecraft(child));
     }
 
     @Override
     public void onClose() {
         minecraft.setScreen(previousScreen);
+    }
+
+    @Override
+    public void renderBackground(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        switch (handle.getBackground()) {
+            case DEFAULT -> super.renderBackground(graphics, mouseX, mouseY, partialTick);
+            case PANORAMA -> {
+                renderPanorama(graphics, partialTick);
+                renderBlurredBackground(partialTick);
+                renderMenuBackground(graphics);
+            }
+            case TRANSPARENT -> renderTransparentBackground(graphics);
+        }
     }
 
 }

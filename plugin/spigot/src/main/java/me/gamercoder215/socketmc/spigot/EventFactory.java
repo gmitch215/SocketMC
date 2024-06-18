@@ -6,13 +6,11 @@ import me.gamercoder215.socketmc.events.input.AsyncPlayerClickMouseEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerPressKeyEvent;
 import me.gamercoder215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
-import me.gamercoder215.socketmc.events.screen.AsyncPlayerChangeScreenEvent;
-import me.gamercoder215.socketmc.events.screen.AsyncPlayerClickButtonEvent;
-import me.gamercoder215.socketmc.events.screen.AsyncPlayerEditTextEvent;
-import me.gamercoder215.socketmc.events.screen.AsyncPlayerToggleCheckboxEvent;
+import me.gamercoder215.socketmc.events.screen.*;
 import me.gamercoder215.socketmc.screen.AbstractScreen;
 import me.gamercoder215.socketmc.screen.ui.AbstractButton;
 import me.gamercoder215.socketmc.screen.ui.CheckboxButton;
+import me.gamercoder215.socketmc.screen.ui.CycleButton;
 import me.gamercoder215.socketmc.screen.ui.EditTextWidget;
 import me.gamercoder215.socketmc.util.input.Action;
 import me.gamercoder215.socketmc.util.input.Key;
@@ -24,6 +22,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiFunction;
 
+@SuppressWarnings("unchecked")
 final class EventFactory {
 
     private EventFactory() {
@@ -101,6 +100,14 @@ final class EventFactory {
                 String text = (String) params.get("text");
 
                 return new AsyncPlayerEditTextEvent(widget, text, screen, p);
+            },
+            // PlayerCycleButtonEvent - 8
+            (p, params) -> {
+                CycleButton<Object> button = (CycleButton<Object>) params.get("button");
+                AbstractScreen screen = (AbstractScreen) params.get("screen");
+                Object value = params.get("value");
+
+                return new AsyncPlayerCycleButtonEvent(button, value, screen, p);
             }
     );
 

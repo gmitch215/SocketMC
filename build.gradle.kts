@@ -10,7 +10,7 @@ plugins {
     `maven-publish`
 
     // Mod
-    id("fabric-loom") version "1.7.0-alpha.5" apply false
+    id("fabric-loom") version "1.7.1" apply false
     id("net.minecraftforge.gradle") version "6.0.25" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
     id("org.spongepowered.mixin") version "0.7.+" apply false
@@ -35,21 +35,23 @@ tasks {
 
         options {
             require(this is StandardJavadocDocletOptions)
+            showFromProtected()
 
             overview = "core/src/main/javadoc/overview.html"
 
-            showFromProtected()
-
-            links("https://hub.spigotmc.org/javadocs/spigot/")
-            links("https://netty.io/5.0/api/")
-            links("https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/")
+            links(
+                "https://hub.spigotmc.org/javadocs/spigot/",
+                "https://netty.io/5.0/api/",
+                "https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/",
+                "https://jd.advntr.dev/api/4.17.0/"
+            )
         }
     }
 }
 
 allprojects {
     val mc = "1.20.6"
-    val pr = "0.1.2"
+    val pr = "0.1.3"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
@@ -86,6 +88,8 @@ allprojects {
         maven("https://maven.fabricmc.net/")
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.parchmentmc.org")
+        maven("https://maven.terraformersmc.com/")
+        maven("https://libraries.minecraft.net/")
     }
 
     publishing {
@@ -134,6 +138,10 @@ subprojects {
     apply(plugin = "org.jetbrains.kotlin.jvm")
 
     tasks {
+        clean {
+            delete("logs")
+        }
+
         compileJava {
             options.encoding = "UTF-8"
             options.isDeprecation = false
