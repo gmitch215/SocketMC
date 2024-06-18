@@ -1,10 +1,13 @@
-package me.gamercoder215.socketmc.fabric.mod;
+package me.gamercoder215.socketmc.forge.mod;
 
 import me.gamercoder215.socketmc.SocketMC;
 import me.gamercoder215.socketmc.config.ModPermission;
 import me.gamercoder215.socketmc.spigot.SocketPlugin;
 import net.minecraft.Util;
-import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.client.gui.components.FocusableTextWidget;
+import net.minecraft.client.gui.components.StringWidget;
+import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.layouts.GridLayout;
 import net.minecraft.client.gui.layouts.HeaderAndFooterLayout;
 import net.minecraft.client.gui.layouts.LayoutSettings;
@@ -18,7 +21,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static me.gamercoder215.socketmc.fabric.mod.MainScreen.PERMISSIONS;
+import static me.gamercoder215.socketmc.forge.mod.MainScreen.PERMISSIONS;
 
 public final class ModPermissionsScreen extends Screen {
 

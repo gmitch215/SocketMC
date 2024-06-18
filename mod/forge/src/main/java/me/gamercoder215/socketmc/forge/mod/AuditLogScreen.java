@@ -1,4 +1,4 @@
-package me.gamercoder215.socketmc.fabric.mod;
+package me.gamercoder215.socketmc.forge.mod;
 
 import me.gamercoder215.socketmc.ModAuditLog;
 import net.minecraft.Util;
@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
-import static me.gamercoder215.socketmc.fabric.mod.MainScreen.AUDIT_LOG;
+import static me.gamercoder215.socketmc.forge.mod.MainScreen.AUDIT_LOG;
 
 public final class AuditLogScreen extends Screen {
 
