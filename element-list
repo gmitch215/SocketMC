@@ -1,10 +1,10 @@
 me.gamercoder215.socketmc
+me.gamercoder215.socketmc.config
 me.gamercoder215.socketmc.events
 me.gamercoder215.socketmc.events.input
 me.gamercoder215.socketmc.events.screen
 me.gamercoder215.socketmc.instruction
 me.gamercoder215.socketmc.instruction.builder
-me.gamercoder215.socketmc.instruction.util
 me.gamercoder215.socketmc.log
 me.gamercoder215.socketmc.screen
 me.gamercoder215.socketmc.screen.builder
