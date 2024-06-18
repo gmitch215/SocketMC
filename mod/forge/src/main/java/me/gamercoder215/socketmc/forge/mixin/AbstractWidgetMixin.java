@@ -25,11 +25,13 @@ public class AbstractWidgetMixin implements ScreenWidget {
     @Inject(method = "onClick", at = @At("TAIL"))
     public void onClick(double mouseX, double mouseY, CallbackInfo ci) {
         Positionable widget = ForgeScreenUtil.fromMinecraft((AbstractWidget) (Object) this);
+        if (widget == null) return;
+
         socketMC$clickListeners.forEach(listener -> {
             listener.accept(widget);
             
             AbstractWidget applied = ForgeScreenUtil.toMinecraft(widget);
-            ReflectionUtil.apply(applied, (AbstractWidget) (Object) this, AbstractWidget.class);
+            ReflectionUtil.apply((AbstractWidget) (Object) this, applied, AbstractWidget.class);
         });
     }
 
