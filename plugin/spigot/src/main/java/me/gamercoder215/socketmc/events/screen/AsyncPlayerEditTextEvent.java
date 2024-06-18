@@ -24,6 +24,11 @@ public class AsyncPlayerEditTextEvent extends AsyncPlayerElementEvent {
         this.text = text;
     }
 
+    @Override
+    public EditTextWidget getElement() {
+        return (EditTextWidget) super.getElement();
+    }
+
     /**
      * Gets the text that the player entered.
      * @return The text.
