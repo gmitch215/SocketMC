@@ -69,6 +69,13 @@ tasks {
         }
     }
 
+    configureLaunch {
+        copy {
+            from(project(":socketmc-shared").sourceSets["main"].resources)
+            into(layout.buildDirectory.dir("resources/main"))
+        }
+    }
+
     named("modrinth") {
         dependsOn("remapJar")
     }
