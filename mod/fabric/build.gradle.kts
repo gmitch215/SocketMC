@@ -61,6 +61,7 @@ tasks {
     jar {
         from(project(":socketmc-core").sourceSets["main"].output)
         from(project(":socketmc-shared").sourceSets["main"].output)
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     }
 
     processResources {
@@ -73,6 +74,7 @@ tasks {
         copy {
             from(project(":socketmc-shared").sourceSets["main"].resources)
             into(layout.buildDirectory.dir("resources/main"))
+            duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         }
     }
 
