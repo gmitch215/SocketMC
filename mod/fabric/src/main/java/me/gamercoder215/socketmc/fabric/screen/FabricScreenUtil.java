@@ -158,8 +158,9 @@ public final class FabricScreenUtil {
                     new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
             case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(FabricUtil.toMinecraft(tooltip));
 
@@ -193,8 +194,9 @@ public final class FabricScreenUtil {
             case Button button -> new TextButton(x, y, width, height, FabricUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, FabricUtil.toJson(button.getMessage()));
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(tooltip);
 

@@ -156,8 +156,9 @@ public final class ForgeScreenUtil {
             case SendInstructionButton button -> new ForgeSendInstructionButton(x, y, width, height, message, button.getInstruction());
             case LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(ForgeUtil.toMinecraft(tooltip));
 
@@ -191,8 +192,9 @@ public final class ForgeScreenUtil {
             case Button button -> new TextButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()));
             case Checkbox button -> new CheckboxButton(x, y, ForgeUtil.toJson(button.getMessage()));
 
-            case null, default -> throw new AssertionError("Unexpected value: " + renderable);
+            case null, default -> null;
         };
+        if (w0 == null) return null;
 
         w0.setTooltip(tooltip);
 
