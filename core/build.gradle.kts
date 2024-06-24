@@ -36,5 +36,5 @@ java {
 
 // Bundled with Minecraft
 dependencies {
-    compileOnly("org.joml:joml:1.10.5")
+    compileOnly("org.joml:joml:1.10.6")
 }
