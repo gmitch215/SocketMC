@@ -36,7 +36,7 @@ public final class FabricUtil {
 
     public static ResourceLocation toMinecraft(Identifier identifier) {
         if (identifier == null) return null;
-        return new ResourceLocation(identifier.getNamespace(), identifier.getPath());
+        return ResourceLocation.fromNamespaceAndPath(identifier.getNamespace(), identifier.getPath());
     }
 
     public static Sprite fromMinecraft(WidgetSprites widgetSprites) {

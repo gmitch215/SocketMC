@@ -10,11 +10,13 @@ description = "Forge Mod for SocketMC Client-side Implementation"
 val minecraft = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
+val forge = "51.0.0"
+
 dependencies {
     api(project(":socketmc-core"))
     api(project(":socketmc-shared"))
 
-    minecraft("net.minecraftforge:forge:$minecraft-50.0.13")
+    minecraft("net.minecraftforge:forge:$minecraft-$forge")
 
     annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 }

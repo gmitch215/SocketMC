@@ -4,6 +4,7 @@ import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
 import me.gamercoder215.socketmc.util.LifecycleMap;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import org.jetbrains.annotations.NotNull;
 
@@ -18,7 +19,7 @@ public final class DrawShapeMachine implements Machine {
 
     private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
-    public static void frameTick(GuiGraphics graphics, float delta) {
+    public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();
         lifecycle.forEach(c -> c.accept(graphics));
     }

@@ -29,7 +29,7 @@ accessible field net/minecraft/client/gui/screens/AlertScreen messageText Lnet/m
 accessible field net/minecraft/client/gui/screens/AlertScreen okButton Lnet/minecraft/network/chat/Component;
 
 # DisconnectedScreen
-accessible field net/minecraft/client/gui/screens/DisconnectedScreen reason Lnet/minecraft/network/chat/Component;
+accessible field net/minecraft/client/gui/screens/DisconnectedScreen details Lnet/minecraft/network/DisconnectionDetails;
 accessible field net/minecraft/client/gui/screens/DisconnectedScreen buttonText Lnet/minecraft/network/chat/Component;
 
 # DeathScreen
@@ -44,9 +44,6 @@ accessible field net/minecraft/client/gui/components/CycleButton valueStringifie
 accessible field net/minecraft/client/gui/components/CycleButton values Lnet/minecraft/client/gui/components/CycleButton$ValueListSupplier;
 
 ## Rendering API
-
-# Minecraft
-accessible field net/minecraft/client/Minecraft pausePartialTick F
 
 # GameRenderer
 accessible method net/minecraft/client/renderer/GameRenderer renderItemInHand (Lnet/minecraft/client/Camera;FLorg/joml/Matrix4f;)V

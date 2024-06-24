@@ -18,6 +18,7 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.network.chat.Component;
 
 import java.util.Map;
@@ -36,7 +37,7 @@ public final class ForgeScreenUtil {
 
         AbstractScreen s0 = findDefault(screen);
         if (s0 == null) {
-            if (screen instanceof ForgeScreen fabric) s0 = fabric.handle;
+            if (screen instanceof ForgeScreen forge) s0 = forge.handle;
         }
 
         return s0;
@@ -62,7 +63,7 @@ public final class ForgeScreenUtil {
             }
             case DisconnectedScreen s -> {
                 JsonText title = ForgeUtil.toText(s.getTitle());
-                JsonText reason = ForgeUtil.toText(s.reason);
+                JsonText reason = ForgeUtil.toText(s.details.reason());
                 JsonText button = ForgeUtil.toText(s.buttonText);
 
                 yield DefaultScreen.disconnected(title, reason);

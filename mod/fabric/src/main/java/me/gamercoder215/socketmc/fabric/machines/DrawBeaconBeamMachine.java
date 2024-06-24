@@ -6,6 +6,7 @@ import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.InstructionUtil;
 import me.gamercoder215.socketmc.instruction.Machine;
 import me.gamercoder215.socketmc.util.LifecycleMap;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.blockentity.BeaconRenderer;
 
@@ -20,9 +21,9 @@ public final class DrawBeaconBeamMachine implements Machine {
 
     private DrawBeaconBeamMachine() {}
 
-    private static final LifecycleMap<BiConsumer<GuiGraphics, Float>> lifecycle = new LifecycleMap<>();
+    private static final LifecycleMap<BiConsumer<GuiGraphics, DeltaTracker>> lifecycle = new LifecycleMap<>();
 
-    public static void frameTick(GuiGraphics graphics, float delta) {
+    public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();
         lifecycle.forEach(c -> c.accept(graphics, delta));
     }
@@ -39,15 +40,13 @@ public final class DrawBeaconBeamMachine implements Machine {
         float glowRadius = instruction.parameter(7, Float.class);
         long millis = instruction.lastParameter(Long.class);
 
-        float[] colors0 = InstructionUtil.parseColor(color);
-
         PoseStack stack = new PoseStack();
         stack.pushPose();
         stack.translate(x, y, z);
 
         lifecycle.store((graphics, delta) -> BeaconRenderer.renderBeaconBeam(
-                stack, graphics.bufferSource(), BeaconRenderer.BEAM_LOCATION, delta, 1.0F, minecraft.level.getGameTime(),
-                yOffset, height, colors0, beamRadius, glowRadius
+                stack, graphics.bufferSource(), BeaconRenderer.BEAM_LOCATION, delta.getGameTimeDeltaPartialTick(true), 1.0F, minecraft.level.getGameTime(),
+                yOffset, height, color & 0xFF000000, beamRadius, glowRadius
         ), millis);
     }
 }

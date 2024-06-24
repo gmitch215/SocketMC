@@ -18,6 +18,7 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
 import net.minecraft.network.chat.Component;
 
 import java.util.Map;
@@ -62,7 +63,7 @@ public final class FabricScreenUtil {
             }
             case DisconnectedScreen s -> {
                 JsonText title = FabricUtil.toText(s.getTitle());
-                JsonText reason = FabricUtil.toText(s.reason);
+                JsonText reason = FabricUtil.toText(s.details.reason());
                 JsonText button = FabricUtil.toText(s.buttonText);
 
                 yield DefaultScreen.disconnected(title, reason);

@@ -33,16 +33,12 @@ public final class RenderingMachine implements Machine {
                         Matrix4f matrix = i.data("matrix", Matrix4f.class);
                         return () -> minecraft.gameRenderer.renderItemInHand(
                                 minecraft.gameRenderer.getMainCamera(),
-                                partialTick(),
+                                minecraft.getTimer().getGameTimeDeltaPartialTick(true),
                                 matrix
                         );
                     }
             )
     );
-
-    private static float partialTick() {
-        return minecraft.isPaused() ? minecraft.pausePartialTick : minecraft.getFrameTime();
-    }
 
     @Override
     public void onInstruction(Instruction instruction) {

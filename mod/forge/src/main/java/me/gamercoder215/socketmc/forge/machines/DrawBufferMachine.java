@@ -1,18 +1,14 @@
 package me.gamercoder215.socketmc.forge.machines;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
+import com.mojang.blaze3d.vertex.*;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
+import me.gamercoder215.socketmc.util.LifecycleMap;
 import me.gamercoder215.socketmc.util.render.RenderBuffer;
 import me.gamercoder215.socketmc.util.render.Vertex;
-import me.gamercoder215.socketmc.util.LifecycleMap;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.renderer.GameRenderer;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
@@ -27,7 +23,7 @@ public final class DrawBufferMachine implements Machine {
 
     private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
-    public static void frameTick(GuiGraphics graphics, float delta) {
+    public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();
         lifecycle.forEach(c -> c.accept(graphics));
     }
@@ -50,21 +46,16 @@ public final class DrawBufferMachine implements Machine {
             Tesselator tesselator = Tesselator.getInstance();
             Matrix4f matrix = graphics.pose().last().pose();
 
-            BufferBuilder builder = tesselator.getBuilder();
-            builder.begin(mode, DefaultVertexFormat.POSITION_COLOR);
+            BufferBuilder builder = tesselator.begin(mode, DefaultVertexFormat.POSITION_COLOR);
 
             for (Vertex vertex : buffer.getVertices()) {
                 int color = buffer.getColor(vertex);
 
-                builder.vertex(matrix, vertex.getX(), vertex.getY(), vertex.getZ())
-                        .color((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, (color >> 24) & 0xFF)
-                        .endVertex();
+                builder.addVertex(matrix, vertex.getX(), vertex.getY(), vertex.getZ())
+                        .setColor((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, (color >> 24) & 0xFF);
             }
 
-            RenderSystem.setShader(GameRenderer::getPositionColorShader);
-            RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-
-            tesselator.end();
+            BufferUploader.drawWithShader(builder.buildOrThrow());
         }, millis);
     }
 }

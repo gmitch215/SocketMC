@@ -50,12 +50,12 @@ tasks {
 }
 
 allprojects {
-    val mc = "1.20.6"
+    val mc = "1.21"
     val pr = "0.1.3"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
-    project.ext["parchment"] = "2024.05.01"
+    project.ext["parchment"] = "2024.06.23"
 
     group = "me.gamercoder215.socketmc"
     version = "$mc-$pr"

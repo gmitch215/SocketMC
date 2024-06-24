@@ -3,8 +3,8 @@ package me.gamercoder215.socketmc.forge.mixin;
 import me.gamercoder215.socketmc.forge.mod.MainScreen;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.Tooltip;
-import net.minecraft.client.gui.screens.OnlineOptionsScreen;
-import net.minecraft.client.gui.screens.OptionsSubScreen;
+import net.minecraft.client.gui.screens.options.OnlineOptionsScreen;
+import net.minecraft.client.gui.screens.options.OptionsSubScreen;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -29,4 +29,6 @@ public class OnlineOptionsScreenMixin extends OptionsSubScreen {
         addRenderableWidget(socketMC);
     }
 
+    @Override
+    protected void addOptions() {}
 }

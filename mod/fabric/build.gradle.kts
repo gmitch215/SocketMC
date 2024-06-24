@@ -12,7 +12,7 @@ description = "Fabric Mod for SocketMC Client-side Implementation"
 val minecraft = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
-val fabric = "0.98.0"
+val fabric = "0.100.2"
 
 dependencies {
     api(project(":socketmc-core"))
@@ -41,7 +41,7 @@ dependencies {
     annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 
     // API Hooks
-    modImplementation("com.terraformersmc:modmenu:10.0.0-beta.1")
+    modImplementation("com.terraformersmc:modmenu:11.0.0")
 }
 
 loom {

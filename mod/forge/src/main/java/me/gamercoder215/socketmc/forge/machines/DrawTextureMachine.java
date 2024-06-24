@@ -1,10 +1,12 @@
 package me.gamercoder215.socketmc.forge.machines;
 
+import me.gamercoder215.socketmc.forge.ForgeUtil;
 import me.gamercoder215.socketmc.instruction.Instruction;
 import me.gamercoder215.socketmc.instruction.InstructionId;
 import me.gamercoder215.socketmc.instruction.Machine;
 import me.gamercoder215.socketmc.util.Identifier;
 import me.gamercoder215.socketmc.util.LifecycleMap;
+import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -19,7 +21,7 @@ public final class DrawTextureMachine implements Machine {
 
     private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
-    public static void frameTick(GuiGraphics graphics, float delta) {
+    public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();
         lifecycle.forEach(c -> c.accept(graphics));
     }
@@ -39,7 +41,7 @@ public final class DrawTextureMachine implements Machine {
 
         long millis = instruction.lastParameter(Long.class);
 
-        ResourceLocation l = new ResourceLocation(texture.getNamespace(), texture.getPath());
+        ResourceLocation l = ForgeUtil.toMinecraft(texture);
         int rw = regionWidth == -1 ? width : regionWidth;
         int rh = regionHeight == -1 ? height : regionHeight;
 
