@@ -28,8 +28,10 @@ public final class SocketPlayer {
      */
     public static final String PACKET_INJECTOR_ID = "socketmc:packet_injector";
 
-    private final Player player;
-    private final Channel channel;
+    private final SocketRetriever retriever = new SocketRetriever(this);
+
+    final Player player;
+    final Channel channel;
 
     /**
      * Creates a new SocketPlayer instance.
@@ -134,6 +136,15 @@ public final class SocketPlayer {
         } catch (InterruptedException e) {
             throw new FailedInstructionException("Failed to send instruction", e);
         }
+    }
+
+    /**
+     * Gets the retriever for this SocketPlayer.
+     * @return Socket Retriever
+     */
+    @NotNull
+    public SocketRetriever getRetriever() {
+        return retriever;
     }
 
     // Static Util
