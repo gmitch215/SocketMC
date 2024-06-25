@@ -1,6 +1,7 @@
 package xyz.gmitch215.socketmc.log;
 
 import xyz.gmitch215.socketmc.instruction.Instruction;
+import xyz.gmitch215.socketmc.retriever.RetrieverType;
 import xyz.gmitch215.socketmc.spigot.SocketPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,9 +26,9 @@ public abstract class AuditLog {
     public static final SimpleDateFormat LOG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
-     * Represents the message format for when a client receives an instruction.
+     * Represents the message format for when a client receives a packet.
      */
-    public static final String CLIENT_RECEIVED_MESSAGE = "Received instruction: {}, size {} bytes";
+    public static final String CLIENT_RECEIVED_MESSAGE = "Received message: {}, size {} bytes";
 
     /**
      * The folder where the audit log is stored.
@@ -118,6 +119,28 @@ public abstract class AuditLog {
      */
     public void logReceived(@NotNull Instruction received, @NotNull SocketPlugin sender) {
         String msg = "Received instruction from " + sender.getPluginName() + " v" + sender.getPluginVersion() + "\": " + received;
+        log(msg);
+    }
+
+    /**
+     * Logs a sent retriever to the audit log.
+     * @param sent The retriever that was sent.
+     * @param sender The plugin that sent the retriever.
+     */
+    public void logSent(@NotNull RetrieverType<?> sent, @NotNull SocketPlugin sender) {
+        String msg = "\"" + sender.getPluginName() + " v" + sender.getPluginVersion() + "\" sent retriever of type: " + sent;
+        log(msg);
+    }
+
+    /**
+     * Logs a received retriever to the audit log.
+     * @param received The retriever that was received.
+     * @param sender The plugin that sent the retriever.
+     * @param value The value of the retriever.
+     * @param <T> The type of the retriever.
+     */
+    public void logReceived(@NotNull RetrieverType<?> received, @NotNull SocketPlugin sender, @NotNull Object value) {
+        String msg = "Received retriever from " + sender.getPluginName() + " v" + sender.getPluginVersion() + "\": " + received + " with value: " + value;
         log(msg);
     }
 
