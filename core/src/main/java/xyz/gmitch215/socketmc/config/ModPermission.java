@@ -2,6 +2,7 @@ package xyz.gmitch215.socketmc.config;
 
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import org.jetbrains.annotations.NotNull;
+import xyz.gmitch215.socketmc.retriever.RetrieverType;
 
 /**
  * Represents the permissions for the SocketMC Mod.
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 public enum ModPermission {
 
     /**
-     * The permission for the mod to be enabled and work properly. Used in essential permissions, such as {@link Instruction#ping()}.
+     * The permission for the mod to be enabled and work properly. Used in essential permissions, such as {@link Instruction#ping()}, and retrievers that cannot be disabled, such as {@link RetrieverType#PLUGIN_PERMISSIONS}.
      */
     REQUIRED(true, false),
 
@@ -18,6 +19,7 @@ public enum ModPermission {
      * <p>This permission includes everything used to manage what you see, confined to the game's operations. For example,
      * this permission includes drawing on the HUD, managing the player's perspective camera, and drawing objects in the world.</p>
      * <p>Everything included in {@link #USE_SCREENS} is ignored by this permission.</p>
+     * <p>This permission is also used for retrievers that require input, such as {@link RetrieverType#LAST_INPUT_TYPE}.</p>
      */
     USE_GUI(true),
 
@@ -40,7 +42,18 @@ public enum ModPermission {
      * <p>Permission to use external applications and integrations.</p>
      * <p>This permission also grants using non-web links speciifed by {@link #OPEN_LINKS}, such as {@code mailto:} links.</p>
      */
-    EXTERNAL_APPLICATIONS(false)
+    EXTERNAL_APPLICATIONS(false),
+
+    /**
+     * <p>Permission to read various system properties, such as memory usage.</p>
+     * <p>{@link RetrieverType#OPERATING_SYSTEM} is not included, which is marked with {@link #REQUIRED}.</p>
+     */
+    READ_SYSTEM_PROPERTIES(false),
+
+    /**
+     * Permission to read various GUI properties, such as window information and the game's paused state.
+     */
+    READ_GUI_PROPERTIES(true),
 
     ;
 

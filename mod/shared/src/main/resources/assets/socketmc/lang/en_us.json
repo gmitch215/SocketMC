@@ -17,5 +17,9 @@
   "gui.socketmc.permission.open_links": "Open Links",
   "gui.socketmc.permission.open_links.tooltip": "Permission to open HTTP(S) links.",
   "gui.socketmc.permission.external_applications": "External Applications",
-  "gui.socketmc.permission.external_applications.tooltip": "Permission to use external applications and integrations. Includes opening non-HTTP(S) links, such as 'mailto:' links."
+  "gui.socketmc.permission.external_applications.tooltip": "Permission to use external applications and integrations. Includes opening non-HTTP(S) links, such as 'mailto:' links.",
+  "gui.socketmc.permission.read_system_properties": "Read System Properties",
+  "gui.socketmc.permission.read_system_properties.tooltip": "Permission to read system properties, such as the operating system, Java version, and more.",
+  "gui.socketmc.permission.read_gui_properties": "Read GUI Properties",
+  "gui.socketmc.permission.read_gui_properties.tooltip": "Permission to read GUI properties, such as the screen size, window size, and more."
 }
