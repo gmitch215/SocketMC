@@ -28,10 +28,9 @@ public final class SocketPlayer {
      */
     public static final String PACKET_INJECTOR_ID = "socketmc:packet_injector";
 
-    private final SocketRetriever retriever = new SocketRetriever(this);
-
     final Player player;
     final Channel channel;
+    final SocketRetriever retriever = new SocketRetriever(this);
 
     /**
      * Creates a new SocketPlayer instance.
@@ -110,9 +109,10 @@ public final class SocketPlayer {
      * @param i The instruction to send.
      * @param plugin The plugin sending the instruction.
      * @throws SocketMCNotInstalledException if the player does not have SocketMC installed
+     * @throws FailedInstructionException if the instruction fails to send
      * @see SocketPlugin
      */
-    public void sendInstruction(@NotNull Instruction i, @NotNull SocketPlugin plugin) throws SocketMCNotInstalledException {
+    public void sendInstruction(@NotNull Instruction i, @NotNull SocketPlugin plugin) throws SocketMCNotInstalledException, FailedInstructionException {
         if (i == null) throw new IllegalArgumentException("Instruction cannot be null");
         if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
 

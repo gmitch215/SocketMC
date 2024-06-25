@@ -1,6 +1,14 @@
 package xyz.gmitch215.socketmc.spigot;
 
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelFuture;
+import io.netty.handler.codec.DecoderException;
+import net.minecraft.network.FriendlyByteBuf;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import xyz.gmitch215.socketmc.SocketMCNotInstalledException;
+import xyz.gmitch215.socketmc.instruction.FailedInstructionException;
+import xyz.gmitch215.socketmc.retriever.RetrieverType;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,10 +18,11 @@ import java.util.function.Consumer;
 /**
  * The retriever handler for a {@link SocketPlayer}.
  */
+@SuppressWarnings({"unchecked", "rawtypes"})
 public final class SocketRetriever {
 
-    private final SocketPlayer player;
-    private final Map<UUID, Consumer<?>> bus = new HashMap<>();
+    final SocketPlayer player;
+    final Map<UUID, Consumer> bus = new HashMap<>();
 
     SocketRetriever(SocketPlayer player) {
         this.player = player;
@@ -39,4 +48,49 @@ public final class SocketRetriever {
     public SocketPlayer getPlayer() {
         return player;
     }
+
+    /**
+     * Retrieves information from the client.
+     * @param r The retriever type
+     * @param callback The callback to be called when the information is retrieved
+     * @param plugin The plugin to retrieve the information for
+     * @return The identifier of the request, to be stored in {@link #getBus()}.
+     * @param <T> The type of the retriever
+     * @throws FailedInstructionException if the instruction fails to send
+     */
+    @NotNull
+    public <T> UUID retrieve(@NotNull RetrieverType<T> r, @NotNull Consumer<@Nullable T> callback, @NotNull SocketPlugin plugin) throws FailedInstructionException {
+        if (r == null) throw new IllegalArgumentException("Retriever type cannot be null");
+        if (callback == null) throw new IllegalArgumentException("Callback cannot be null");
+        if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
+
+        UUID id = UUID.randomUUID();
+        bus.put(id, callback);
+
+        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        buf.writeVarInt(-4);
+        buf.writeUUID(id);
+        buf.writeByteArray(r.toByteArray());
+        buf.writeByteArray(plugin.toByteArray());
+
+        try {
+            ChannelFuture future = player.channel.writeAndFlush(buf);
+            future.await();
+            if (!future.isSuccess()) {
+                if (future.cause() instanceof DecoderException)
+                    throw new SocketMCNotInstalledException("Player does not have SocketMC installed", future.cause());
+                else
+                    throw new FailedInstructionException("Failed to request retriever", future.cause());
+            } else {
+                // Successful Retriever Request
+                ServerAuditLog.INSTANCE.logSent(r, plugin);
+            }
+        } catch (InterruptedException e) {
+            throw new FailedInstructionException("Failed to request retriever", e);
+        }
+
+        return id;
+    }
+
+
 }

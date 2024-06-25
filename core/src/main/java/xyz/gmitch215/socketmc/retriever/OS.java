@@ -1,4 +1,4 @@
-package xyz.gmitch215.socketmc.retriever.util;
+package xyz.gmitch215.socketmc.retriever;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -62,6 +62,26 @@ public enum OS {
             }
         }
         return UNKNOWN;
+    }
+
+    /**
+     * Gets the current operating system that this JVM is running on.
+     * @return The current operating system
+     */
+    public static OS current() {
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if (os.contains("win")) {
+            return WINDOWS;
+        } else if (os.contains("mac")) {
+            return OSX;
+        } else if (os.contains("nix") || os.contains("nux") || os.contains("aix")) {
+            return LINUX;
+        } else if (os.contains("sunos")) {
+            return SOLARIS;
+        } else {
+            return UNKNOWN;
+        }
     }
 
 }

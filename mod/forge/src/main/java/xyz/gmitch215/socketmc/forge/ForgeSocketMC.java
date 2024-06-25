@@ -39,6 +39,7 @@ public final class ForgeSocketMC implements SocketMC {
             obj.close();
 
             FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+            buf.writeVarInt(-3);
             buf.writeVarInt(id);
             buf.writeByteArray(out.toByteArray());
 
