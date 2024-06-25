@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
+import static xyz.gmitch215.socketmc.retriever.Retriever.create;
 
 public final class FabricRetriever {
 
@@ -22,7 +23,7 @@ public final class FabricRetriever {
     public static final Set<ClientProperty<?>> PROPERTIES = Stream.concat(
             Retriever.PROPERTIES.stream(),
             Stream.of(
-                    new ClientProperty<>(RetrieverType.CURRENT_WINDOW, () -> {
+                    create(RetrieverType.CURRENT_WINDOW, () -> {
                         com.mojang.blaze3d.platform.Window window = minecraft.getWindow();
 
                         Window w = new Window();
@@ -43,12 +44,12 @@ public final class FabricRetriever {
 
                         return w;
                     }),
-                    new ClientProperty<>(RetrieverType.PAUSED, minecraft::isPaused),
-                    new ClientProperty<>(RetrieverType.FPS, minecraft::getFps),
-                    new ClientProperty<>(RetrieverType.GPU_UTILIZATION, minecraft::getGpuUtilization),
-                    new ClientProperty<>(RetrieverType.LAUNCH_VERSION, minecraft::getLaunchedVersion),
-                    new ClientProperty<>(RetrieverType.VERSION_TYPE, minecraft::getVersionType),
-                    new ClientProperty<>(RetrieverType.LAST_INPUT_TYPE, () -> switch (minecraft.getLastInputType()) {
+                    create(RetrieverType.PAUSED, minecraft::isPaused),
+                    create(RetrieverType.FPS, minecraft::getFps),
+                    create(RetrieverType.GPU_UTILIZATION, minecraft::getGpuUtilization),
+                    create(RetrieverType.LAUNCH_VERSION, minecraft::getLaunchedVersion),
+                    create(RetrieverType.VERSION_TYPE, minecraft::getVersionType),
+                    create(RetrieverType.LAST_INPUT_TYPE, () -> switch (minecraft.getLastInputType()) {
                         case KEYBOARD_ARROW -> InputType.KEYBOARD_ARROW;
                         case KEYBOARD_TAB -> InputType.KEYBOARD_TAB;
                         case MOUSE -> InputType.MOUSE;

@@ -59,6 +59,10 @@ public final class Tooltip implements Narratable {
         this.narrationMessageJSON = narrationMessageJSON;
     }
 
+    /**
+     * Gets the JSON representation for this tooltip.
+     * @return JSON Representation
+     */
     @NotNull
     public String getTooltipJSON() {
         return tooltipJSON;

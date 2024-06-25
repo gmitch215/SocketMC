@@ -127,7 +127,7 @@ public final class Window implements Serializable {
     /**
      * <p>Gets the platform this window is currently on.</p>
      * <p>Common values are {@code "win32"}, {@code "cocoa"}, {@code "wayland"}, and {@code "x11"}. {@code "null"} will be returned if not accessible, and {@code "<error>"} will be returned if something happened.</p>
-     * @return
+     * @return Window Platform
      */
     public String getPlatform() {
         return platform;

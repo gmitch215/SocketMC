@@ -18,6 +18,7 @@ public class AsyncPlayerCycleButtonEvent extends AsyncPlayerClickButtonEvent {
      * @param newValue The new value that the player selected.
      * @param screen The screen that the element is on.
      * @param player The player that edited the element.
+     * @param <T> The type of the element.
      */
     public <T> AsyncPlayerCycleButtonEvent(@NotNull CycleButton<T> element, @NotNull T newValue, @NotNull AbstractScreen screen, @NotNull SocketPlayer player) {
         super(element, screen, player);

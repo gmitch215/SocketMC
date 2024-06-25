@@ -14,9 +14,9 @@ import java.util.function.Supplier;
 public final class Retriever {
 
     public static final Set<ClientProperty<?>> PROPERTIES = Set.of(
-            new ClientProperty<>(RetrieverType.OPERATING_SYSTEM, OS::current),
-            new ClientProperty<>(RetrieverType.AVAILABLE_PROCESSORS, Runtime.getRuntime()::availableProcessors),
-            new ClientProperty<>(RetrieverType.PLUGIN_PERMISSIONS, () -> {
+            create(RetrieverType.OPERATING_SYSTEM, OS::current),
+            create(RetrieverType.AVAILABLE_PROCESSORS, Runtime.getRuntime()::availableProcessors),
+            create(RetrieverType.PLUGIN_PERMISSIONS, () -> {
                 Map<SocketPlugin, Set<ModPermission>> permissions = new HashMap<>();
                 for (SocketPlugin plugin : SocketMC.plugins()) {
                     Set<ModPermission> perms = new HashSet<>();
@@ -28,29 +28,33 @@ public final class Retriever {
 
                 return permissions;
             }),
-            new ClientProperty<>(RetrieverType.FREE_MEMORY, Runtime.getRuntime()::freeMemory),
-            new ClientProperty<>(RetrieverType.TOTAL_MEMORY, Runtime.getRuntime()::totalMemory),
-            new ClientProperty<>(RetrieverType.MAX_MEMORY, Runtime.getRuntime()::maxMemory)
+            create(RetrieverType.FREE_MEMORY, Runtime.getRuntime()::freeMemory),
+            create(RetrieverType.TOTAL_MEMORY, Runtime.getRuntime()::totalMemory),
+            create(RetrieverType.MAX_MEMORY, Runtime.getRuntime()::maxMemory)
     );
 
     //<editor-fold desc="Properties" defaultstate="collapsed">
     private Retriever() {}
 
-    public static <T> ClientProperty<T> create(RetrieverType<T> type, T value) {
-        return new ClientProperty<>(type, () -> value);
-    }
-
     public static <T> ClientProperty<T> create(RetrieverType<T> type, Supplier<T> supplier) {
         return new ClientProperty<>(type, supplier);
     }
 
-    public static <T> T value(RetrieverType<T> type, Set<ClientProperty<?>> properties) {
+    public static <T> Supplier<T> supplier(RetrieverType<T> type, Set<ClientProperty<?>> properties) {
         for (ClientProperty<?> property : properties) {
             if (property.type.equals(type))
-                return (T) property.supplier.get();
+                return (Supplier<T>) property.supplier;
         }
 
         return null;
     }
+
+    public static <T> T value(RetrieverType<T> type, Set<ClientProperty<?>> properties) {
+        Supplier<T> supplier = supplier(type, properties);
+        if (supplier == null) return null;
+
+        return supplier.get();
+    }
+
     //</editor-fold>
 }

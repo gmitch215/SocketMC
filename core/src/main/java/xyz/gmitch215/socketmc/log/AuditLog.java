@@ -137,7 +137,6 @@ public abstract class AuditLog {
      * @param received The retriever that was received.
      * @param sender The plugin that sent the retriever.
      * @param value The value of the retriever.
-     * @param <T> The type of the retriever.
      */
     public void logReceived(@NotNull RetrieverType<?> received, @NotNull SocketPlugin sender, @NotNull Object value) {
         String msg = "Received retriever from " + sender.getPluginName() + " v" + sender.getPluginVersion() + "\": " + received + " with value: " + value;

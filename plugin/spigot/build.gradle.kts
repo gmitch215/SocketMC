@@ -52,6 +52,8 @@ tasks {
 
             links("https://hub.spigotmc.org/javadocs/spigot/")
             links("https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/")
+
+            addStringOption("Xdoclint:none", "-quiet")
         }
     }
 

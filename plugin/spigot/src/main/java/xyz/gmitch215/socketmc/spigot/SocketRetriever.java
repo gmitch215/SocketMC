@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 /**
  * The retriever handler for a {@link SocketPlayer}.
  */
-@SuppressWarnings({"unchecked", "rawtypes"})
+@SuppressWarnings("rawtypes")
 public final class SocketRetriever {
 
     final SocketPlayer player;
@@ -36,7 +36,7 @@ public final class SocketRetriever {
      * @return An immutable copy of this SocketRetriever's method bus
      */
     @NotNull
-    public Map<UUID, Consumer<?>> getBus() {
+    public Map<UUID, Consumer> getBus() {
         return Map.copyOf(bus);
     }
 

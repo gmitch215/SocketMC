@@ -32,7 +32,7 @@ import java.util.*;
  *
  * @param <T> The type of the retriever
  */
-@SuppressWarnings({"unchecked", "rawtypes"})
+@SuppressWarnings({"unchecked", "RedundantCast"})
 public final class RetrieverType<T> implements Serializable {
 
     @Serial
@@ -96,7 +96,7 @@ public final class RetrieverType<T> implements Serializable {
      * A retriever for the permissions the client has for each plugin.
      */
     @RetrieverPermission(ModPermission.REQUIRED)
-    public static final RetrieverType<Map<SocketPlugin, Set<ModPermission>>> PLUGIN_PERMISSIONS = new RetrieverType<>("plugin_permissions", Map.class);
+    public static final RetrieverType<Map<SocketPlugin, Set<ModPermission>>> PLUGIN_PERMISSIONS = new RetrieverType<>("plugin_permissions", (Class<Map<SocketPlugin, Set<ModPermission>>>) (Object) Map.class);
 
     /**
      * A retriever for the client's free memory on its JVM.
@@ -119,9 +119,9 @@ public final class RetrieverType<T> implements Serializable {
     //<editor-fold desc="Implementation" defaultstate="collapsed">
 
     private final String id;
-    private final Class<? extends T> type;
+    private final Class<T> type;
 
-    private RetrieverType(String id, Class<? extends T> type) {
+    private RetrieverType(String id, Class<T> type) {
         this.id = id;
         this.type = type;
     }
@@ -140,7 +140,7 @@ public final class RetrieverType<T> implements Serializable {
      * @return The type of the retriever
      */
     @NotNull
-    public Class<? extends T> getType() {
+    public Class<T> getType() {
         return type;
     }
 
