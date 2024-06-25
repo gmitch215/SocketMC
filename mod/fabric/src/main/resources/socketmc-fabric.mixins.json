@@ -4,11 +4,12 @@
   "package": "xyz.gmitch215.socketmc.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "xyz.gmitch215.socketmc.fabric.mixin.PacketDecoderMixin",
-    "xyz.gmitch215.socketmc.fabric.mixin.AbstractWidgetMixin",
-    "xyz.gmitch215.socketmc.fabric.mixin.OnlineOptionsScreenMixin",
-    "xyz.gmitch215.socketmc.fabric.mixin.events.PlayerPressKeyEvent",
-    "xyz.gmitch215.socketmc.fabric.mixin.events.PlayerMouseInputEvent",
-    "xyz.gmitch215.socketmc.fabric.mixin.events.PlayerChangeScreenEvent"
+    "PacketDecoderMixin",
+    "AbstractWidgetMixin",
+    "OnlineOptionsScreenMixin",
+
+    "events.PlayerPressKeyEvent",
+    "events.PlayerMouseInputEvent",
+    "events.PlayerChangeScreenEvent"
   ]
 }
