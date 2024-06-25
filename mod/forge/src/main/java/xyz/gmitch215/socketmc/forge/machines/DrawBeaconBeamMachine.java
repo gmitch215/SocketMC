@@ -1,0 +1,51 @@
+package xyz.gmitch215.socketmc.forge.machines;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import xyz.gmitch215.socketmc.instruction.Instruction;
+import xyz.gmitch215.socketmc.instruction.InstructionId;
+import xyz.gmitch215.socketmc.instruction.Machine;
+import xyz.gmitch215.socketmc.util.LifecycleMap;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.blockentity.BeaconRenderer;
+
+import java.util.function.BiConsumer;
+
+import static xyz.gmitch215.socketmc.forge.ForgeSocketMC.minecraft;
+
+@InstructionId(Instruction.DRAW_BEACON_BEAM)
+public final class DrawBeaconBeamMachine implements Machine {
+
+    public static final DrawBeaconBeamMachine MACHINE = new DrawBeaconBeamMachine();
+
+    private DrawBeaconBeamMachine() {}
+
+    private static final LifecycleMap<BiConsumer<GuiGraphics, DeltaTracker>> lifecycle = new LifecycleMap<>();
+
+    public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
+        lifecycle.run();
+        lifecycle.forEach(c -> c.accept(graphics, delta));
+    }
+
+    @Override
+    public void onInstruction(Instruction instruction) {
+        int x = instruction.parameter(0, Integer.class);
+        int y = instruction.parameter(1, Integer.class);
+        int z = instruction.parameter(2, Integer.class);
+        int height = instruction.parameter(3, Integer.class);
+        int color = instruction.parameter(4, Integer.class);
+        int yOffset = instruction.parameter(5, Integer.class);
+        float beamRadius = instruction.parameter(6, Float.class);
+        float glowRadius = instruction.parameter(7, Float.class);
+        long millis = instruction.lastParameter(Long.class);
+
+        PoseStack stack = new PoseStack();
+        stack.pushPose();
+        stack.translate(x, y, z);
+
+        lifecycle.store((graphics, delta) -> BeaconRenderer.renderBeaconBeam(
+                stack, graphics.bufferSource(), BeaconRenderer.BEAM_LOCATION, delta.getGameTimeDeltaPartialTick(true), 1.0F, minecraft.level.getGameTime(),
+                yOffset, height, color, beamRadius, glowRadius
+        ), millis);
+    }
+}

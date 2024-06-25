@@ -57,7 +57,7 @@ allprojects {
     project.ext["project_version"] = pr
     project.ext["parchment"] = "2024.06.23"
 
-    group = "me.gamercoder215.socketmc"
+    group = "xyz.gmitch215.socketmc"
     version = "$mc-$pr"
     description = "Direct Minecraft Server-to-Client Communication"
 
