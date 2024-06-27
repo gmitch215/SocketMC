@@ -4,6 +4,7 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.handler.codec.DecoderException;
 import net.minecraft.network.FriendlyByteBuf;
+import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import xyz.gmitch215.socketmc.SocketMCNotInstalledException;
@@ -47,6 +48,37 @@ public final class SocketRetriever {
     @NotNull
     public SocketPlayer getPlayer() {
         return player;
+    }
+
+    /**
+     * Retrieves information from the client.
+     * @param r The retriever type
+     * @param callback The callback to be called when the information is retrieved
+     * @param plugin The plugin to retrieve the information for
+     * @return The identifier of the request, to be stored in {@link #getBus()}.
+     * @param <T> The type of the retriever
+     * @throws FailedInstructionException if the instruction fails to send
+     */
+    @NotNull
+    public <T> UUID retrieve(@NotNull RetrieverType<T> r, @NotNull Consumer<@Nullable T> callback, @NotNull Plugin plugin) throws FailedInstructionException {
+        try {
+            SocketPlugin sp = new SocketPlugin(
+                    plugin.getDescription().getMain(),
+                    plugin.getName(),
+                    plugin.getDescription().getVersion(),
+                    plugin.getDescription().getWebsite(),
+                    plugin.getClass()
+                            .getProtectionDomain()
+                            .getCodeSource()
+                            .getLocation()
+                            .toURI()
+                            .getPath()
+            );
+
+            return retrieve(r, callback, sp);
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Failed to get plugin jar file path", e);
+        }
     }
 
     /**
