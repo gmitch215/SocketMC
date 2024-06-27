@@ -25,37 +25,37 @@ public final class DrawShapeMachine implements Machine {
     }
 
     private static void fill(int x, int y, Instruction i) {
-        int width = i.parameter(3, Integer.class);
-        int height = i.parameter(4, Integer.class);
-        int color = i.parameter(5, Integer.class);
-        long millis = i.lastParameter(Long.class);
+        int width = i.intParameter(3);
+        int height = i.intParameter(4);
+        int color = i.intParameter(5);
+        long millis = i.lastLongParameter();
 
         lifecycle.store(graphics -> graphics.fill(x, y, x + width, y + height, color), millis);
     }
 
     private static void gradient(int x, int y, Instruction i) {
-        int width = i.parameter(3, Integer.class);
-        int height = i.parameter(4, Integer.class);
-        int z = i.parameter(5, Integer.class);
-        int color1 = i.parameter(6, Integer.class);
-        int color2 = i.parameter(7, Integer.class);
-        long millis = i.lastParameter(Long.class);
+        int width = i.intParameter(3);
+        int height = i.intParameter(4);
+        int z = i.intParameter(5);
+        int color1 = i.intParameter(6);
+        int color2 = i.intParameter(7);
+        long millis = i.lastLongParameter();
 
         lifecycle.store(graphics -> graphics.fillGradient(x, y, x + width, y + height, z, color1, color2), millis);
     }
 
     private static void vline(int x, int y, Instruction i) {
-        int height = i.parameter(3, Integer.class);
-        int color = i.parameter(4, Integer.class);
-        long millis = i.lastParameter(Long.class);
+        int height = i.intParameter(3);
+        int color = i.intParameter(4);
+        long millis = i.lastLongParameter();
 
         lifecycle.store(graphics -> graphics.vLine(x, y, y + height, color), millis);
     }
 
     private static void hline(int x, int y, Instruction i) {
-        int width = i.parameter(3, Integer.class);
-        int color = i.parameter(4, Integer.class);
-        long millis = i.lastParameter(Long.class);
+        int width = i.intParameter(3);
+        int color = i.intParameter(4);
+        long millis = i.lastLongParameter();
 
         lifecycle.store(graphics -> graphics.hLine(x, x + width, y, color), millis);
     }
@@ -63,8 +63,8 @@ public final class DrawShapeMachine implements Machine {
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         String id = instruction.parameter(0, String.class);
-        int x = instruction.parameter(1, Integer.class);
-        int y = instruction.parameter(2, Integer.class);
+        int x = instruction.intParameter(1);
+        int y = instruction.intParameter(2);
 
         switch (id) {
             case "fill" -> fill(x, y, instruction);

@@ -29,10 +29,10 @@ public final class DrawTextMachine implements Machine {
 
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
-        int x = instruction.parameter(0, Integer.class);
-        int y = instruction.parameter(1, Integer.class);
+        int x = instruction.intParameter(0);
+        int y = instruction.intParameter(1);
         Component c = Component.Serializer.fromJson(instruction.parameter(2, String.class), minecraft.level.registryAccess());
-        int color = instruction.parameter(3, Integer.class);
+        int color = instruction.intParameter(3);
         boolean dropShadow = instruction.parameter(4, Boolean.class);
         long millis = instruction.parameter(5, Long.class);
 

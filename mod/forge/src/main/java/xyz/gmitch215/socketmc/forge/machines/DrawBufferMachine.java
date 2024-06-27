@@ -31,7 +31,7 @@ public final class DrawBufferMachine implements Machine {
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
         RenderBuffer buffer = instruction.parameter(0, RenderBuffer.class);
-        long millis = instruction.lastParameter(Long.class);
+        long millis = instruction.lastLongParameter();
 
         VertexFormat.Mode mode = switch (buffer.getMode()) {
             case LINES -> VertexFormat.Mode.LINES;

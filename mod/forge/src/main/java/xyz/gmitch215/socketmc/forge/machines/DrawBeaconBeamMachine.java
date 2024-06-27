@@ -29,15 +29,15 @@ public final class DrawBeaconBeamMachine implements Machine {
 
     @Override
     public void onInstruction(Instruction instruction) {
-        int x = instruction.parameter(0, Integer.class);
-        int y = instruction.parameter(1, Integer.class);
-        int z = instruction.parameter(2, Integer.class);
-        int height = instruction.parameter(3, Integer.class);
-        int color = instruction.parameter(4, Integer.class);
-        int yOffset = instruction.parameter(5, Integer.class);
-        float beamRadius = instruction.parameter(6, Float.class);
-        float glowRadius = instruction.parameter(7, Float.class);
-        long millis = instruction.lastParameter(Long.class);
+        int x = instruction.intParameter(0);
+        int y = instruction.intParameter(1);
+        int z = instruction.intParameter(2);
+        int height = instruction.intParameter(3);
+        int color = instruction.intParameter(4);
+        int yOffset = instruction.intParameter(5);
+        float beamRadius = instruction.floatParameter(6);
+        float glowRadius = instruction.floatParameter(7);
+        long millis = instruction.lastLongParameter();
 
         PoseStack stack = new PoseStack();
         stack.pushPose();

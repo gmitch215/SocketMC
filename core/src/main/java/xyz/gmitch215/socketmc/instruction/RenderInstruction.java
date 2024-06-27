@@ -2,6 +2,7 @@ package xyz.gmitch215.socketmc.instruction;
 
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
+import xyz.gmitch215.socketmc.util.DataHolder;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * Represents a rendering-related instruction.
  */
-public abstract class RenderInstruction implements Serializable {
+public abstract class RenderInstruction implements Serializable, DataHolder {
 
     private final int ordinal;
 
@@ -57,40 +58,9 @@ public abstract class RenderInstruction implements Serializable {
         if (isFilled) throw new IllegalStateException("Render Instruction is already filled");
     }
 
-    /**
-     * Gets an immutable copy of the data map.
-     * @return Data Map
-     */
-    @NotNull
+    @Override
     public Map<String, Object> getData() {
         return Map.copyOf(data);
-    }
-
-    /**
-     * Gets the data for the specified key.
-     * @param key The key to get the data for
-     * @return Data Object
-     */
-    public Object data(@NotNull String key) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
-        if (!data.containsKey(key)) throw new IllegalArgumentException("Data key not found: " + key);
-
-        return data.get(key);
-    }
-
-    /**
-     * Gets the data for the specified key, casted to the specified type.
-     * @param key The key to get the data for
-     * @param type The type to cast the data to
-     * @return Data Object
-     * @param <T> The type to cast the data to
-     */
-    public <T> T data(@NotNull String key, @NotNull Class<T> type) {
-        if (key == null) throw new IllegalArgumentException("Key cannot be null");
-        if (type == null) throw new IllegalArgumentException("Type cannot be null");
-        if (!data.containsKey(key)) throw new IllegalArgumentException("Data key not found: " + key);
-
-        return type.cast(data.get(key));
     }
 
     // Subclasses

@@ -28,18 +28,18 @@ public final class DrawTextureMachine implements Machine {
 
     @Override
     public void onInstruction(Instruction instruction) {
-        int x = instruction.parameter(0, Integer.class);
-        int y = instruction.parameter(1, Integer.class);
-        int width = instruction.parameter(2, Integer.class);
-        int height = instruction.parameter(3, Integer.class);
+        int x = instruction.intParameter(0);
+        int y = instruction.intParameter(1);
+        int width = instruction.intParameter(2);
+        int height = instruction.intParameter(3);
         Identifier texture = instruction.parameter(4, Identifier.class);
 
-        int u = instruction.parameter(5, Integer.class);
-        int v = instruction.parameter(6, Integer.class);
-        int regionWidth = instruction.parameter(7, Integer.class);
-        int regionHeight = instruction.parameter(8, Integer.class);
+        int u = instruction.intParameter(5);
+        int v = instruction.intParameter(6);
+        int regionWidth = instruction.intParameter(7);
+        int regionHeight = instruction.intParameter(8);
 
-        long millis = instruction.lastParameter(Long.class);
+        long millis = instruction.lastLongParameter();
 
         ResourceLocation l = FabricUtil.toMinecraft(texture);
         int rw = regionWidth == -1 ? width : regionWidth;

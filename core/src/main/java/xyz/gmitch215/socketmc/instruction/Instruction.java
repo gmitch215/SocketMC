@@ -3,6 +3,8 @@ package xyz.gmitch215.socketmc.instruction;
 import xyz.gmitch215.socketmc.config.ModPermission;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.util.Identifier;
+import xyz.gmitch215.socketmc.util.Paramaterized;
+import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.text.Text;
 import xyz.gmitch215.socketmc.util.render.RenderBuffer;
 import xyz.gmitch215.socketmc.log.AuditLog;
@@ -35,7 +37,7 @@ import java.util.Objects;
  *     <li>SocketMC v0.1.3 introduced a permission system that allows or disallows specific types of Instructions. If permission is not given, the Instruction will <i>silently</i> fail.</li>
  * </ul>
  */
-public final class Instruction implements Serializable {
+public final class Instruction implements Serializable, Paramaterized {
 
     // Instruction IDs
 
@@ -124,6 +126,11 @@ public final class Instruction implements Serializable {
     @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
     public static final String MAILTO = "mailto";
 
+    /**
+     * Instruction to draw a raw {@link DrawingContext}.
+     */
+    public static final String DRAW_CONTEXT = "draw_context";
+
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
 
@@ -152,44 +159,6 @@ public final class Instruction implements Serializable {
     @NotNull
     public List<Object> getParameters() {
         return List.copyOf(parameters);
-    }
-
-    /**
-     * Gets a parameter of this instruction by index.
-     * @param index Index of Parameter
-     * @return Value of Parameter
-     */
-    public Object parameter(int index) {
-        return parameters.get(index);
-    }
-
-    /**
-     * Gets a parameter of this instruction by index and casting it to the specified type.
-     * @param index Index of Parameter
-     * @param type Parameter Type
-     * @return Value of Parameter
-     * @param <T> Parameter Type
-     */
-    public <T> T parameter(int index, Class<T> type) {
-        return type.cast(parameters.get(index));
-    }
-
-    /**
-     * Gets the last parameter of this instruction.
-     * @return Last Parameter
-     */
-    public Object lastParameter() {
-        return parameters.getLast();
-    }
-
-    /**
-     * Gets the last parameter of this instruction and casts it to the specified type.
-     * @param type Parameter Type
-     * @return Last Parameter
-     * @param <T> Parameter Type
-     */
-    public <T> T lastParameter(Class<T> type) {
-        return type.cast(parameters.getLast());
     }
 
     /**
@@ -1387,6 +1356,34 @@ public final class Instruction implements Serializable {
         if (mailto.getScheme() == null || !mailto.getScheme().equals("mailto")) throw new IllegalArgumentException("URI must be a mailto: URI");
 
         return new Instruction(MAILTO, List.of(mailto));
+    }
+
+    /**
+     * Creates a {@link #DRAW_CONTEXT} instruction.
+     * @param context Drawing Context to Display
+     * @param duration Time Duration
+     * @return Draw Context Instruction
+     * @throws IllegalArgumentException If the context is null, or the duration is negative
+     */
+    @NotNull
+    public static Instruction drawContext(@NotNull DrawingContext context, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawContext(context, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_CONTEXT} instruction.
+     * @param context Drawing Context to Display
+     * @param millis Duration to display, in milliseconds
+     * @return Draw Context Instruction
+     * @throws IllegalArgumentException If the context is null, or the duration is negative
+     */
+    @NotNull
+    public static Instruction drawContext(@NotNull DrawingContext context, long millis) throws IllegalArgumentException {
+        if (context == null) throw new IllegalArgumentException("Drawing context cannot be null");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_CONTEXT, List.of(context, millis));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

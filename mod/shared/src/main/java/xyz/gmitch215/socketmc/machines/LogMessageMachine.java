@@ -15,7 +15,7 @@ public final class LogMessageMachine implements Machine {
 
     @Override
     public void onInstruction(@NotNull Instruction instruction) {
-        String message = instruction.parameter(0, String.class);
+        String message = instruction.firstStringParameter();
         SocketMC.LOGGER.info("[Log Instruction] {}", message);
     }
 
