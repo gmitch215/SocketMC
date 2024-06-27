@@ -1,11 +1,11 @@
 package xyz.gmitch215.socketmc.fabric.screen;
 
+import net.minecraft.client.gui.components.Button;
+import net.minecraft.network.chat.Component;
 import xyz.gmitch215.socketmc.SocketMC;
 import xyz.gmitch215.socketmc.fabric.machines.FabricMachineFinder;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.machines.MachineFinder;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.network.chat.Component;
 
 import static xyz.gmitch215.socketmc.fabric.screen.FabricScreenUtil.BUTTON_PRESS_EVENT;
 

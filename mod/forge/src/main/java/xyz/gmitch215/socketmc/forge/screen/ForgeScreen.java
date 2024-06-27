@@ -1,12 +1,12 @@
 package xyz.gmitch215.socketmc.forge.screen;
 
-import xyz.gmitch215.socketmc.forge.ForgeUtil;
-import xyz.gmitch215.socketmc.screen.CustomScreen;
-import xyz.gmitch215.socketmc.screen.Positionable;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.Nullable;
+import xyz.gmitch215.socketmc.forge.ForgeUtil;
+import xyz.gmitch215.socketmc.screen.CustomScreen;
+import xyz.gmitch215.socketmc.screen.Positionable;
 
 import java.util.List;
 
