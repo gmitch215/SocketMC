@@ -177,6 +177,8 @@ public final class RetrieverType<T> implements Serializable {
             return f.getAnnotation(RetrieverPermission.class).value();
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Failed to get permission for retriever: " + id, e);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("RetrieverType missing permission: " + id, e);
         }
     }
 

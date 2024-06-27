@@ -331,7 +331,6 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
 
         /**
          * Fills a rectangle with the specified color.
-         * @param type the type of drawing command to use
          * @param minX the minimum x-coordinate
          * @param minY the minimum y-coordinate
          * @param maxX the maximum x-coordinate

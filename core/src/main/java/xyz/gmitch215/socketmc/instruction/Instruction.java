@@ -129,6 +129,7 @@ public final class Instruction implements Serializable, Paramaterized {
     /**
      * Instruction to draw a raw {@link DrawingContext}.
      */
+    @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_CONTEXT = "draw_context";
 
     @Serial
@@ -225,6 +226,8 @@ public final class Instruction implements Serializable, Paramaterized {
             return f.getAnnotation(InstructionPermission.class).value();
         } catch (ReflectiveOperationException e) {
             throw new RuntimeException("Failed to get permission for instruction: " + id, e);
+        } catch (NullPointerException e) {
+            throw new IllegalArgumentException("Instruction missing permission: " + id, e);
         }
     }
 
