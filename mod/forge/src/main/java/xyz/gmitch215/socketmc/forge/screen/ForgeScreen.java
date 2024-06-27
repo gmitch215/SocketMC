@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Nullable;
 import xyz.gmitch215.socketmc.forge.ForgeUtil;
 import xyz.gmitch215.socketmc.screen.CustomScreen;
 import xyz.gmitch215.socketmc.screen.Positionable;
+import xyz.gmitch215.socketmc.screen.layout.Layout;
 
 import java.util.List;
 
@@ -33,6 +34,21 @@ public final class ForgeScreen extends Screen {
         List<Positionable> children = handle.getChildren();
         for (Positionable child : children)
             addRenderableWidget(ForgeScreenUtil.toMinecraft(child));
+    }
+
+    @Override
+    public void repositionElements() {
+        if (handle.getLayout() != null) {
+            Layout layout = handle.getLayout();
+            if (layout.isFullscreen()) {
+                layout.setWidth(width);
+                layout.setHeight(height);
+            }
+
+            layout.arrangeElements();
+        }
+
+        super.repositionElements();
     }
 
     @Override
