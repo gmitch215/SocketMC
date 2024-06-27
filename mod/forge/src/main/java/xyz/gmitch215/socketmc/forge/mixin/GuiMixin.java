@@ -19,6 +19,7 @@ public class GuiMixin {
         DrawBufferMachine.frameTick(drawContext, tickDelta);
         DrawTextureMachine.frameTick(drawContext, tickDelta);
         DrawBeaconBeamMachine.frameTick(drawContext, tickDelta);
+        DrawContextMachine.frameTick(drawContext, tickDelta);
     }
 
 }
