@@ -32,7 +32,7 @@ import java.util.*;
  *
  * @param <T> The type of the retriever
  */
-@SuppressWarnings({"unchecked", "RedundantCast"})
+@SuppressWarnings({"unchecked"})
 public final class RetrieverType<T> implements Serializable {
 
     @Serial
