@@ -1,5 +1,12 @@
 package xyz.gmitch215.socketmc.forge.screen;
 
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.*;
+import net.minecraft.client.gui.screens.achievement.StatsScreen;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.network.chat.Component;
 import xyz.gmitch215.socketmc.forge.ForgeSocketMC;
 import xyz.gmitch215.socketmc.forge.ForgeUtil;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
@@ -9,16 +16,10 @@ import xyz.gmitch215.socketmc.screen.ScreenWidget;
 import xyz.gmitch215.socketmc.screen.ui.CycleButton;
 import xyz.gmitch215.socketmc.screen.ui.ImageButton;
 import xyz.gmitch215.socketmc.screen.ui.ImageWidget;
+import xyz.gmitch215.socketmc.screen.ui.*;
 import xyz.gmitch215.socketmc.screen.util.Tooltip;
 import xyz.gmitch215.socketmc.util.render.text.JsonText;
 import xyz.gmitch215.socketmc.util.render.text.Text;
-import net.minecraft.client.gui.components.AbstractWidget;
-import net.minecraft.client.gui.components.*;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.client.gui.screens.achievement.StatsScreen;
-import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
-import net.minecraft.client.gui.screens.options.OptionsScreen;
-import net.minecraft.network.chat.Component;
 
 import java.util.Map;
 import java.util.function.BiConsumer;
@@ -156,6 +157,7 @@ public final class ForgeScreenUtil {
 
                 yield w;
             }
+            case CustomWidget widget -> new ForgeCustomWidget(widget);
 
             // Buttons
             case xyz.gmitch215.socketmc.screen.ui.TextButton button -> Button.builder(message, BUTTON_PRESS_EVENT).bounds(x, y, width, height).build();
@@ -172,6 +174,7 @@ public final class ForgeScreenUtil {
                         .withValues(button.getValues())
                         .create(x, y, width, height, message, CYCLE_BUTTON_EVENT);
             }
+            case CustomButton button -> new ForgeCustomButton(button);
 
             case null, default -> null;
         };
@@ -201,11 +204,13 @@ public final class ForgeScreenUtil {
             case net.minecraft.client.gui.components.ImageWidget.Sprite widget -> new ImageWidget(x, y, width, height, ImageWidget.Type.SPRITE, ForgeUtil.fromMinecraft(widget.sprite));
             case net.minecraft.client.gui.components.ImageWidget.Texture widget -> new ImageWidget(x, y, width, height, ImageWidget.Type.TEXTURE, ForgeUtil.fromMinecraft(widget.texture));
             case EditBox widget -> new xyz.gmitch215.socketmc.screen.ui.EditTextWidget(x, y, width, height, ForgeUtil.toJson(widget.getMessage()));
+            case ForgeCustomWidget widget -> widget.handle;
 
             // Buttons
             case net.minecraft.client.gui.components.ImageButton button -> new ImageButton(x, y, width, height, ForgeUtil.fromMinecraft(button.sprites));
             case ForgeSendInstructionButton button -> new xyz.gmitch215.socketmc.screen.ui.SendInstructionButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()), button.instruction);
             case LockIconButton button -> new xyz.gmitch215.socketmc.screen.ui.LockButton(x, y);
+            case ForgeCustomButton button -> button.handle;
             case Button button -> new xyz.gmitch215.socketmc.screen.ui.TextButton(x, y, width, height, ForgeUtil.toJson(button.getMessage()));
             case Checkbox button -> new xyz.gmitch215.socketmc.screen.ui.CheckboxButton(x, y, ForgeUtil.toJson(button.getMessage()));
             case net.minecraft.client.gui.components.CycleButton button -> {
