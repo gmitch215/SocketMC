@@ -69,4 +69,9 @@ public final class ForgeScreen extends Screen {
         }
     }
 
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return handle.isCloseableOnEscape();
+    }
+
 }

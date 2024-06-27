@@ -69,4 +69,9 @@ public final class FabricScreen extends Screen {
         }
     }
 
+    @Override
+    public boolean shouldCloseOnEsc() {
+        return handle.isCloseableOnEscape();
+    }
+
 }

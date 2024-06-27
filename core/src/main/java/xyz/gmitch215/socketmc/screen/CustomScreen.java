@@ -20,6 +20,7 @@ public final class CustomScreen extends AbstractScreen {
     private String narrationMessageJSON;
     private ScreenBackground background = ScreenBackground.DEFAULT;
     private Layout layout;
+    private boolean closeableOnEscape = true;
 
     private final List<Positionable> children = new ArrayList<>();
 
@@ -155,6 +156,22 @@ public final class CustomScreen extends AbstractScreen {
             layout.visitWidgets(this::addChild);
             layout.arrangeElements();
         }
+    }
+
+    /**
+     * Gets whether this screen can be closed with the escape key.
+     * @return true if screen can be closed with escape
+     */
+    public boolean isCloseableOnEscape() {
+        return closeableOnEscape;
+    }
+
+    /**
+     * Sets whether this screen can be closed with the escape key.
+     * @param closeableOnEscape true if screen can be closed with escape
+     */
+    public void setCloseableOnEscape(boolean closeableOnEscape) {
+        this.closeableOnEscape = closeableOnEscape;
     }
 
     @Override
