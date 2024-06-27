@@ -48,7 +48,7 @@ public final class RetrieverType<T> implements Serializable {
      * A retriever for the client's operating system information.
      */
     @RetrieverPermission(ModPermission.REQUIRED)
-    public static final RetrieverType<OS> OPERATING_SYSTEM = new RetrieverType<>("os", OS.class);
+    public static final RetrieverType<OS> OPERATING_SYSTEM = new RetrieverType<>("operating_system", OS.class);
 
     /**
      * A retriever for whether the client's game is paused.
