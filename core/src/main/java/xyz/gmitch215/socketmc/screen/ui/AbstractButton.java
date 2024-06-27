@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.screen.ui;
 
+import xyz.gmitch215.socketmc.util.ElementBounds;
 import xyz.gmitch215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
 
@@ -37,6 +38,16 @@ public abstract class AbstractButton extends AbstractTextWidget {
      * The default width and height spacing between buttons.
      */
     public static final int DEFAULT_SPACING = 8;
+
+    /**
+     * Constructs a new button using the specified bounds.
+     * @param bounds the bounds
+     * @param message the text message
+     * @throws IllegalArgumentException if bounds or message is null
+     */
+    protected AbstractButton(@NotNull ElementBounds bounds, @NotNull Text message) throws IllegalArgumentException {
+        super(bounds, message);
+    }
 
     /**
      * Constructs a new button using the default dimesions.
