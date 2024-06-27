@@ -119,6 +119,22 @@ public abstract class RenderInstruction implements Serializable, DataHolder {
             isFilled = true;
         }
 
+        /**
+         * Renders the confusion effect, used when the player has the nausea effect.
+         * @param strength The strength of the effect, between 0 and 1
+         * @throws IllegalArgumentException if the strength is not between 0 and 1
+         */
+        public void renderConfusionEffect(float strength) throws IllegalArgumentException {
+            checkFilled();
+
+            if (strength < 0 || strength > 1) throw new IllegalArgumentException("Strength must be between 0 and 1");
+
+            data.put("strength", strength);
+
+            subOrdinal = 1;
+            isFilled = true;
+        }
+
     }
 
 }

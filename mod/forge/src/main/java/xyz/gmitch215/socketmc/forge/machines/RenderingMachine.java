@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.forge.machines;
 
+import net.minecraft.client.gui.GuiGraphics;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.instruction.InstructionId;
 import xyz.gmitch215.socketmc.instruction.Machine;
@@ -36,6 +37,11 @@ public final class RenderingMachine implements Machine {
                                 minecraft.getTimer().getGameTimeDeltaPartialTick(true),
                                 matrix
                         );
+                    },
+                    i -> {
+                        float strength = i.data("strength", Float.class);
+                        GuiGraphics graphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
+                        return () -> minecraft.gameRenderer.renderConfusionOverlay(graphics, strength);
                     }
             )
     );

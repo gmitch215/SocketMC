@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.fabric.machines;
 
+import net.minecraft.client.gui.GuiGraphics;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.instruction.InstructionId;
 import xyz.gmitch215.socketmc.instruction.Machine;
@@ -10,6 +11,8 @@ import xyz.gmitch215.socketmc.fabric.FabricSocketMC;
 
 import java.util.List;
 import java.util.function.Function;
+
+import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
 
 @InstructionId(Instruction.RENDERER)
 public final class RenderingMachine implements Machine {
@@ -30,11 +33,16 @@ public final class RenderingMachine implements Machine {
             List.of(
                     i -> {
                         Matrix4f matrix = i.data("matrix", Matrix4f.class);
-                        return () -> FabricSocketMC.minecraft.gameRenderer.renderItemInHand(
-                                FabricSocketMC.minecraft.gameRenderer.getMainCamera(),
-                                FabricSocketMC.minecraft.getTimer().getGameTimeDeltaPartialTick(true),
+                        return () -> minecraft.gameRenderer.renderItemInHand(
+                                minecraft.gameRenderer.getMainCamera(),
+                                minecraft.getTimer().getGameTimeDeltaPartialTick(true),
                                 matrix
                         );
+                    },
+                    i -> {
+                        float strength = i.data("strength", Float.class);
+                        GuiGraphics graphics = new GuiGraphics(minecraft, minecraft.renderBuffers().bufferSource());
+                        return () -> minecraft.gameRenderer.renderConfusionOverlay(graphics, strength);
                     }
             )
     );
