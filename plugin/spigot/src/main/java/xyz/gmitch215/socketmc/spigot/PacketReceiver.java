@@ -13,7 +13,7 @@ import java.util.UUID;
 @SuppressWarnings("unchecked")
 final class PacketReceiver extends ChannelDuplexHandler {
 
-    private final SocketPlayer player;
+    SocketPlayer player;
 
     PacketReceiver(SocketPlayer player) {
         this.player = player;

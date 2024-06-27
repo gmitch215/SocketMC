@@ -33,9 +33,12 @@ final class EventFactory {
 
     static void addPacketInjector(SocketPlayer p) {
         ChannelPipeline pipeline = p.getChannel().pipeline();
+        PacketReceiver old = (PacketReceiver) pipeline.get(SocketPlayer.PACKET_INJECTOR_ID);
 
-        if (pipeline.get(SocketPlayer.PACKET_INJECTOR_ID) != null) return;
-        pipeline.addBefore("decoder", SocketPlayer.PACKET_INJECTOR_ID, new PacketReceiver(p));
+        if (old != null)
+            old.player = p;
+        else
+            pipeline.addBefore("decoder", SocketPlayer.PACKET_INJECTOR_ID, new PacketReceiver(p));
     }
 
     // Event Factory
