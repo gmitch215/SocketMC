@@ -10,11 +10,14 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
 import java.util.*;
+import java.util.function.Function;
 
 /**
- * Represents the raw graphics context used to display graphics on the screen.
+ * <p>Represents the raw graphics context used to display graphics on the screen.</p>
+ * <p>This allows you to also collect the context of the current screen, as specified in {@link GraphicsContext}.
+ * The {@link Function} interfaces you specify <strong>must</strong> be serializable and cannot call anything external.</p>
  */
-public final class DrawingContext implements Serializable, Iterable<DrawingContext.Command> {
+public final class DrawingContext implements Serializable, Iterable<Function<GraphicsContext, DrawingContext.Command>> {
 
     @Serial
     private static final long serialVersionUID = 6151208407260227313L;
@@ -74,18 +77,18 @@ public final class DrawingContext implements Serializable, Iterable<DrawingConte
      */
     public static final int BLIT = 10;
 
-    private final List<Command> commands = new ArrayList<>();
+    private final List<Function<GraphicsContext, Command>> commands = new ArrayList<>();
 
-    private DrawingContext(Collection<Command> commands) {
+    private DrawingContext(Collection<Function<GraphicsContext, Command>> commands) {
         this.commands.addAll(commands);
     }
 
     /**
-     * Gets an immutable copy of the commands in this DrawingContext.
+     * Gets an immutable copy of the commands in this DrawingContext, with the current {@link GraphicsContext} information.
      * @return DrawingContext Commands
      */
     @NotNull
-    public List<Command> getCommands() {
+    public List<Function<GraphicsContext, Command>> getCommands() {
         return List.copyOf(commands);
     }
 
@@ -95,6 +98,15 @@ public final class DrawingContext implements Serializable, Iterable<DrawingConte
      * @throws IllegalArgumentException if the command is null
      */
     public void addCommand(@NotNull Command command) throws IllegalArgumentException {
+        addCommand(ctx -> command);
+    }
+
+    /**
+     * Adds a command to the DrawingContext.
+     * @param command the command to add
+     * @throws IllegalArgumentException if the command is null
+     */
+    public void addCommand(@NotNull Function<GraphicsContext, Command> command) throws IllegalArgumentException {
         if (command == null) throw new IllegalArgumentException("Command cannot be null");
         commands.add(command);
     }
@@ -106,18 +118,18 @@ public final class DrawingContext implements Serializable, Iterable<DrawingConte
      * @throws IllegalArgumentException if the command is null
      */
     public void addCommand(int index, @NotNull Command command) throws IllegalArgumentException {
-        if (command == null) throw new IllegalArgumentException("Command cannot be null");
-        commands.add(index, command);
+        addCommand(index, ctx -> command);
     }
 
     /**
-     * Removes a command from the DrawingContext.
-     * @param command the command to remove
+     * Adds a command to the DrawingContext at the specified index.
+     * @param index the index to add the command at
+     * @param command the command to add
      * @throws IllegalArgumentException if the command is null
      */
-    public void removeCommand(@NotNull Command command) throws IllegalArgumentException {
+    public void addCommand(int index, @NotNull Function<GraphicsContext, Command> command) throws IllegalArgumentException {
         if (command == null) throw new IllegalArgumentException("Command cannot be null");
-        commands.remove(command);
+        commands.add(index, command);
     }
 
     /**
@@ -137,7 +149,7 @@ public final class DrawingContext implements Serializable, Iterable<DrawingConte
 
     @NotNull
     @Override
-    public Iterator<Command> iterator() {
+    public Iterator<Function<GraphicsContext, Command>> iterator() {
         return commands.iterator();
     }
 
@@ -188,12 +200,10 @@ public final class DrawingContext implements Serializable, Iterable<DrawingConte
     /**
      * Represents a command in a DrawingContext.
      */
-    public static final class Command implements Serializable, Paramaterized {
+    public static final class Command implements Serializable, Paramaterized  {
 
         @Serial
         private static final long serialVersionUID = 1202929033750152256L;
-
-        // GuiGraphics
 
         /**
          * Draws a horizontal line.

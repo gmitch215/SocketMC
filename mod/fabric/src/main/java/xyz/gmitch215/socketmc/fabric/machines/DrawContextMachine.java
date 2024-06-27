@@ -5,15 +5,18 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.fabric.FabricUtil;
+import xyz.gmitch215.socketmc.fabric.screen.FabricGraphicsContext;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.instruction.InstructionId;
 import xyz.gmitch215.socketmc.instruction.Machine;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.LifecycleMap;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
+import xyz.gmitch215.socketmc.util.render.GraphicsContext;
 import xyz.gmitch215.socketmc.util.render.text.Text;
 
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
 
@@ -40,7 +43,9 @@ public final class DrawContextMachine implements Machine {
     }
 
     public static void draw(GuiGraphics graphics, DrawingContext context) {
-        for (DrawingContext.Command cmd : context) {
+        for (Function<GraphicsContext, DrawingContext.Command> func : context) {
+            DrawingContext.Command cmd = func.apply(FabricGraphicsContext.INSTANCE);
+
             RenderType type = switch (cmd.getType()) {
                 case DEFAULT -> RenderType.gui();
                 case OVERLAY -> RenderType.guiOverlay();
