@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.screen;
 
+import xyz.gmitch215.socketmc.screen.layout.Layout;
 import xyz.gmitch215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,6 +19,7 @@ public final class CustomScreen extends AbstractScreen {
     private String titleJSON;
     private String narrationMessageJSON;
     private ScreenBackground background = ScreenBackground.DEFAULT;
+    private Layout layout;
 
     private final List<Positionable> children = new ArrayList<>();
 
@@ -134,12 +136,35 @@ public final class CustomScreen extends AbstractScreen {
         this.background = background;
     }
 
+    /**
+     * Gets the layout of this screen.
+     * @return Layout
+     */
+    @Nullable
+    public Layout getLayout() {
+        return layout;
+    }
+
+    /**
+     * Sets the layout of this screen. Setting it to null will not remove the elements from the layout.
+     * @param layout Layout
+     */
+    public void setLayout(@Nullable Layout layout) {
+        this.layout = layout;
+        if (layout != null) {
+            layout.visitWidgets(this::addChild);
+            layout.arrangeElements();
+        }
+    }
+
     @Override
     public String toString() {
         return "CustomScreen{" +
                 "title='" + titleJSON + '\'' +
                 ", narrationMessage='" + narrationMessageJSON + '\'' +
                 ", children=" + children +
+                ", background=" + background +
+                ", layout=" + layout +
                 '}';
     }
 }

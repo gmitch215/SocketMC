@@ -11,6 +11,7 @@ import java.io.Serial;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Represents a Widget on the screen.
@@ -128,6 +129,11 @@ public abstract class AbstractWidget implements Positionable {
     @Override
     public final void setTooltip(@Nullable Tooltip tooltip) {
         this.tooltip = tooltip;
+    }
+
+    @Override
+    public final void visitWidget(@NotNull Consumer<AbstractWidget> visitor) {
+        visitor.accept(this);
     }
 
     @Override

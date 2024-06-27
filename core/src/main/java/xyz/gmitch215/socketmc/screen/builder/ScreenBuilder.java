@@ -1,7 +1,10 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
+import org.jetbrains.annotations.Nullable;
 import xyz.gmitch215.socketmc.screen.CustomScreen;
 import xyz.gmitch215.socketmc.screen.Positionable;
+import xyz.gmitch215.socketmc.screen.ScreenBackground;
+import xyz.gmitch215.socketmc.screen.layout.Layout;
 import xyz.gmitch215.socketmc.screen.ui.ImageButton;
 import xyz.gmitch215.socketmc.screen.ui.ImageWidget;
 import xyz.gmitch215.socketmc.screen.ui.TextButton;
@@ -140,6 +143,43 @@ public final class ScreenBuilder {
         button.accept(builder);
 
         screen.addChild(builder.build());
+        return this;
+    }
+
+    /**
+     * Sets the background of the screen.
+     * @param background The background of the screen.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if the background is null
+     */
+    @NotNull
+    public ScreenBuilder background(@NotNull ScreenBackground background) throws IllegalArgumentException {
+        screen.setBackground(background);
+        return this;
+    }
+
+    /**
+     * Sets the layout of the screen.
+     * @param layout The layout of the screen.
+     * @return this class, for chaining
+     */
+    @NotNull
+    public ScreenBuilder layout(@Nullable Layout layout) {
+        screen.setLayout(layout);
+        return this;
+    }
+
+    /**
+     * Sets the layout of the screen.
+     * @param layout The generator for the screen layout.
+     * @return this class, for chaining
+     * @throws IllegalArgumentException if the generator is null
+     */
+    @NotNull
+    public ScreenBuilder layout(@NotNull Supplier<Layout> layout) throws IllegalArgumentException {
+        if (layout == null) throw new IllegalArgumentException("Layout cannot be null");
+
+        screen.setLayout(layout.get());
         return this;
     }
 
