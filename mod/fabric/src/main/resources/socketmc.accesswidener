@@ -47,3 +47,4 @@ accessible field net/minecraft/client/gui/components/CycleButton values Lnet/min
 
 # GameRenderer
 accessible method net/minecraft/client/renderer/GameRenderer renderItemInHand (Lnet/minecraft/client/Camera;FLorg/joml/Matrix4f;)V
+accessible method net/minecraft/client/renderer/GameRenderer renderConfusionOverlay (Lnet/minecraft/client/gui/GuiGraphics;F)V

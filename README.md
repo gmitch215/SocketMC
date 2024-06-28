@@ -68,20 +68,20 @@ You can download them from the following locations:
     <dependencies>
         <!-- Include Core Module -->
         <dependency>
-          <groupId>me.gamercoder215.socketmc</groupId>
+          <groupId>xyz.gmitch215.socketmc</groupId>
           <artifactId>socketmc-core</artifactId>
           <version>[VERSION]</version>
         </dependency>
         
         <dependency>
-            <groupId>me.gamercoder215.socketmc</groupId>
+            <groupId>xyz.gmitch215.socketmc</groupId>
             <artifactId>socketmc-spigot</artifactId>
             <version>[VERSION]</version>
         </dependency>
         
         <!-- Alternatively, use the Paper Build instead of Spigot -->
         <dependency>
-            <groupId>me.gamercoder215.socketmc</groupId>
+            <groupId>xyz.gmitch215.socketmc</groupId>
             <artifactId>socketmc-paper</artifactId>
             <version>[VERSION]</version>
         </dependency>
@@ -101,11 +101,11 @@ repositories {
 
 dependencies {
     // Include Core Module
-    implementation 'me.gamercoder215.socketmc:socketmc-core:[VERSION]'
-    implementation 'me.gamercoder215.socketmc:socketmc-spigot:[VERSION]'
+    implementation 'xyz.gmitch215.socketmc:socketmc-core:[VERSION]'
+    implementation 'xyz.gmitch215.socketmc:socketmc-spigot:[VERSION]'
     
     // Alternatively, use the Paper Build
-    implementation 'me.gamercoder215.socketmc:socketmc-paper:[VERSION]'
+    implementation 'xyz.gmitch215.socketmc:socketmc-paper:[VERSION]'
 }
 ```
 </details>
@@ -120,11 +120,11 @@ repositories {
 
 dependencies {
     // Include Core Module
-    implementation("me.gamercoder215.socketmc:socketmc-core:[VERSION]")
-    implementation("me.gamercoder215.socketmc:socketmc-spigot:[VERSION]")
+    implementation("xyz.gmitch215.socketmc:socketmc-core:[VERSION]")
+    implementation("xyz.gmitch215.socketmc:socketmc-spigot:[VERSION]")
     
     // Alternatively, use the Paper Build
-    implementation("me.gamercoder215.socketmc:socketmc-paper:[VERSION]")
+    implementation("xyz.gmitch215.socketmc:socketmc-paper:[VERSION]")
 }
 ```
 </details>
@@ -134,8 +134,8 @@ dependencies {
 **Java**
 
 ```java
-import me.gamercoder215.socketmc.spigot.SocketPlayer;
-import me.gamercoder215.socketmc.instruction.Instruction;
+import xyz.gmitch215.socketmc.spigot.SocketPlayer;
+import xyz.gmitch215.socketmc.instruction.Instruction;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -162,8 +162,8 @@ public class MyPlugin extends JavaPlugin {
 **Kotlin**
 
 ```kotlin
-import me.gamercoder215.socketmc.spigot.SocketPlayer
-import me.gamercoder215.socketmc.instruction.Instruction
+import xyz.gmitch215.socketmc.spigot.SocketPlayer
+import xyz.gmitch215.socketmc.instruction.Instruction
 
 import org.bukkit.Bukkit
 import org.bukkit.entity.Player

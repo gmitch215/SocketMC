@@ -51,13 +51,13 @@ tasks {
 
 allprojects {
     val mc = "1.21"
-    val pr = "0.1.3"
+    val pr = "0.2.0"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
     project.ext["parchment"] = "2024.06.23"
 
-    group = "me.gamercoder215.socketmc"
+    group = "xyz.gmitch215.socketmc"
     version = "$mc-$pr"
     description = "Direct Minecraft Server-to-Client Communication"
 
@@ -90,6 +90,7 @@ allprojects {
         maven("https://maven.parchmentmc.org")
         maven("https://maven.terraformersmc.com/")
         maven("https://libraries.minecraft.net/")
+        maven("https://repo.azisaba.net/repository/maven-public/")
     }
 
     publishing {

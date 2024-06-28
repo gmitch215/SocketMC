@@ -25,6 +25,8 @@ tasks {
             showFromProtected()
 
             links("https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/")
+
+            addStringOption("Xdoclint:none", "-quiet")
         }
     }
 }

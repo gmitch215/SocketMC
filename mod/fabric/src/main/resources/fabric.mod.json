@@ -5,10 +5,10 @@
   "version": "${project.version}",
   "entrypoints": {
     "client": [
-      "me.gamercoder215.socketmc.fabric.FabricSocketMC"
+      "xyz.gmitch215.socketmc.fabric.FabricSocketMC"
     ],
     "modmenu": [
-      "me.gamercoder215.socketmc.fabric.modmenu.SocketModMenu"
+      "xyz.gmitch215.socketmc.fabric.modmenu.SocketModMenu"
     ]
   },
 
