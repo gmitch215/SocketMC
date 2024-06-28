@@ -1,9 +1,11 @@
 package xyz.gmitch215.socketmc.forge.machines;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Quaternionf;
 import xyz.gmitch215.socketmc.forge.ForgeUtil;
 import xyz.gmitch215.socketmc.forge.screen.ForgeGraphicsContext;
 import xyz.gmitch215.socketmc.instruction.Instruction;
@@ -14,6 +16,7 @@ import xyz.gmitch215.socketmc.util.LifecycleMap;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.GraphicsContext;
 
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -51,6 +54,16 @@ public final class DrawContextMachine implements Machine {
                 case TEXT_HIGHLIGHT -> RenderType.guiTextHighlight();
                 case GHOST_RECIPE_OVERLAY -> RenderType.guiGhostRecipeOverlay();
             };
+
+            List<DrawingContext.Modifier> modifiers = cmd.getModifiers();
+            boolean modding = !modifiers.isEmpty();
+
+            if (modding) {
+                graphics.pose().pushPose();
+
+                for (DrawingContext.Modifier mod : modifiers)
+                    applyModifier(mod, graphics.pose());
+            }
             
             switch (cmd.getId()) {
                 case DrawingContext.H_LINE -> {
@@ -147,6 +160,41 @@ public final class DrawContextMachine implements Machine {
                     
                     graphics.blit(ForgeUtil.toMinecraft(texture), x, y, u, v, width, height, textureWidth, textureHeight);
                 }
+            }
+
+            if (modding)
+                graphics.pose().popPose();
+        }
+    }
+
+    public static void applyModifier(DrawingContext.Modifier mod, PoseStack pose) {
+        switch (mod.getId()) {
+            case DrawingContext.MODIFIER_SCALE -> {
+                float x = mod.firstFloatParameter();
+                float y = mod.floatParameter(1);
+                float z = mod.lastFloatParameter();
+
+                pose.scale(x, y, z);
+            }
+            case DrawingContext.MODIFIER_TRANSLATE -> {
+                float x = mod.firstFloatParameter();
+                float y = mod.floatParameter(1);
+                float z = mod.lastFloatParameter();
+
+                pose.translate(x, y, z);
+            }
+            case DrawingContext.MODIFIER_ROTATE -> {
+                Quaternionf quaternion = mod.firstParameter(Quaternionf.class);
+
+                pose.mulPose(quaternion);
+            }
+            case DrawingContext.MODIFIER_ROTATE_AROUND -> {
+                Quaternionf quaternion = mod.firstParameter(Quaternionf.class);
+                float x = mod.floatParameter(1);
+                float y = mod.floatParameter(2);
+                float z = mod.lastFloatParameter();
+
+                pose.rotateAround(quaternion, x, y, z);
             }
         }
     }
