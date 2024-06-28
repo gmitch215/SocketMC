@@ -18,7 +18,8 @@ public final class MachineFinder {
             OpenLinkMachine.class,
             MailtoMachine.class,
             PlayAudioMachine.class,
-            LogMessageMachine.class
+            LogMessageMachine.class,
+            NarrateMachine.class
     );
 
     public static Machine getMachine(@NotNull Collection<Class<? extends Machine>> machines, @NotNull String id) {

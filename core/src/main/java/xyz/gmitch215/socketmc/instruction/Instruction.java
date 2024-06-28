@@ -1,16 +1,16 @@
 package xyz.gmitch215.socketmc.instruction;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
 import xyz.gmitch215.socketmc.config.ModPermission;
+import xyz.gmitch215.socketmc.log.AuditLog;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.Paramaterized;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
-import xyz.gmitch215.socketmc.util.render.text.Text;
 import xyz.gmitch215.socketmc.util.render.RenderBuffer;
-import xyz.gmitch215.socketmc.log.AuditLog;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.Unmodifiable;
+import xyz.gmitch215.socketmc.util.render.text.Text;
 
 import javax.sound.sampled.AudioSystem;
 import java.awt.*;
@@ -131,6 +131,12 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_CONTEXT = "draw_context";
+
+    /**
+     * Instruction for the narrator to speak.
+     */
+    @InstructionPermission(ModPermission.USE_AUDIO)
+    public static final String NARRATE = "narrate";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1387,6 +1393,33 @@ public final class Instruction implements Serializable, Paramaterized {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_CONTEXT, List.of(context, millis));
+    }
+
+    /**
+     * Creates a {@link #NARRATE} instruction.
+     * @param text Text to Narrate
+     * @return Narrate Instruction
+     * @throws IllegalArgumentException If the text is null
+     */
+    @NotNull
+    public static Instruction narrate(@NotNull String text) throws IllegalArgumentException {
+        if (text == null) throw new IllegalArgumentException("Text cannot be null");
+
+        return new Instruction(NARRATE, List.of(text, true));
+    }
+
+    /**
+     * Creates a {@link #NARRATE} instruction.
+     * @param text Text to Narrate
+     * @param interrupt Whether to interrupt any current speaking requests
+     * @return Narrate Instruction
+     * @throws IllegalArgumentException If the text is null
+     */
+    @NotNull
+    public static Instruction narrate(@NotNull String text, boolean interrupt) throws IllegalArgumentException {
+        if (text == null) throw new IllegalArgumentException("Text cannot be null");
+
+        return new Instruction(NARRATE, List.of(text, interrupt));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">
