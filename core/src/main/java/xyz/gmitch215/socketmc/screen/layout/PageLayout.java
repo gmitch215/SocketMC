@@ -35,7 +35,6 @@ public final class PageLayout implements Layout {
 
     /**
      * Creates a new PageLayout using the default margin height.
-     * @param marginHeight The height of the header and footer.
      */
     public PageLayout() {
         this(DEFAULT_MARGIN_HEIGHT);
@@ -51,8 +50,6 @@ public final class PageLayout implements Layout {
     
     /**
      * Creates a new PageLayout.
-     * @param width The width of the layout.
-     * @param height The height of the layout.
      * @param headerHeight The height of the header.
      * @param footerHeight The height of the footer.
      */
@@ -104,7 +101,6 @@ public final class PageLayout implements Layout {
     /**
      * Adds an element to the header of this PageLayout.
      * @param element the element to add
-     * @param settings the settings for the element
      * @return the element that was added
      * @param <T> the type of element
      * @throws IllegalArgumentException if the element or settings are null
@@ -193,7 +189,6 @@ public final class PageLayout implements Layout {
     /**
      * Adds an element to the footer of this PageLayout.
      * @param element the element to add
-     * @param settings the settings for the element
      * @return the element that was added
      * @param <T> the type of element
      * @throws IllegalArgumentException if the element or settings are null
