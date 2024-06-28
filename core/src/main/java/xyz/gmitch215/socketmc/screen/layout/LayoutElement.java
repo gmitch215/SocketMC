@@ -109,5 +109,5 @@ public interface LayoutElement {
      * Visits this object, applying a function to it.
      * @param visitor the visitor
      */
-    void visitWidget(@Nullable Consumer<AbstractWidget> visitor);
+    void visitWidgets(@Nullable Consumer<AbstractWidget> visitor);
 }

@@ -132,7 +132,7 @@ public abstract class AbstractWidget implements Positionable {
     }
 
     @Override
-    public final void visitWidget(@NotNull Consumer<AbstractWidget> visitor) {
+    public final void visitWidgets(@NotNull Consumer<AbstractWidget> visitor) {
         visitor.accept(this);
     }
 

@@ -98,7 +98,7 @@ public interface Layout extends LayoutElement, Serializable {
      */
     default void visitWidgets(@Nullable Consumer<AbstractWidget> visitor) {
         if (visitor == null) return;
-        visitChildren(element -> element.visitWidget(visitor));
+        visitChildren(element -> element.visitWidgets(visitor));
     }
 
     /**
