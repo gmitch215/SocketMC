@@ -1,8 +1,8 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.screen.ui.AbstractWidget;
 import xyz.gmitch215.socketmc.util.ElementBounds;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a builder for creating an {@link AbstractWidget} type.

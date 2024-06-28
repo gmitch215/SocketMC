@@ -1,7 +1,7 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
-import xyz.gmitch215.socketmc.screen.ui.FocusedTextWidget;
 import org.jetbrains.annotations.NotNull;
+import xyz.gmitch215.socketmc.screen.ui.FocusedTextWidget;
 
 /**
  * Represents a builder for a {@link FocusedTextWidget}.

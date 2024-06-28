@@ -1,8 +1,8 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.screen.ui.ImageWidget;
 import xyz.gmitch215.socketmc.util.Identifier;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a builder for an {@link ImageWidget}.

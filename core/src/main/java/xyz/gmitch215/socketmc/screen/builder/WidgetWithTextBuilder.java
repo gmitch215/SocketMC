@@ -1,10 +1,10 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.screen.ui.AbstractTextWidget;
 import xyz.gmitch215.socketmc.screen.ui.AbstractWidget;
 import xyz.gmitch215.socketmc.util.render.text.PlainText;
 import xyz.gmitch215.socketmc.util.render.text.Text;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a builder for creating a widget with a text element ({@link AbstractTextWidget}).

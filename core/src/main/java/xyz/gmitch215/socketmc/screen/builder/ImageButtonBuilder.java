@@ -1,9 +1,9 @@
 package xyz.gmitch215.socketmc.screen.builder;
 
+import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.screen.ui.ImageButton;
 import xyz.gmitch215.socketmc.screen.util.Sprite;
 import xyz.gmitch215.socketmc.util.render.text.Text;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents a builder for an {@link ImageButton}.
