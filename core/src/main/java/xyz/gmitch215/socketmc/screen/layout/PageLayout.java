@@ -7,7 +7,8 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
- * <p>Represents a layout with a header, footer, and content area. This layout is always at the top left of the screen, with {@link #isFullscreen()} always true.</p>
+ * <p>Represents a layout with a header, footer, and content area. This layout is always at the top left of the screen, with {@link #isFullscreen()} always true.
+ * This means that calling {@link #setWidth(int)} and {@link #setHeight(int)} will have no effect.</p>
  */
 public final class PageLayout implements Layout {
 
@@ -27,29 +28,23 @@ public final class PageLayout implements Layout {
     private final FrameLayout header = new FrameLayout();
     private final FrameLayout footer = new FrameLayout();
     private final FrameLayout contents = new FrameLayout();
-    private int width;
-    private int height;
     private int headerHeight;
     private int footerHeight;
 
     /**
      * Creates a new PageLayout using the default margin height.
-     * @param width The width of the layout.
-     * @param height The height of the layout.
      * @param marginHeight The height of the header and footer.
      */
-    public PageLayout(int width, int height) {
-        this(width, height, DEFAULT_MARGIN_HEIGHT);
+    public PageLayout() {
+        this(DEFAULT_MARGIN_HEIGHT);
     }
     
     /**
      * Creates a new PageLayout.
-     * @param width The width of the layout.
-     * @param height The height of the layout.
      * @param marginHeight The height of the header and footer.
      */
-    public PageLayout(int width, int height, int marginHeight) {
-        this(width, height, marginHeight, marginHeight);
+    public PageLayout(int marginHeight) {
+        this(marginHeight, marginHeight);
     }
     
     /**
@@ -59,9 +54,7 @@ public final class PageLayout implements Layout {
      * @param headerHeight The height of the header.
      * @param footerHeight The height of the footer.
      */
-    public PageLayout(int width, int height, int headerHeight, int footerHeight) {
-        this.width = width;
-        this.height = height;
+    public PageLayout(int headerHeight, int footerHeight) {
         this.headerHeight = headerHeight;
         this.footerHeight = footerHeight;
     }

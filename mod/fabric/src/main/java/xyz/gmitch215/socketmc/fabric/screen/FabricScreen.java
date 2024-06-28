@@ -34,6 +34,9 @@ public final class FabricScreen extends Screen {
         List<Positionable> children = handle.getChildren();
         for (Positionable child : children)
             addRenderableWidget(FabricScreenUtil.toMinecraft(child));
+
+        if (handle.getLayout() != null)
+            repositionElements();
     }
 
     @Override

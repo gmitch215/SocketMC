@@ -34,6 +34,9 @@ public final class ForgeScreen extends Screen {
         List<Positionable> children = handle.getChildren();
         for (Positionable child : children)
             addRenderableWidget(ForgeScreenUtil.toMinecraft(child));
+
+        if (handle.getLayout() != null)
+            repositionElements();
     }
 
     @Override
