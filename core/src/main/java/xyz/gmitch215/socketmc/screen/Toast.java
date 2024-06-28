@@ -108,8 +108,6 @@ public final class Toast implements Serializable, Paramaterized {
 
     /**
      * Creates a custom Toast Message using the default dimensions.
-     * @param width Toast Width
-     * @param height Toast Height
      * @param millis Display Duration, in milliseconds
      * @param context Drawing Context to render
      * @return Custom Toast Message
