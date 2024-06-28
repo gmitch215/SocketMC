@@ -23,7 +23,8 @@ public final class ForgeMachineFinder {
             CloseScreenMachine.class,
             RenderingMachine.class,
             DrawBeaconBeamMachine.class,
-            DrawContextMachine.class
+            DrawContextMachine.class,
+            DisplayToastMachine.class
     )).toList();
 
 }

@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import xyz.gmitch215.socketmc.config.ModPermission;
 import xyz.gmitch215.socketmc.log.AuditLog;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
+import xyz.gmitch215.socketmc.screen.Toast;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.Paramaterized;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
@@ -137,6 +138,12 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_AUDIO)
     public static final String NARRATE = "narrate";
+
+    /**
+     * Instruction to display a toast message on the client's screen.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String DISPLAY_TOAST = "display_toast";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1420,6 +1427,18 @@ public final class Instruction implements Serializable, Paramaterized {
         if (text == null) throw new IllegalArgumentException("Text cannot be null");
 
         return new Instruction(NARRATE, List.of(text, interrupt));
+    }
+
+    /**
+     * Creates a {@link #DISPLAY_TOAST} instruction.
+     * @param toast Toast to Display
+     * @return Display Toast Instruction
+     * @throws IllegalArgumentException If the toast is null
+     */
+    @NotNull
+    public static Instruction displayToast(@NotNull Toast toast) throws IllegalArgumentException {
+        if (toast == null) throw new IllegalArgumentException("Toast cannot be null");
+        return new Instruction(DISPLAY_TOAST, List.of(toast));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

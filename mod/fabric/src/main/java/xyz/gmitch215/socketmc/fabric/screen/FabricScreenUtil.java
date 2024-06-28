@@ -2,6 +2,9 @@ package xyz.gmitch215.socketmc.fabric.screen;
 
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.components.toasts.SystemToast;
+import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.client.gui.components.toasts.TutorialToast;
 import net.minecraft.client.gui.screens.*;
 import net.minecraft.client.gui.screens.achievement.StatsScreen;
 import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
@@ -24,6 +27,8 @@ import xyz.gmitch215.socketmc.util.render.text.Text;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+
+import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
 
 @SuppressWarnings({"unchecked", "rawtypes"})
 public final class FabricScreenUtil {
@@ -230,6 +235,58 @@ public final class FabricScreenUtil {
         f0.socketMC$getClickListeners().forEach(w0::onClick);
 
         return w0;
+    }
+
+    public static Toast toMinecraft(xyz.gmitch215.socketmc.screen.Toast toast) {
+        return switch (toast.getType()) {
+            // Custom
+            case 0 -> new FabricToast(toast);
+
+            // System
+            case 1 -> {
+                xyz.gmitch215.socketmc.screen.Toast.System type = toast.firstParameter(xyz.gmitch215.socketmc.screen.Toast.System.class);
+                String title = toast.stringParameter(1);
+                String message = toast.lastStringParameter();
+
+                SystemToast.SystemToastId id = switch (type) {
+                    case WORLD_BACKUP -> SystemToast.SystemToastId.WORLD_BACKUP;
+                    case LOW_DISK_SPACE -> SystemToast.SystemToastId.LOW_DISK_SPACE;
+                    case NARRATOR_TOGGLE -> SystemToast.SystemToastId.NARRATOR_TOGGLE;
+                    case FILE_DROP_FAILURE -> SystemToast.SystemToastId.FILE_DROP_FAILURE;
+                    case PACK_COPY_FAILURE -> SystemToast.SystemToastId.PACK_COPY_FAILURE;
+                    case PACK_LOAD_FAILURE -> SystemToast.SystemToastId.PACK_LOAD_FAILURE;
+                    case PERIODIC_NOTIFICATION -> SystemToast.SystemToastId.PERIODIC_NOTIFICATION;
+                    case CHUNK_LOAD_FAILURE -> SystemToast.SystemToastId.CHUNK_LOAD_FAILURE;
+                    case CHUNK_SAVE_FAILURE -> SystemToast.SystemToastId.CHUNK_SAVE_FAILURE;
+                    case WORLD_ACCESS_FAILURE -> SystemToast.SystemToastId.WORLD_ACCESS_FAILURE;
+                    case UNSECURE_SERVER_WARNING -> SystemToast.SystemToastId.UNSECURE_SERVER_WARNING;
+                };
+
+                yield SystemToast.multiline(minecraft, id, FabricUtil.fromJson(title), FabricUtil.fromJson(message));
+            }
+
+            // Tutorial
+            case 2 -> {
+                xyz.gmitch215.socketmc.screen.Toast.Tutorial type = toast.firstParameter(xyz.gmitch215.socketmc.screen.Toast.Tutorial.class);
+                String title = toast.stringParameter(1);
+                String message = toast.stringParameter(2);
+                boolean progressable = toast.lastBooleanParameter();
+
+                TutorialToast.Icons icon = switch (type) {
+                    case TREE -> TutorialToast.Icons.TREE;
+                    case MOUSE -> TutorialToast.Icons.MOUSE;
+                    case RECIPE_BOOK -> TutorialToast.Icons.RECIPE_BOOK;
+                    case RIGHT_CLICK -> TutorialToast.Icons.RIGHT_CLICK;
+                    case MOVEMENT_KEYS -> TutorialToast.Icons.MOVEMENT_KEYS;
+                    case WOODEN_PLANKS -> TutorialToast.Icons.WOODEN_PLANKS;
+                    case SOCIAL_INTERACTIONS -> TutorialToast.Icons.SOCIAL_INTERACTIONS;
+                };
+
+                yield new TutorialToast(icon, FabricUtil.fromJson(title), FabricUtil.fromJson(message), progressable);
+            }
+
+            default -> throw new IllegalStateException("Unexpected value: " + toast.getType());
+        };
     }
 
 }
