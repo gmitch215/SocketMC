@@ -10,24 +10,16 @@ public final class FabricToast implements Toast {
 
     final xyz.gmitch215.socketmc.screen.Toast handle;
 
-    long lastChanged;
-    boolean changed;
-
     public FabricToast(xyz.gmitch215.socketmc.screen.Toast handle) {
         this.handle = handle;
     }
 
     @Override
     public Visibility render(GuiGraphics guiGraphics, ToastComponent toastComponent, long timeSinceLastVisible) {
-        if (changed) {
-            lastChanged = timeSinceLastVisible;
-            changed = false;
-        }
-
         DrawingContext context = handle.firstParameter(DrawingContext.class);
         DrawContextMachine.draw(guiGraphics, context);
 
-        return (timeSinceLastVisible - lastChanged) >= handle.getDuration() * toastComponent.getNotificationDisplayTimeMultiplier() ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
+        return timeSinceLastVisible >= handle.getDuration() * toastComponent.getNotificationDisplayTimeMultiplier() ? Toast.Visibility.HIDE : Toast.Visibility.SHOW;
     }
 
     @Override
