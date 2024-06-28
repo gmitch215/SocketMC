@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/FunctionalInterface.html" title="class or interface in java.lang" class="external-link">@FunctionalInterface</a>
 </span><span class="modifiers">public interface </span><span class="element-name type-name-label">Axis</span></div>
-<div class="block">Utility functional interface to convert a rotation amount to a <code>Quaternionf</code>. Commonly represents an axis of rotation.</div>
+<div class="block">Utility functional interface to convert a rotation amount to a <a href="https://javadoc.scijava.org/JOML/org/joml/Quaternionf.html" title="class or interface in org.joml" class="external-link"><code>Quaternionf</code></a>. Commonly represents an axis of rotation.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -151,11 +151,11 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1"><code>static <a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="Axis.html" title="interface in xyz.gmitch215.socketmc.util.math">Axis</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(org.joml.Vector3f)" class="member-name-link">of</a><wbr>(<a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> org.joml.Vector3f&nbsp;axis)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1"><code><a href="#of(org.joml.Vector3f)" class="member-name-link">of</a><wbr>(<a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://javadoc.scijava.org/JOML/org/joml/Vector3f.html" title="class or interface in org.joml" class="external-link">Vector3f</a>&nbsp;axis)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1">
-<div class="block">Creates an axis of rotation from the given <code>Vector3f</code>.</div>
+<div class="block">Creates an axis of rotation from the given <a href="https://javadoc.scijava.org/JOML/org/joml/Vector3f.html" title="class or interface in org.joml" class="external-link"><code>Vector3f</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> org.joml.Quaternionf</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://javadoc.scijava.org/JOML/org/joml/Quaternionf.html" title="class or interface in org.joml" class="external-link">Quaternionf</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rotation(float)" class="member-name-link">rotation</a><wbr>(float&nbsp;radians)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Rotates the axis by the given radians.</div>
@@ -229,9 +229,9 @@ loadScripts(document, 'script');</script>
 <h3>of</h3>
 <div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a>
 </span><span class="modifiers">static</span>&nbsp;<span class="return-type"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="Axis.html" title="interface in xyz.gmitch215.socketmc.util.math">Axis</a></span>&nbsp;<span class="element-name">of</span><wbr><span class="parameters">(<a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a>
- <a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> org.joml.Vector3f&nbsp;axis)</span>
+ <a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://javadoc.scijava.org/JOML/org/joml/Vector3f.html" title="class or interface in org.joml" class="external-link">Vector3f</a>&nbsp;axis)</span>
                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/IllegalArgumentException.html" title="class or interface in java.lang" class="external-link">IllegalArgumentException</a></span></div>
-<div class="block">Creates an axis of rotation from the given <code>Vector3f</code>.</div>
+<div class="block">Creates an axis of rotation from the given <a href="https://javadoc.scijava.org/JOML/org/joml/Vector3f.html" title="class or interface in org.joml" class="external-link"><code>Vector3f</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>axis</code> - The axis to rotate around.</dd>
@@ -246,7 +246,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="rotation(float)">
 <h3>rotation</h3>
 <div class="member-signature"><span class="annotations"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a>
-</span><span class="return-type"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> org.joml.Quaternionf</span>&nbsp;<span class="element-name">rotation</span><wbr><span class="parameters">(float&nbsp;radians)</span></div>
+</span><span class="return-type"><a href="https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/org/jetbrains/annotations/NotNull.html" title="class or interface in org.jetbrains.annotations" class="external-link">@NotNull</a> <a href="https://javadoc.scijava.org/JOML/org/joml/Quaternionf.html" title="class or interface in org.joml" class="external-link">Quaternionf</a></span>&nbsp;<span class="element-name">rotation</span><wbr><span class="parameters">(float&nbsp;radians)</span></div>
 <div class="block">Rotates the axis by the given radians.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
