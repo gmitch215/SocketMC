@@ -49,7 +49,7 @@ final class PacketReceiver extends ChannelDuplexHandler {
                     ObjectInputStream ois = new ObjectInputStream(bis);
                     Object value = ois.readObject();
 
-                    player.retriever.bus.remove(id).accept(value);
+                    player.retriever.getBus0().remove(id).accept(value);
                     break;
                 }
             }

@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 public final class SocketRetriever {
 
     final SocketPlayer player;
-    final Map<UUID, Consumer> bus = new HashMap<>();
+    private static final Map<UUID, Map<UUID, Consumer>> bus = new HashMap<>();
 
     SocketRetriever(SocketPlayer player) {
         this.player = player;
@@ -38,7 +38,15 @@ public final class SocketRetriever {
      */
     @NotNull
     public Map<UUID, Consumer> getBus() {
-        return Map.copyOf(bus);
+        return Map.copyOf(getBus0());
+    }
+
+    Map<UUID, Consumer> getBus0() {
+        UUID id = player.getPlayer().getUniqueId();
+        if (!bus.containsKey(id))
+            bus.put(id, new HashMap<>());
+
+        return bus.get(id);
     }
 
     /**
@@ -97,7 +105,7 @@ public final class SocketRetriever {
         if (plugin == null) throw new IllegalArgumentException("Plugin cannot be null");
 
         UUID id = UUID.randomUUID();
-        bus.put(id, callback);
+        getBus0().put(id, callback);
 
         FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
         buf.writeVarInt(-4);
