@@ -227,7 +227,49 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
 
     @Override
     public String toString() {
-        return "DrawingContext{" + commands + '}';
+        return "DrawingContext{" + commands.size() + '}';
+    }
+
+    // Constructors
+
+    /**
+     * Creates a new {@link DrawingContext} from a single command.
+     * @param command the command to use
+     * @return A new DrawingContext
+     * @throws IllegalArgumentException if the command is null
+     */
+    @NotNull
+    public static DrawingContext of(@NotNull Function<GraphicsContext, DrawingContext.Command> command) throws IllegalArgumentException {
+        if (command == null) throw new IllegalArgumentException("Command cannot be null");
+
+        return new DrawingContext(List.of(command));
+    }
+
+    /**
+     * Creates a new {@link DrawingContext} from a list of commands.
+     * @param commands the commands to use
+     * @return A new DrawingContext
+     * @throws IllegalArgumentException if the commands are null
+     */
+    @NotNull
+    public static DrawingContext of(@NotNull Collection<Function<GraphicsContext, DrawingContext.Command>> commands) throws IllegalArgumentException {
+        if (commands == null) throw new IllegalArgumentException("Commands cannot be null");
+
+        return new DrawingContext(commands);
+    }
+
+    /**
+     * Creates a new {@link DrawingContext} from an array of commands.
+     * @param commands the commands to use
+     * @return A new DrawingContext
+     * @throws IllegalArgumentException if the commands are null
+     */
+    @NotNull
+    @SafeVarargs
+    public static DrawingContext of(@NotNull Function<GraphicsContext, DrawingContext.Command>... commands) throws IllegalArgumentException {
+        if (commands == null) throw new IllegalArgumentException("Commands cannot be null");
+
+        return new DrawingContext(List.of(commands));
     }
 
     /**
