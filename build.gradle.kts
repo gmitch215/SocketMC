@@ -41,9 +41,10 @@ tasks {
 
             links(
                 "https://hub.spigotmc.org/javadocs/spigot/",
-                "https://netty.io/5.0/api/",
+                "https://netty.io/4.0/api/",
                 "https://javadoc.io/doc/org.jetbrains/annotations-java5/23.0.0/",
-                "https://jd.advntr.dev/api/4.17.0/"
+                "https://jd.advntr.dev/api/4.17.0/",
+                "https://javadoc.scijava.org/JOML/"
             )
         }
     }
