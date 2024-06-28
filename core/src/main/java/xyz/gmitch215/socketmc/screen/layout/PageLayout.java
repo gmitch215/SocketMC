@@ -28,6 +28,8 @@ public final class PageLayout implements Layout {
     private final FrameLayout header = new FrameLayout();
     private final FrameLayout footer = new FrameLayout();
     private final FrameLayout contents = new FrameLayout();
+    private int width;
+    private int height;
     private int headerHeight;
     private int footerHeight;
 
