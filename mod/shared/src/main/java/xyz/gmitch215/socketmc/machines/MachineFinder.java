@@ -19,7 +19,10 @@ public final class MachineFinder {
             MailtoMachine.class,
             PlayAudioMachine.class,
             LogMessageMachine.class,
-            NarrateMachine.class
+            NarrateMachine.class,
+            OSBeepMachine.class,
+            ExternalPopupMachine.class,
+            ExternalMessageMachine.class
     );
 
     public static Machine getMachine(@NotNull Collection<Class<? extends Machine>> machines, @NotNull String id) {
