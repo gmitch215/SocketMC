@@ -122,7 +122,7 @@ public final class SocketPlugin implements Serializable, Comparable<SocketPlugin
      * @return Deserialized Instruction
      */
     @Nullable
-    public static SocketPlugin fromByteArray(@NotNull byte[] plugin) {
+    public static SocketPlugin fromByteArray(byte[] plugin) {
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(plugin);
             ObjectInputStream inw = new ObjectInputStream(in);

@@ -207,7 +207,7 @@ public final class RetrieverType<T> implements Serializable {
      * @return The retriever type
      */
     @NotNull
-    public static RetrieverType<?> fromByteArray(@NotNull byte[] bytes) {
+    public static RetrieverType<?> fromByteArray(byte[] bytes) {
         if (bytes == null) throw new IllegalArgumentException("Bytes cannot be null");
 
         try {
