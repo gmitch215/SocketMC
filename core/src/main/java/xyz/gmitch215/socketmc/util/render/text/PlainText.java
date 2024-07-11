@@ -83,7 +83,7 @@ public class PlainText extends Text {
      * Sets the color for this text element.
      * @param color Color as an ARGB integer
      */
-    public void setColor(@NotNull int color) {
+    public void setColor(int color) {
         this.color = color;
     }
 

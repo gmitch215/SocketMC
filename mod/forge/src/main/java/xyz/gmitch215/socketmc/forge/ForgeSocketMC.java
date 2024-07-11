@@ -23,6 +23,7 @@ public final class ForgeSocketMC implements SocketMC {
     public ForgeSocketMC() {
         minecraft = Minecraft.getInstance();
         GAME_DIRECTORY.set(minecraft.gameDirectory);
+        INSTANCE.set(this);
 
         // Events
         MinecraftForge.EVENT_BUS.register(new ForgeEvents());
@@ -52,4 +53,15 @@ public final class ForgeSocketMC implements SocketMC {
         }
     }
 
+    // Implementation
+
+    @Override
+    public void sendSocketMCEvent(int id, Map<String, Object> params) {
+        sendEvent(id, params);
+    }
+
+    @Override
+    public long getWindowId() {
+        return minecraft.getWindow().getWindow();
+    }
 }

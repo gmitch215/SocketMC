@@ -2,10 +2,7 @@ package xyz.gmitch215.socketmc.spigot;
 
 import io.netty.channel.ChannelPipeline;
 import xyz.gmitch215.socketmc.events.SocketEvent;
-import xyz.gmitch215.socketmc.events.input.AsyncPlayerClickMouseEvent;
-import xyz.gmitch215.socketmc.events.input.AsyncPlayerMoveMouseEvent;
-import xyz.gmitch215.socketmc.events.input.AsyncPlayerPressKeyEvent;
-import xyz.gmitch215.socketmc.events.input.AsyncPlayerScrollMouseEvent;
+import xyz.gmitch215.socketmc.events.input.*;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.ui.AbstractButton;
 import xyz.gmitch215.socketmc.screen.ui.CheckboxButton;
@@ -111,6 +108,12 @@ final class EventFactory {
                 Object value = params.get("value");
 
                 return new AsyncPlayerCycleButtonEvent(button, value, screen, p);
+            },
+            // PlayerClickExternalMessageBoxEvent - 9
+            (p, params) -> {
+                boolean success = (boolean) params.get("success");
+
+                return new AsyncPlayerClickExternalMessageBoxEvent(success, p);
             }
     );
 

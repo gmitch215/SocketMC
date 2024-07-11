@@ -30,5 +30,5 @@ public class OnlineOptionsScreenMixin extends OptionsSubScreen {
     }
 
     @Override
-    protected void addOptions() {}
+    public void addOptions() {}
 }

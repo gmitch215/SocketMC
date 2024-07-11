@@ -15,6 +15,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 
@@ -23,6 +24,15 @@ public interface SocketMC {
     Logger LOGGER = LoggerFactory.getLogger("SocketMC");
 
     AtomicReference<File> GAME_DIRECTORY = new AtomicReference<>(null);
+    AtomicReference<SocketMC> INSTANCE = new AtomicReference<>(null);
+
+    // Abstraction
+
+    void sendSocketMCEvent(int id, Map<String, Object> params);
+
+    long getWindowId();
+
+    // Static Util
 
     static void print(Throwable t) {
         LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());

@@ -29,6 +29,7 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
     public void onInitializeClient() {
         minecraft = Minecraft.getInstance();
         GAME_DIRECTORY.set(minecraft.gameDirectory);
+        INSTANCE.set(this);
 
         // Events
         FabricEvents events = new FabricEvents();
@@ -70,4 +71,15 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
         }
     }
 
+    // Implementation
+
+    @Override
+    public void sendSocketMCEvent(int id, Map<String, Object> params) {
+        sendEvent(id, params);
+    }
+
+    @Override
+    public long getWindowId() {
+        return minecraft.getWindow().getWindow();
+    }
 }

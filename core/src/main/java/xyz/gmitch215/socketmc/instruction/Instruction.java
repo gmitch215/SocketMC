@@ -9,6 +9,8 @@ import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.Toast;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.Paramaterized;
+import xyz.gmitch215.socketmc.util.WindowDialogue;
+import xyz.gmitch215.socketmc.util.WindowIcon;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.RenderBuffer;
 import xyz.gmitch215.socketmc.util.render.text.Text;
@@ -144,6 +146,30 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String DISPLAY_TOAST = "display_toast";
+
+    /**
+     * Instruction to play the beeping noise specific to the client's operating system.
+     */
+    @InstructionPermission(ModPermission.USE_AUDIO)
+    public static final String OS_BEEP = "os_beep";
+
+    /**
+     * Instruction to display a notification popup using the OS's native notification system.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String EXTERNAL_WINDOW_POPUP = "external_window_popup";
+
+    /**
+     * Instruction to display a message box using the OS's native notification system.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String EXTERNAL_WINDOW_MESSAGE_BOX = "external_window_message_box";
+
+    /**
+     * Instruction to change the native window title of the client.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String SET_WINDOW_TITLE = "set_window_title";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1441,6 +1467,133 @@ public final class Instruction implements Serializable, Paramaterized {
         return new Instruction(DISPLAY_TOAST, List.of(toast));
     }
 
+    /**
+     * Creates a {@link #OS_BEEP} instruction.
+     * @return OS Beep Instruction
+     */
+    @NotNull
+    public static Instruction osBeep() {
+        return new Instruction(OS_BEEP, List.of());
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_POPUP} instruction.
+     * @param title Window Title
+     * @param message Window Message
+     * @return External Window Popup Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty
+     */
+    @NotNull
+    public static Instruction externalWindowPopup(@NotNull String title, @NotNull String message) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        
+        return new Instruction(EXTERNAL_WINDOW_POPUP, List.of(title, message, "ok"));
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_POPUP} instruction.
+     * @param title Window Title
+     * @param message Window Message
+     * @param icon Window Icon
+     * @return External Window Popup Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty, or the icon is null
+     * @throws UnsupportedOperationException If the icon is {@link WindowIcon#QUESTION}
+     */
+    @NotNull
+    public static Instruction externalWindowPopup(@NotNull String title, @NotNull String message, @NotNull WindowIcon icon) throws IllegalArgumentException, UnsupportedOperationException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        if (icon == null) throw new IllegalArgumentException("Icon cannot be null");
+        if (icon == WindowIcon.QUESTION) throw new UnsupportedOperationException("WindowIcon#QUESTION");
+        
+        return new Instruction(EXTERNAL_WINDOW_POPUP, List.of(title, message, icon.name().toLowerCase()));
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_MESSAGE_BOX} instruction with {@link WindowDialogue#OK}.
+     * @param title Window Title
+     * @param message Window Message
+     * @return External Window Message Box Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty
+     */
+    @NotNull
+    public static Instruction externalWindowMessageBox(@NotNull String title, @NotNull String message) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+
+        return new Instruction(EXTERNAL_WINDOW_MESSAGE_BOX, List.of(title, message, "ok", "ok", 1));
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_MESSAGE_BOX} instruction.
+     * @param title Window Title
+     * @param message Window Message
+     * @param dialogue Window Dialogue
+     * @return External Window Message Box Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty, or the dialogue is null
+     */
+    @NotNull
+    public static Instruction externalWindowMessageBox(@NotNull String title, @NotNull String message, @NotNull WindowDialogue dialogue) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        if (dialogue == null) throw new IllegalArgumentException("Dialogue cannot be null");
+
+        return new Instruction(EXTERNAL_WINDOW_MESSAGE_BOX, List.of(title, message, dialogue.name().toLowerCase(), "ok", true));
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_MESSAGE_BOX} instruction.
+     * @param title Window Title
+     * @param message Window Message
+     * @param dialogue Window Dialogue
+     * @param icon Window Icon
+     * @return External Window Message Box Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty, the dialogue is null, or the icon is null
+     */
+    @NotNull
+    public static Instruction externalWindowMessageBox(@NotNull String title, @NotNull String message, @NotNull WindowDialogue dialogue, @NotNull WindowIcon icon) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        if (dialogue == null) throw new IllegalArgumentException("Dialogue cannot be null");
+        if (icon == null) throw new IllegalArgumentException("Icon cannot be null");
+
+        return new Instruction(EXTERNAL_WINDOW_MESSAGE_BOX, List.of(title, message, dialogue.name().toLowerCase(), icon.name().toLowerCase(), true));
+    }
+
+    /**
+     * Creates a {@link #EXTERNAL_WINDOW_MESSAGE_BOX} instruction.
+     * @param title Window Title
+     * @param message Window Message
+     * @param dialogue Window Dialogue
+     * @param icon Window Icon
+     * @param cancelDefault Whether the cancel button is the default
+     * @return External Window Message Box Instruction
+     * @throws IllegalArgumentException If the title or message is null or empty, the dialogue is null, or the icon is null
+     */
+    @NotNull
+    public static Instruction externalWindowMessageBox(@NotNull String title, @NotNull String message, @NotNull WindowDialogue dialogue, @NotNull WindowIcon icon, boolean cancelDefault) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+        if (message == null || message.isEmpty()) throw new IllegalArgumentException("Message cannot be null or empty");
+        if (dialogue == null) throw new IllegalArgumentException("Dialogue cannot be null");
+        if (icon == null) throw new IllegalArgumentException("Icon cannot be null");
+        
+        return new Instruction(EXTERNAL_WINDOW_MESSAGE_BOX, List.of(title, message, dialogue.name().toLowerCase(), icon.name().toLowerCase(), !cancelDefault));
+    }
+
+    /**
+     * Creates a {@link #SET_WINDOW_TITLE} instruction.
+     * @param title Window Title
+     * @return Set Window Title Instruction
+     * @throws IllegalArgumentException If the title is null or empty
+     */
+    @NotNull
+    public static Instruction setWindowTitle(@NotNull String title) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+
+        return new Instruction(SET_WINDOW_TITLE, List.of(title));
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">
     // Serialization
 
@@ -1467,7 +1620,7 @@ public final class Instruction implements Serializable, Paramaterized {
      * @return Deserialized Instruction
      */
     @Nullable
-    public static Instruction fromByteArray(@NotNull byte[] instruction) {
+    public static Instruction fromByteArray(byte[] instruction) {
         try {
             ByteArrayInputStream in = new ByteArrayInputStream(instruction);
             ObjectInputStream inw = new ObjectInputStream(in);
