@@ -91,7 +91,6 @@ allprojects {
         maven("https://maven.parchmentmc.org")
         maven("https://maven.terraformersmc.com/")
         maven("https://libraries.minecraft.net/")
-        maven("https://repo.azisaba.net/repository/maven-public/")
     }
 
     publishing {
