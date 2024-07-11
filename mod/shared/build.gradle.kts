@@ -9,6 +9,7 @@ dependencies {
     compileOnly("com.mojang:text2speech:1.17.9")
 
     compileOnly("org.lwjgl:lwjgl-tinyfd:3.3.3")
+    compileOnly("org.lwjgl:lwjgl-glfw:3.3.3")
 }
 
 tasks {

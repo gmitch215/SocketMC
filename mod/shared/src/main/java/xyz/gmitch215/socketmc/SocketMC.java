@@ -30,6 +30,10 @@ public interface SocketMC {
 
     void sendSocketMCEvent(int id, Map<String, Object> params);
 
+    long getWindowId();
+
+    // Static Util
+
     static void print(Throwable t) {
         LOGGER.error("[SocketMC] {}", t.getClass().getSimpleName());
         LOGGER.error("-----------");

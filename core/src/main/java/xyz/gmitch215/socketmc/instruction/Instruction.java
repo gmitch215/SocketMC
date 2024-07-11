@@ -165,6 +165,12 @@ public final class Instruction implements Serializable, Paramaterized {
     @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
     public static final String EXTERNAL_WINDOW_MESSAGE_BOX = "external_window_message_box";
 
+    /**
+     * Instruction to change the native window title of the client.
+     */
+    @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
+    public static final String SET_WINDOW_TITLE = "set_window_title";
+
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
 
@@ -1573,6 +1579,19 @@ public final class Instruction implements Serializable, Paramaterized {
         if (icon == null) throw new IllegalArgumentException("Icon cannot be null");
         
         return new Instruction(EXTERNAL_WINDOW_MESSAGE_BOX, List.of(title, message, dialogue.name().toLowerCase(), icon.name().toLowerCase(), !cancelDefault));
+    }
+
+    /**
+     * Creates a {@link #SET_WINDOW_TITLE} instruction.
+     * @param title Window Title
+     * @return Set Window Title Instruction
+     * @throws IllegalArgumentException If the title is null or empty
+     */
+    @NotNull
+    public static Instruction setWindowTitle(@NotNull String title) throws IllegalArgumentException {
+        if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
+
+        return new Instruction(SET_WINDOW_TITLE, List.of(title));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

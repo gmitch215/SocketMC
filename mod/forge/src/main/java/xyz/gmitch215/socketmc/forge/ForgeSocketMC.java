@@ -59,4 +59,9 @@ public final class ForgeSocketMC implements SocketMC {
     public void sendSocketMCEvent(int id, Map<String, Object> params) {
         sendEvent(id, params);
     }
+
+    @Override
+    public long getWindowId() {
+        return minecraft.getWindow().getWindow();
+    }
 }

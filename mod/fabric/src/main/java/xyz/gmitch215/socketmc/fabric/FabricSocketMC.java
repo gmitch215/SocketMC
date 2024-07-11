@@ -77,4 +77,9 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
     public void sendSocketMCEvent(int id, Map<String, Object> params) {
         sendEvent(id, params);
     }
+
+    @Override
+    public long getWindowId() {
+        return minecraft.getWindow().getWindow();
+    }
 }
