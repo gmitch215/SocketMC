@@ -6,6 +6,7 @@ import org.jetbrains.annotations.Unmodifiable;
 import xyz.gmitch215.socketmc.config.ModPermission;
 import xyz.gmitch215.socketmc.log.AuditLog;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
+import xyz.gmitch215.socketmc.screen.Overlay;
 import xyz.gmitch215.socketmc.screen.Toast;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.Paramaterized;
@@ -170,6 +171,12 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.EXTERNAL_APPLICATIONS)
     public static final String SET_WINDOW_TITLE = "set_window_title";
+
+    /**
+     * Instruction to change the overlay of the client.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String SET_OVERLAY = "set_overlay";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1592,6 +1599,16 @@ public final class Instruction implements Serializable, Paramaterized {
         if (title == null || title.isEmpty()) throw new IllegalArgumentException("Title cannot be null or empty");
 
         return new Instruction(SET_WINDOW_TITLE, List.of(title));
+    }
+
+    /**
+     * Creates a {@link #SET_OVERLAY} instruction.
+     * @param overlay Overlay to Set, or {@code null} to clear the overlay
+     * @return Set Overlay Instruction
+     */
+    @NotNull
+    public static Instruction setOverlay(@Nullable Overlay overlay) {
+        return new Instruction(SET_OVERLAY, List.of(overlay));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

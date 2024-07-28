@@ -21,7 +21,7 @@ import java.util.function.Function;
  * <p>This allows you to also collect the context of the current screen, as specified in {@link GraphicsContext}.
  * The {@link Function} interfaces you specify <strong>must</strong> be serializable and cannot call anything external.</p>
  */
-public final class DrawingContext implements Serializable, Iterable<Function<GraphicsContext, DrawingContext.Command>> {
+public final class DrawingContext implements Serializable, Iterable<Function<GraphicsContext, DrawingContext.Command>>, Cloneable {
 
     @Serial
     private static final long serialVersionUID = 6151208407260227313L;
@@ -205,6 +205,12 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
 
     private void checkLocked() {
         if (locked) throw new IllegalStateException("DrawingContext is locked");
+    }
+
+    @NotNull
+    @Override
+    public DrawingContext clone() {
+        return new DrawingContext(commands);
     }
 
     @NotNull

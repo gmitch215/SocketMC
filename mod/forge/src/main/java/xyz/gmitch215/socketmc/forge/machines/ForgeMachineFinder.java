@@ -24,7 +24,8 @@ public final class ForgeMachineFinder {
             RenderingMachine.class,
             DrawBeaconBeamMachine.class,
             DrawContextMachine.class,
-            DisplayToastMachine.class
+            DisplayToastMachine.class,
+            SetOverlayMachine.class
     )).toList();
 
 }
