@@ -496,7 +496,7 @@ public enum Key {
     }
 
     /**
-     * Gets the keyboard code of this key, as specified by <a href="https://www.glfw.org/docs/latest/group__keys.html#gabf48fcc3afbe69349df432b470c96ef2">GLFW</a>.
+     * Gets the keyboard code of this key, as specified by <a href="https://www.glfw.org/docs/latest/group__keys.html">GLFW</a>.
      * @return the keyboard code
      */
     public int getCode() {
