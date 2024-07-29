@@ -55,6 +55,11 @@ public enum ModPermission {
      */
     READ_GUI_PROPERTIES(true),
 
+    /**
+     * Permission to read various client game properties, such as command history and in-game information.
+     */
+    READ_GAME_PROPERTIES(true),
+
     ;
 
     private final boolean changeable;

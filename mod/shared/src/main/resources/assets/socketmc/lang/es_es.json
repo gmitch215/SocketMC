@@ -21,5 +21,7 @@
   "gui.socketmc.permission.read_system_properties": "Leer Propiedades del Sistema",
   "gui.socketmc.permission.read_system_properties.tooltip": "Permiso para leer las propiedades del sistema, como la versión de Java y el sistema operativo.",
   "gui.socketmc.permission.read_gui_properties": "Leer Propiedades de la GUI",
-  "gui.socketmc.permission.read_gui_properties.tooltip": "Permiso para leer las propiedades de la GUI, como el tamaño de la ventana y la posición de la ventana."
+  "gui.socketmc.permission.read_gui_properties.tooltip": "Permiso para leer las propiedades de la GUI, como el tamaño de la ventana y la posición de la ventana.",
+  "gui.socketmc.permission.read_game_properties": "Leer Propiedades del Juego",
+  "gui.socketmc.permission.read_game_properties.tooltip": "Permiso para leer las propiedades del juego, como el historial de comandos y la información del juego."
 }
