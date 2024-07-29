@@ -4,7 +4,10 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.network.chat.Component;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import xyz.gmitch215.socketmc.forge.ForgeUtil;
 import xyz.gmitch215.socketmc.forge.screen.ForgeGraphicsContext;
@@ -13,16 +16,19 @@ import xyz.gmitch215.socketmc.instruction.InstructionId;
 import xyz.gmitch215.socketmc.instruction.Machine;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.LifecycleMap;
+import xyz.gmitch215.socketmc.util.SerializableConsumer;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.GraphicsContext;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static xyz.gmitch215.socketmc.forge.ForgeSocketMC.minecraft;
 
 @InstructionId(Instruction.DRAW_CONTEXT)
+@SuppressWarnings("unchecked")
 public final class DrawContextMachine implements Machine {
 
     public static final DrawContextMachine MACHINE = new DrawContextMachine();
@@ -160,6 +166,26 @@ public final class DrawContextMachine implements Machine {
                     
                     graphics.blit(ForgeUtil.toMinecraft(texture), x, y, u, v, width, height, textureWidth, textureHeight);
                 }
+                case DrawingContext.BLIT_SPRITE -> {
+                    Identifier sprite = cmd.firstParameter(Identifier.class);
+                    int x = cmd.intParameter(1);
+                    int y = cmd.intParameter(2);
+                    int width = cmd.intParameter(3);
+                    int height = cmd.intParameter(4);
+                    int z = cmd.intParameter(5);
+
+                    graphics.blitSprite(ForgeUtil.toMinecraft(sprite), x, y, z, width, height);
+                }
+                case DrawingContext.DRAW_TOOLTIP -> {
+                    int x = cmd.firstIntParameter();
+                    int y = cmd.intParameter(1);
+                    List<Component> text = ((List<String>) cmd.lastParameter(List.class))
+                            .stream()
+                            .map(ForgeUtil::fromJson)
+                            .toList();
+
+                    graphics.renderTooltip(minecraft.font, text, Optional.empty(), x, y);
+                }
             }
 
             if (modding)
@@ -195,6 +221,16 @@ public final class DrawContextMachine implements Machine {
                 float z = mod.lastFloatParameter();
 
                 pose.rotateAround(quaternion, x, y, z);
+            }
+            case DrawingContext.MODIFIER_APPLY_POSE -> {
+                SerializableConsumer<Matrix4f> consumer = mod.firstParameter(SerializableConsumer.class);
+
+                consumer.accept(pose.last().pose());
+            }
+            case DrawingContext.MODIFIER_APPLY_NORMAL -> {
+                SerializableConsumer<Matrix3f> consumer = mod.firstParameter(SerializableConsumer.class);
+
+                consumer.accept(pose.last().normal());
             }
         }
     }

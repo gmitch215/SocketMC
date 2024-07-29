@@ -3,9 +3,13 @@ package xyz.gmitch215.socketmc.util.render;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.Unmodifiable;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import xyz.gmitch215.socketmc.screen.util.Sprites;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.Paramaterized;
+import xyz.gmitch215.socketmc.util.SerializableConsumer;
 import xyz.gmitch215.socketmc.util.math.Axis;
 import xyz.gmitch215.socketmc.util.render.text.Text;
 
@@ -15,6 +19,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.*;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * <p>Represents the raw graphics context used to display graphics on the screen.</p>
@@ -83,6 +88,16 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
      */
     public static final int BLIT = 10;
 
+    /**
+     * Blit Sprite
+     */
+    public static final int BLIT_SPRITE = 11;
+
+    /**
+     * Draw Tooltip
+     */
+    public static final int DRAW_TOOLTIP = 12;
+
     //</editor-fold>
 
     //<editor-fold desc="Modifiers" defaultstate="collapsed">
@@ -106,6 +121,16 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
      * Rotates an element on the XYZ axis around a specific coordinate.
      */
     public static final int MODIFIER_ROTATE_AROUND = 3;
+
+    /**
+     * A custom modifier on the pose for the pose stack.
+     */
+    public static final int MODIFIER_APPLY_POSE = 4;
+
+    /**
+     * A custom modifier on the normal for the pose stack.
+     */
+    public static final int MODIFIER_APPLY_NORMAL = 5;
 
     //</editor-fold>
 
@@ -987,6 +1012,91 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
             return new Command(BLIT, Type.DEFAULT, modifiers, List.of(texture, x, y, xOffset, yOffset, width, height, textureWidth, textureHeight));
         }
 
+        /**
+         * Draws a sprite at the specified coordinates.
+         * @param sprite the identifier to the sprite to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param width the width of the blitted area
+         * @param height the height of the blitted area
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the sprite is null, coordinates are invalid, or width/height are negative
+         * @see Sprites
+         */
+        @NotNull
+        public static Command blitSprite(@NotNull Identifier sprite, int x, int y, int width, int height) throws IllegalArgumentException {
+            return blitSprite(sprite, x, y, width, height, 0);
+        }
+
+        /**
+         * Draws a sprite at the specified coordinates.
+         * @param sprite the identifier to the sprite to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param width the width of the blitted area
+         * @param height the height of the blitted area
+         * @param z the z-index of the sprite
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the sprite is null, coordinates are invalid, or width/height are negative
+         * @see Sprites
+         */
+        @NotNull
+        public static Command blitSprite(@NotNull Identifier sprite, int x, int y, int width, int height, int z) throws IllegalArgumentException {
+            return blitSprite(sprite, x, y, width, height, z, null);
+        }
+
+        /**
+         * Draws a sprite at the specified coordinates.
+         * @param sprite the identifier to the sprite to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param width the width of the blitted area
+         * @param height the height of the blitted area
+         * @param z the z-index of the sprite
+         * @param modifiers the modifiers to apply to the command
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the sprite is null, coordinates are invalid, or width/height are negative
+         * @see Sprites
+         */
+        @NotNull
+        public static Command blitSprite(@NotNull Identifier sprite, int x, int y, int width, int height, int z, @Nullable Collection<Modifier> modifiers) throws IllegalArgumentException {
+            if (sprite == null) throw new IllegalArgumentException("Sprite cannot be null");
+            if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+            if (width < 0 || height < 0) throw new IllegalArgumentException("Width and height cannot be negative");
+
+            return new Command(BLIT_SPRITE, Type.DEFAULT, modifiers, List.of(sprite, x, y, width, height, z));
+        }
+
+        /**
+         * Draws a tooltip at the specified coordinates.
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param text the text to draw
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the text is null or coordinates are invalid
+         */
+        @NotNull
+        public static Command drawTooltip(int x, int y, @NotNull List<Text> text) throws IllegalArgumentException {
+            return drawTooltip(x, y, text, null);
+        }
+
+        /**
+         * Draws a tooltip at the specified coordinates.
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param text the text to draw
+         * @param modifiers the modifiers to apply to the command
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the text is null or coordinates are invalid
+         */
+        @NotNull
+        public static Command drawTooltip(int x, int y, @NotNull List<Text> text, @Nullable Collection<Modifier> modifiers) {
+            if (text == null) throw new IllegalArgumentException("Text cannot be null");
+            if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+
+            return new Command(DRAW_TOOLTIP, Type.DEFAULT, modifiers, List.of(x, y, text.stream().map(Text::toJSON).collect(Collectors.toList())));
+        }
+
         //<editor-fold desc="Implementation" defaultstate="collapsed">
 
         private final int id;
@@ -1150,6 +1260,32 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
             if (quaternion == null) throw new IllegalArgumentException("Quaternion cannot be null");
 
             return new Modifier(MODIFIER_ROTATE_AROUND, List.of(quaternion, x, y, z));
+        }
+
+        /**
+         * Applies a function on the pose for the pose stack.
+         * @param consumer the consumer to apply the pose
+         * @return A {@link Command} Modifier
+         * @throws IllegalArgumentException if the consumer is null
+         */
+        @NotNull
+        public static Modifier applyPose(@NotNull SerializableConsumer<Matrix4f> consumer) throws IllegalArgumentException {
+            if (consumer == null) throw new IllegalArgumentException("Consumer cannot be null");
+
+            return new Modifier(MODIFIER_APPLY_POSE, List.of(consumer));
+        }
+
+        /**
+         * Applies a function on the normal for the pose stack.
+         * @param consumer the consumer to apply the pose
+         * @return A {@link Command} Modifier
+         * @throws IllegalArgumentException if the consumer is null
+         */
+        @NotNull
+        public static Modifier applyNormal(@NotNull SerializableConsumer<Matrix3f> consumer) throws IllegalArgumentException {
+            if (consumer == null) throw new IllegalArgumentException("Consumer cannot be null");
+
+            return new Modifier(MODIFIER_APPLY_NORMAL, List.of(consumer));
         }
 
         //<editor-fold desc="Implementation" defaultstate="collapsed">
