@@ -1,5 +1,10 @@
 package xyz.gmitch215.socketmc.util.render;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import xyz.gmitch215.socketmc.util.InputType;
+import xyz.gmitch215.socketmc.util.input.Key;
+
 /**
  * Represents the context of what is currently happening on the screen.
  */
@@ -52,5 +57,26 @@ public interface GraphicsContext {
      * @return the partial tick
      */
     float getPartialTicks();
+
+    /**
+     * Gets the current clipboard contents.
+     * @return the clipboard, or empty string if there is none
+     */
+    @NotNull
+    String getClipboard();
+
+    /**
+     * Gets the last input type that was pressed.
+     * @return the last input type, or null if there was none
+     */
+    @Nullable
+    InputType getLastInputType();
+
+    /**
+     * Gets whether the specified key is currently pressed.
+     * @param key the key
+     * @return true if the key is down, false otherwise
+     */
+    boolean isKeyDown(@Nullable Key key);
 
 }
