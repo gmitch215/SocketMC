@@ -1618,7 +1618,6 @@ public final class Instruction implements Serializable, Paramaterized {
      * Serializes this Instruction to a byte array to be passed over the network.
      * @return Byte Array Representation
      */
-    @NotNull
     public byte[] toByteArray() {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();

@@ -103,7 +103,6 @@ public final class SocketPlugin implements Serializable, Comparable<SocketPlugin
      * Serializes this SocketPlugin to a byte array to be passed over the network.
      * @return Byte Array Representation
      */
-    @NotNull
     public byte[] toByteArray() {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();

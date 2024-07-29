@@ -194,7 +194,6 @@ public final class RetrieverType<T> implements Serializable {
      * Converts the retriever type to a byte array.
      * @return Byte Array Representation
      */
-    @NotNull
     public byte[] toByteArray() {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();

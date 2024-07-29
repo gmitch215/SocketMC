@@ -336,7 +336,7 @@ public final class NBTTag implements Serializable {
      * @return The byte array, or the default value if it does not exist.
      */
     @NotNull
-    public byte[] getByteArray(@NotNull String key, @NotNull byte[] def) {
+    public byte[] getByteArray(@NotNull String key, byte[] def) {
         return getObject(key, byte[].class, def);
     }
 
