@@ -8,10 +8,7 @@ import xyz.gmitch215.socketmc.log.AuditLog;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.Overlay;
 import xyz.gmitch215.socketmc.screen.Toast;
-import xyz.gmitch215.socketmc.util.Identifier;
-import xyz.gmitch215.socketmc.util.Paramaterized;
-import xyz.gmitch215.socketmc.util.WindowDialogue;
-import xyz.gmitch215.socketmc.util.WindowIcon;
+import xyz.gmitch215.socketmc.util.*;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.RenderBuffer;
 import xyz.gmitch215.socketmc.util.render.text.Text;
@@ -177,6 +174,12 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String SET_OVERLAY = "set_overlay";
+
+    /**
+     * Instruction to draw an item on the client's screen.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String DRAW_ITEMSTACK = "draw_itemstack";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1609,6 +1612,111 @@ public final class Instruction implements Serializable, Paramaterized {
     @NotNull
     public static Instruction setOverlay(@Nullable Overlay overlay) {
         return new Instruction(SET_OVERLAY, List.of(overlay));
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param duration Time Duration
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawItemStack(item, x, y, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param millis Duration to display, in milliseconds
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, long millis) throws IllegalArgumentException {
+        if (item == null) throw new IllegalArgumentException("Item cannot be null");
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_ITEMSTACK, List.of(item, x, y, 0, 0, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param guiOffset GUI Offset on the z-axis for its 3D model
+     * @param duration Time Duration
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawItemStack(item, x, y, guiOffset, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param guiOffset GUI Offset on the z-axis for its 3D model
+     * @param millis Duration to display, in milliseconds
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, long millis) throws IllegalArgumentException {
+        if (item == null) throw new IllegalArgumentException("Item cannot be null");
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_ITEMSTACK, List.of(item, x, y, guiOffset, 0, millis));
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param guiOffset GUI Offset on the z-axis for its 3D model
+     * @param randomSeed Seed for Randomness in Rendering
+     * @param duration Time Duration
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, int randomSeed, @NotNull Duration duration) throws IllegalArgumentException {
+        if (duration == null) throw new IllegalArgumentException("Duration cannot be null");
+        return drawItemStack(item, x, y, guiOffset, randomSeed, duration.toMillis());
+    }
+
+    /**
+     * Creates a {@link #DRAW_ITEMSTACK} instruction.
+     * @param item Item to Draw
+     * @param x X Coordinate for Item
+     * @param y Y Coordinate for Item
+     * @param guiOffset GUI Offset on the z-axis for its 3D model
+     * @param randomSeed Seed for Randomness in Rendering
+     * @param millis Duration to display, in milliseconds
+     * @return Draw ItemStack Instruction
+     * @throws IllegalArgumentException If the item is null, or the coordinates are negative
+     */
+    @NotNull
+    public static Instruction drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, int randomSeed, long millis) throws IllegalArgumentException {
+        if (item == null) throw new IllegalArgumentException("Item cannot be null");
+        if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+        if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
+
+        return new Instruction(DRAW_ITEMSTACK, List.of(item, x, y, guiOffset, randomSeed, millis));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

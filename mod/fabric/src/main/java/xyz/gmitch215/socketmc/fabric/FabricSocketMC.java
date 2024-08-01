@@ -44,6 +44,7 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
             DrawTextureMachine.frameTick(graphics, delta);
             DrawBeaconBeamMachine.frameTick(graphics, delta);
             DrawContextMachine.frameTick(graphics, delta);
+            DrawItemStackMachine.frameTick(graphics, delta);
         });
     }
 
