@@ -25,7 +25,8 @@ public final class FabricMachineFinder {
             DrawBeaconBeamMachine.class,
             DrawContextMachine.class,
             DisplayToastMachine.class,
-            SetOverlayMachine.class
+            SetOverlayMachine.class,
+            DrawItemStackMachine.class
     )).toList();
 
 }

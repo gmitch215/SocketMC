@@ -8,6 +8,7 @@ import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import xyz.gmitch215.socketmc.screen.util.Sprites;
 import xyz.gmitch215.socketmc.util.Identifier;
+import xyz.gmitch215.socketmc.util.NBTTag;
 import xyz.gmitch215.socketmc.util.Paramaterized;
 import xyz.gmitch215.socketmc.util.SerializableConsumer;
 import xyz.gmitch215.socketmc.util.math.Axis;
@@ -97,6 +98,11 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
      * Draw Tooltip
      */
     public static final int DRAW_TOOLTIP = 12;
+
+    /**
+     * Draw ItemStack
+     */
+    public static final int DRAW_ITEMSTACK = 13;
 
     //</editor-fold>
 
@@ -1095,6 +1101,105 @@ public final class DrawingContext implements Serializable, Iterable<Function<Gra
             if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
 
             return new Command(DRAW_TOOLTIP, Type.DEFAULT, modifiers, List.of(x, y, text.stream().map(Text::toJSON).collect(Collectors.toList())));
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null or coordinates are invalid
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y) throws IllegalArgumentException {
+            return drawItemStack(item, x, y, 0);
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param guiOffset the offset of the GUI
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null or coordinates are invalid
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset) throws IllegalArgumentException {
+            return drawItemStack(item, x, y, guiOffset, 16.0F);
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param guiOffset the offset of the GUI
+         * @param scale the scale of the item texture (default is 16)
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null, coordinates are invalid, or scale is negative
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, float scale) throws IllegalArgumentException {
+            return drawItemStack(item, x, y, guiOffset, scale, ItemDisplayType.GUI);
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param guiOffset the offset of the GUI
+         * @param scale the scale of the item texture (default is 16)
+         * @param displayType the rendering context type for the item
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null, coordinates are invalid, scale is negative, or display type is null
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, float scale, @NotNull ItemDisplayType displayType) throws IllegalArgumentException {
+            return drawItemStack(item, x, y, guiOffset, scale, displayType, 0xF000F0);
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param guiOffset the offset of the GUI
+         * @param scale the scale of the item texture (default is 16)
+         * @param displayType the rendering context type for the item
+         * @param combinedLight the combined light color (default is 0xF000F0)
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null, coordinates are invalid, scale is negative, display type is null, or light is negative
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, float scale, @NotNull ItemDisplayType displayType, int combinedLight) throws IllegalArgumentException {
+            return drawItemStack(item, x, y, guiOffset, scale, displayType, combinedLight, 655360);
+        }
+
+        /**
+         * Draws an item stack at the specified coordinates.
+         * @param item the item to draw
+         * @param x the x-coordinate
+         * @param y the y-coordinate
+         * @param guiOffset the offset of the GUI
+         * @param scale the scale of the item texture (default is 16)
+         * @param displayType the rendering context type for the item
+         * @param combinedLight the combined light color (default is 0xF000F0)
+         * @param combinedOverlay the combined overlay color (default is 655360)
+         * @return A DrawingContext Command
+         * @throws IllegalArgumentException if the item is null, coordinates are invalid, scale is negative, display type is null, or light/overlay are negative
+         */
+        @NotNull
+        public static Command drawItemStack(@NotNull NBTTag item, int x, int y, int guiOffset, float scale, @NotNull ItemDisplayType displayType, int combinedLight, int combinedOverlay) throws IllegalArgumentException {
+            if (item == null) throw new IllegalArgumentException("Item cannot be null");
+            if (x < 0 || y < 0) throw new IllegalArgumentException("Coordinates cannot be negative");
+            if (scale < 0) throw new IllegalArgumentException("Scale cannot be negative");
+            if (displayType == null) throw new IllegalArgumentException("Display type cannot be null");
+            if (combinedLight < 0 || combinedOverlay < 0) throw new IllegalArgumentException("Light and overlay cannot be negative");
+
+            return new Command(DRAW_ITEMSTACK, Type.DEFAULT, null, List.of(item, x, y, guiOffset, scale, displayType, combinedLight, combinedOverlay));
         }
 
         //<editor-fold desc="Implementation" defaultstate="collapsed">

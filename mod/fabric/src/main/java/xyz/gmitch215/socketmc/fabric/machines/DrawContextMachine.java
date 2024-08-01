@@ -1,10 +1,15 @@
 package xyz.gmitch215.socketmc.fabric.machines;
 
+import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix3f;
 import org.joml.Matrix4f;
@@ -16,9 +21,11 @@ import xyz.gmitch215.socketmc.instruction.InstructionId;
 import xyz.gmitch215.socketmc.instruction.Machine;
 import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.LifecycleMap;
+import xyz.gmitch215.socketmc.util.NBTTag;
 import xyz.gmitch215.socketmc.util.SerializableConsumer;
 import xyz.gmitch215.socketmc.util.render.DrawingContext;
 import xyz.gmitch215.socketmc.util.render.GraphicsContext;
+import xyz.gmitch215.socketmc.util.render.ItemDisplayType;
 
 import java.util.List;
 import java.util.Optional;
@@ -186,6 +193,45 @@ public final class DrawContextMachine implements Machine {
                             .toList();
 
                     graphics.renderTooltip(minecraft.font, text, Optional.empty(), x, y);
+                }
+                case DrawingContext.DRAW_ITEMSTACK -> {
+                    NBTTag tag = cmd.firstParameter(NBTTag.class);
+                    int x = cmd.intParameter(1);
+                    int y = cmd.intParameter(2);
+                    int guiOffset = cmd.intParameter(3);
+                    float scale = cmd.floatParameter(4);
+                    ItemDisplayType displayType = cmd.parameter(5, ItemDisplayType.class);
+                    int combinedLight = cmd.intParameter(6);
+                    int combinedOverlay = cmd.lastIntParameter();
+
+                    ItemStack stack = FabricUtil.toItem(tag);
+                    ItemDisplayContext ctx = switch (displayType) {
+                        case NONE -> ItemDisplayContext.NONE;
+                        case THIRD_PERSON_LEFT_HAND -> ItemDisplayContext.THIRD_PERSON_LEFT_HAND;
+                        case THIRD_PERSON_RIGHT_HAND -> ItemDisplayContext.THIRD_PERSON_RIGHT_HAND;
+                        case FIRST_PERSON_LEFT_HAND -> ItemDisplayContext.FIRST_PERSON_LEFT_HAND;
+                        case FIRST_PERSON_RIGHT_HAND -> ItemDisplayContext.FIRST_PERSON_RIGHT_HAND;
+                        case HEAD -> ItemDisplayContext.HEAD;
+                        case GROUND -> ItemDisplayContext.GROUND;
+                        case FIXED -> ItemDisplayContext.FIXED;
+                        default -> ItemDisplayContext.GUI;
+                    };
+
+                    BakedModel model = minecraft.getItemRenderer().getModel(stack, minecraft.level, minecraft.player, 0);
+                    graphics.pose().pushPose();
+                    graphics.pose().translate(x + (scale / 2), y + (scale / 2), 150 + (model.isGui3d() ? guiOffset : 0));
+                    graphics.pose().scale(scale, -scale, scale);
+
+                    boolean noLight = !model.usesBlockLight();
+                    if (noLight)
+                        Lighting.setupForFlatItems();
+
+                    minecraft.getItemRenderer().render(stack, ctx, false, graphics.pose(), graphics.bufferSource(), combinedLight, combinedOverlay, model);
+                    graphics.flush();
+                    if (noLight)
+                        Lighting.setupFor3DItems();
+
+                    graphics.pose().popPose();
                 }
             }
 
