@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.util;
 
+import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,6 +17,7 @@ public final class NBTTag implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -8168895646288699502L;
+    private static final Gson gson = new Gson();
 
     private final Map<String, Object> tag = new HashMap<>();
 
@@ -340,4 +342,52 @@ public final class NBTTag implements Serializable {
         return getObject(key, byte[].class, def);
     }
 
+    // Implementation
+
+    /**
+     * Converts the tag to a NBT string.
+     * @return The tag as a string.
+     */
+    @NotNull
+    public String toTag() {
+        return gson.toJson(tag);
+    }
+
+    /**
+     * Converts a NBT string to a {@link NBTTag}.
+     * @param string The string to convert.
+     * @return The converted tag.
+     */
+    @Nullable
+    public static NBTTag fromTag(@Nullable String string) {
+        if (string == null) return null;
+
+        Map<String, Object> tag = gson.fromJson(string, Map.class);
+        Map<String, Object> nbt = new HashMap<>();
+
+        for (Map.Entry<String, Object> entry : tag.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (key.contains(".")) {
+                String[] keys = key.split("\\.");
+                Map<String, Object> current = nbt;
+
+                for (int i = 0; i < keys.length - 1; i++) {
+                    if (!current.containsKey(keys[i]))
+                        current.put(keys[i], new HashMap<String, Object>());
+
+                    Object c = current.get(keys[i]);
+                    if (!(current instanceof Map)) return null;
+
+                    current = (Map<String, Object>) c;
+                }
+
+                current.put(keys[keys.length - 1], value);
+            } else
+                nbt.put(key, value);
+        }
+
+        return new NBTTag(nbt);
+    }
 }

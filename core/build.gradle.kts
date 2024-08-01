@@ -39,4 +39,5 @@ java {
 // Bundled with Minecraft
 dependencies {
     compileOnly("org.joml:joml:1.10.5")
+    compileOnly("com.google.code.gson:gson:2.10.1")
 }
