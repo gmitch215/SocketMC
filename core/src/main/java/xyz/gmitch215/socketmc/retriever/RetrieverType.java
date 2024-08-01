@@ -116,6 +116,12 @@ public final class RetrieverType<T> implements Serializable {
     @RetrieverPermission(ModPermission.READ_SYSTEM_PROPERTIES)
     public static final RetrieverType<Long> MAX_MEMORY = new RetrieverType<>("max_memory", Long.class);
 
+    /**
+     * A retriever for the client's command history.
+     */
+    @RetrieverPermission(ModPermission.READ_GAME_PROPERTIES)
+    public static final RetrieverType<String[]> COMMAND_HISTORY = new RetrieverType<>("command_history", String[].class);
+
     //<editor-fold desc="Implementation" defaultstate="collapsed">
 
     private final String id;
@@ -188,7 +194,6 @@ public final class RetrieverType<T> implements Serializable {
      * Converts the retriever type to a byte array.
      * @return Byte Array Representation
      */
-    @NotNull
     public byte[] toByteArray() {
         try {
             ByteArrayOutputStream out = new ByteArrayOutputStream();

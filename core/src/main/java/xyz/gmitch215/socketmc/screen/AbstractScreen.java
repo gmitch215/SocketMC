@@ -34,7 +34,6 @@ public abstract class AbstractScreen implements Narratable {
      * Serializes this screen to a byte array.
      * @return Byte Array
      */
-    @NotNull
     public final byte[] toByteArray() {
         try {
             ByteArrayOutputStream baos = new ByteArrayOutputStream();

@@ -52,15 +52,18 @@ tasks {
 
 allprojects {
     val mc = "1.21"
-    val pr = "0.2.1"
+    val pr = "0.2.2"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
-    project.ext["parchment"] = "2024.06.23"
+    project.ext["parchment"] = "2024.07.28"
 
     group = "xyz.gmitch215.socketmc"
-    version = "$mc-$pr"
     description = "Direct Minecraft Server-to-Client Communication"
+
+    val v = "$mc-$pr"
+    val suffix = project.findProperty("suffix") ?: ""
+    version = if (project.hasProperty("suffix")) "$v-$suffix" else v
 
     project.ext["id"] = "socketmc"
     project.ext["name"] = "SocketMC"
@@ -96,9 +99,10 @@ allprojects {
     publishing {
         publications {
             create<MavenPublication>("maven") {
-                artifactId = project.name
+                artifactId = project.name.lowercase()
 
                 pom {
+                    name = project.name
                     description.set(project.description)
                     licenses {
                         license {
@@ -120,13 +124,16 @@ allprojects {
         repositories {
             maven {
                 credentials {
-                    username = System.getenv("JENKINS_USERNAME")
-                    password = System.getenv("JENKINS_PASSWORD")
+                    username = project.findProperty("username")?.toString() ?: System.getenv("JENKINS_USERNAME")
+                    password = project.findProperty("password")?.toString() ?: System.getenv("JENKINS_PASSWORD")
                 }
 
                 val releases = "https://repo.codemc.io/repository/maven-releases/"
                 val snapshots = "https://repo.codemc.io/repository/maven-snapshots/"
-                url = uri(if (version.toString().endsWith("SNAPSHOT")) snapshots else releases)
+                url = uri(
+                    project.findProperty("url") ?:
+                    if (version.toString().endsWith("SNAPSHOT")) snapshots else releases
+                )
             }
         }
     }

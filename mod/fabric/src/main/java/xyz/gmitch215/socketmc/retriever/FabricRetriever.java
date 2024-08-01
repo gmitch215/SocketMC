@@ -53,8 +53,9 @@ public final class FabricRetriever {
                         case KEYBOARD_ARROW -> InputType.KEYBOARD_ARROW;
                         case KEYBOARD_TAB -> InputType.KEYBOARD_TAB;
                         case MOUSE -> InputType.MOUSE;
-                        case NONE -> InputType.NONE;
-                    })
+                        default -> InputType.NONE;
+                    }),
+                    create(RetrieverType.COMMAND_HISTORY, () -> minecraft.commandHistory().history().toArray(new String[0]))
             )
     ).collect(Collectors.toSet());
 

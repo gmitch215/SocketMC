@@ -1,5 +1,10 @@
 package xyz.gmitch215.socketmc.forge.screen;
 
+import com.mojang.blaze3d.platform.InputConstants;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import xyz.gmitch215.socketmc.util.InputType;
+import xyz.gmitch215.socketmc.util.input.Key;
 import xyz.gmitch215.socketmc.util.render.GraphicsContext;
 
 import static xyz.gmitch215.socketmc.forge.ForgeSocketMC.minecraft;
@@ -48,5 +53,28 @@ public final class ForgeGraphicsContext implements GraphicsContext {
     @Override
     public float getPartialTicks() {
         return minecraft.getTimer().getGameTimeDeltaTicks();
+    }
+
+    @Override
+    @NotNull
+    public String getClipboard() {
+        return minecraft.keyboardHandler.getClipboard();
+    }
+
+    @Override
+    @Nullable
+    public InputType getLastInputType() {
+        return switch (minecraft.getLastInputType()) {
+            case MOUSE -> InputType.MOUSE;
+            case KEYBOARD_TAB -> InputType.KEYBOARD_TAB;
+            case KEYBOARD_ARROW -> InputType.KEYBOARD_ARROW;
+            default -> InputType.NONE;
+        };
+    }
+
+    @Override
+    public boolean isKeyDown(@Nullable Key key) {
+        if (key == null) return false;
+        return InputConstants.isKeyDown(minecraft.getWindow().getWindow(), key.getCode());
     }
 }

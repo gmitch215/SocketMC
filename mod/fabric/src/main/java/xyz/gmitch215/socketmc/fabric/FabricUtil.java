@@ -1,12 +1,18 @@
 package xyz.gmitch215.socketmc.fabric;
 
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.nbt.TagParser;
+import net.minecraft.world.item.ItemStack;
 import xyz.gmitch215.socketmc.screen.util.Sprite;
 import xyz.gmitch215.socketmc.screen.util.Tooltip;
 import xyz.gmitch215.socketmc.util.Identifier;
+import xyz.gmitch215.socketmc.util.NBTTag;
 import xyz.gmitch215.socketmc.util.render.text.JsonText;
 import net.minecraft.client.gui.components.WidgetSprites;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+
+import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
 
 public final class FabricUtil {
 
@@ -14,12 +20,12 @@ public final class FabricUtil {
 
     public static Component fromJson(String json) {
         if (json == null) return Component.empty();
-        return Component.Serializer.fromJson(json, FabricSocketMC.minecraft.level.registryAccess());
+        return Component.Serializer.fromJson(json, minecraft.level.registryAccess());
     }
 
     public static String toJson(Component component) {
         if (component == null) return "";
-        return Component.Serializer.toJson(component, FabricSocketMC.minecraft.level.registryAccess());
+        return Component.Serializer.toJson(component, minecraft.level.registryAccess());
     }
 
     public static JsonText toText(Component component) {
@@ -71,6 +77,14 @@ public final class FabricUtil {
                 fromJson(tooltip.getTooltipJSON()),
                 fromJson(tooltip.getNarrationMessageJSON())
         );
+    }
+
+    public static ItemStack toItem(NBTTag tag) {
+        try {
+            return ItemStack.parse(minecraft.level.registryAccess(), TagParser.parseTag(tag.toTag())).orElse(ItemStack.EMPTY);
+        } catch (CommandSyntaxException e) {
+            return ItemStack.EMPTY;
+        }
     }
 
 }
