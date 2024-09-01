@@ -12,7 +12,7 @@ description = "Fabric Mod for SocketMC Client-side Implementation"
 val minecraft = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
-val fabric = "0.100.2"
+val fabric = "0.102.0"
 
 dependencies {
     api(project(":socketmc-core"))
