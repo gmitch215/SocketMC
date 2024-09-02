@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.forge.mixin.events;
 
+import net.minecraft.client.KeyboardHandler;
 import xyz.gmitch215.socketmc.forge.ForgeSocketMC;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -8,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(targets = "net.minecraft.client.KeyboardHandler")
+@Mixin(KeyboardHandler.class)
 public class PlayerPressKeyEvent {
 
     @Inject(method = "keyPress", at = @At("HEAD"))

@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.forge.mixin.events;
 
+import net.minecraft.client.MouseHandler;
 import xyz.gmitch215.socketmc.forge.ForgeSocketMC;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -8,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(targets = "net.minecraft.client.MouseHandler")
+@Mixin(MouseHandler.class)
 public class PlayerMouseInputEvent {
 
     @Inject(method = "onMove", at = @At("HEAD"))
