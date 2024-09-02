@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "xyz.gmitch215.socketmc.neoforge.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "PacketDecoderMixin",
+    "GuiMixin",
+    "AbstractWidgetMixin",
+    "OnlineOptionsScreenMixin",
+
+    "events.PlayerPressKeyEvent",
+    "events.PlayerMouseInputEvent",
+    "events.PlayerChangeScreenEvent"
+  ]
+}

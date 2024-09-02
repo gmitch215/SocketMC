@@ -12,6 +12,8 @@ plugins {
     // Mod
     id("fabric-loom") version "1.7.3" apply false
     id("net.minecraftforge.gradle") version "6.0.27" apply false
+    id("net.neoforged.gradle.userdev") version "7.0.162" apply false
+    id("net.neoforged.gradle.mixin") version "7.0.162" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
     id("org.spongepowered.mixin") version "0.7.+" apply false
     id("com.modrinth.minotaur") version "2.+" apply false
@@ -94,6 +96,7 @@ allprojects {
         maven("https://maven.parchmentmc.org")
         maven("https://maven.terraformersmc.com/")
         maven("https://libraries.minecraft.net/")
+        maven("https://maven.neoforged.net/releases/")
     }
 
     publishing {

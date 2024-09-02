@@ -1,0 +1,22 @@
+modLoader="javafml"
+loaderVersion="[3,)"
+license="GPL-3.0"
+showAsDataPack=false
+showAsResourcePack=false
+
+[[mods]]
+modId="${project.ext.id}"
+displayName="${project.ext.name}"
+version="${project.version}"
+description="${project.description}"
+authors="${project.ext.author}"
+logoFile="assets/icon.png"
+license="${project.ext.license}"
+issueTrackerURL="${project.ext.github}/issues"
+displayURL="${project.ext.github}"
+
+[[mixins]]
+config = "socketmc-neoforge.mixins.json"
+
+[[accessTransformers]]
+file = "META-INF/accesstransformer.cfg"
