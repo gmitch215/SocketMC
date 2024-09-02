@@ -93,28 +93,28 @@ public final class FabricScreenUtil {
     }
 
     static final Button.OnPress BUTTON_PRESS_EVENT = b -> {
-        AbstractScreen s0 = fromMinecraft(FabricSocketMC.minecraft.screen);
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
         if (s0 == null) return;
 
         FabricSocketMC.sendEvent(5, Map.of("screen", s0, "button", fromMinecraft(b)));
     };
 
     static final Checkbox.OnValueChange CHECKBOX_CHANGE_EVENT = (b, state) -> {
-        AbstractScreen s0 = fromMinecraft(FabricSocketMC.minecraft.screen);
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
         if (s0 == null) return;
 
         FabricSocketMC.sendEvent(6, Map.of("screen", s0, "button", fromMinecraft(b), "state", state));
     };
 
     static final BiConsumer<EditBox, String> EDIT_BOX_EVENT = (w, s) -> {
-        AbstractScreen s0 = fromMinecraft(FabricSocketMC.minecraft.screen);
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
         if (s0 == null) return;
 
         FabricSocketMC.sendEvent(7, Map.of("screen", s0, "widget", fromMinecraft(w), "text", s));
     };
 
     static final net.minecraft.client.gui.components.CycleButton.OnValueChange<Object> CYCLE_BUTTON_EVENT = (b, o) -> {
-        AbstractScreen s0 = fromMinecraft(FabricSocketMC.minecraft.screen);
+        AbstractScreen s0 = fromMinecraft(minecraft.screen);
         if (s0 == null) return;
 
         FabricSocketMC.sendEvent(8, Map.of("screen", s0, "button", fromMinecraft(b), "value", o));
@@ -135,12 +135,12 @@ public final class FabricScreenUtil {
             // Widgets
             case xyz.gmitch215.socketmc.screen.ui.TextWidget widget -> {
                 if (width == -1 || height == -1)
-                    yield new StringWidget(x, y, message, FabricSocketMC.minecraft.font);
+                    yield new StringWidget(x, y, message, minecraft.font);
                 else
-                    yield new StringWidget(x, y, width, height, message, FabricSocketMC.minecraft.font);
+                    yield new StringWidget(x, y, width, height, message, minecraft.font);
             }
             case xyz.gmitch215.socketmc.screen.ui.FocusedTextWidget widget -> {
-                FocusableTextWidget w = new FocusableTextWidget(width, message, FabricSocketMC.minecraft.font, widget.isAlwaysShowBorder(), widget.getPadding());
+                FocusableTextWidget w = new FocusableTextWidget(width, message, minecraft.font, widget.isAlwaysShowBorder(), widget.getPadding());
                 w.setPosition(widget.getX(), widget.getY());
 
                 yield w;
@@ -157,7 +157,7 @@ public final class FabricScreenUtil {
                 yield w;
             }
             case xyz.gmitch215.socketmc.screen.ui.EditTextWidget widget -> {
-                EditBox w = new EditBox(FabricSocketMC.minecraft.font, x, y, width, height, message);
+                EditBox w = new EditBox(minecraft.font, x, y, width, height, message);
                 w.setResponder(s -> EDIT_BOX_EVENT.accept(w, s));
 
                 yield w;
@@ -169,7 +169,7 @@ public final class FabricScreenUtil {
             case ImageButton button ->
                     new net.minecraft.client.gui.components.ImageButton(x, y, width, height, FabricUtil.toMinecraft(button.getSprite()), BUTTON_PRESS_EVENT);
             case xyz.gmitch215.socketmc.screen.ui.CheckboxButton button ->
-                    Checkbox.builder(message, FabricSocketMC.minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
+                    Checkbox.builder(message, minecraft.font).onValueChange(CHECKBOX_CHANGE_EVENT).pos(x, y).build();
             case xyz.gmitch215.socketmc.screen.ui.SendInstructionButton button ->
                     new FabricSendInstructionButton(x, y, width, height, message, button.getInstruction());
             case xyz.gmitch215.socketmc.screen.ui.LockButton button -> new LockIconButton(x, y, BUTTON_PRESS_EVENT);
