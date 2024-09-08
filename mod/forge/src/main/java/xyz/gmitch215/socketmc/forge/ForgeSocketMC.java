@@ -11,7 +11,10 @@ import net.minecraftforge.fml.common.Mod;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
 
 @Mod("socketmc")
 public final class ForgeSocketMC implements SocketMC {
@@ -63,5 +66,20 @@ public final class ForgeSocketMC implements SocketMC {
     @Override
     public long getWindowId() {
         return minecraft.getWindow().getWindow();
+    }
+
+    @Override
+    public void showPlayers(List<UUID> players) {
+        players.forEach(minecraft.getPlayerSocialManager()::showPlayer);
+    }
+
+    @Override
+    public void hidePlayers(List<UUID> players) {
+        players.forEach(minecraft.getPlayerSocialManager()::hidePlayer);
+    }
+
+    @Override
+    public Set<UUID> getHiddenPlayers() {
+        return minecraft.getPlayerSocialManager().getHiddenPlayers();
     }
 }

@@ -20,9 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a SocketMC Instruction to be sent to the client.
@@ -186,6 +185,18 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String SET_WINDOW_ICON = "set_window_icon";
+
+    /**
+     * Instruction to show players on the social interactions menu.
+     */
+    @InstructionPermission(ModPermission.CHANGE_GAME_PREFERENCES)
+    public static final String SHOW_PLAYERS = "show_players";
+
+    /**
+     * Instruction to hide players from the social interactions menu.
+     */
+    @InstructionPermission(ModPermission.CHANGE_GAME_PREFERENCES)
+    public static final String HIDE_PLAYERS = "hide_players";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1738,6 +1749,50 @@ public final class Instruction implements Serializable, Paramaterized {
     @NotNull
     public static Instruction setWindowIcon(byte[] icon) {
         return new Instruction(SET_WINDOW_ICON, List.of(icon));
+    }
+
+    /**
+     * Creates a {@link #SHOW_PLAYERS} instruction.
+     * @param players Players to Show
+     * @return Show Players Instruction
+     */
+    public static Instruction showPlayers(@NotNull Iterable<UUID> players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(SHOW_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #SHOW_PLAYERS} instruction.
+     * @param players Players to Show
+     * @return Show Players Instruction
+     */
+    public static Instruction showPlayers(@NotNull UUID... players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(SHOW_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #HIDE_PLAYERS} instruction.
+     * @param players Players to Hide
+     * @return Hide Players Instruction
+     */
+    public static Instruction hidePlayers(@NotNull Iterable<UUID> players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(HIDE_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #HIDE_PLAYERS} instruction.
+     * @param players Players to Hide
+     * @return Hide Players Instruction
+     */
+    public static Instruction hidePlayers(@NotNull UUID... players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(HIDE_PLAYERS, List.of(players));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">
