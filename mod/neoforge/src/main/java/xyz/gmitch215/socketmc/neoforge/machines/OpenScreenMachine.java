@@ -23,7 +23,7 @@ public final class OpenScreenMachine implements Machine {
 
     public static final OpenScreenMachine MACHINE = new OpenScreenMachine();
 
-    private OpenScreenMachine() {};
+    private OpenScreenMachine() {}
 
      static Screen defaultScreen(@NotNull DefaultScreen screen, @Nullable Screen lastScreen) {
         return switch (screen.getIdentifier()) {

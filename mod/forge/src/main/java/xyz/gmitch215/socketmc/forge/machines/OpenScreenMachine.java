@@ -1,5 +1,12 @@
 package xyz.gmitch215.socketmc.forge.machines;
 
+import net.minecraft.client.gui.screens.*;
+import net.minecraft.client.gui.screens.achievement.StatsScreen;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.gmitch215.socketmc.forge.ForgeUtil;
 import xyz.gmitch215.socketmc.forge.screen.ForgeScreen;
 import xyz.gmitch215.socketmc.instruction.Instruction;
@@ -8,14 +15,6 @@ import xyz.gmitch215.socketmc.instruction.Machine;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.CustomScreen;
 import xyz.gmitch215.socketmc.screen.DefaultScreen;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.client.gui.screens.achievement.StatsScreen;
-import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
-import net.minecraft.client.gui.screens.options.OptionsScreen;
-import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import xyz.gmitch215.socketmc.forge.ForgeSocketMC;
 
 import static xyz.gmitch215.socketmc.forge.ForgeSocketMC.minecraft;
 
@@ -24,7 +23,7 @@ public final class OpenScreenMachine implements Machine {
 
     public static final OpenScreenMachine MACHINE = new OpenScreenMachine();
 
-    private OpenScreenMachine() {};
+    private OpenScreenMachine() {}
 
      static Screen defaultScreen(@NotNull DefaultScreen screen, @Nullable Screen lastScreen) {
         return switch (screen.getIdentifier()) {
