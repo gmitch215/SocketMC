@@ -64,7 +64,7 @@ jobs:
       - name: Change Permissions
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew clean assemble publishToMavenLocal
+        run: ./gradlew assemble publishToMavenLocal
 
   upload:
     runs-on: ubuntu-latest
@@ -83,7 +83,7 @@ jobs:
       - name: Change Permissions
         run: chmod +x ./gradlew
       - name: Build with Gradle
-        run: ./gradlew clean assemble
+        run: ./gradlew assemble
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -110,7 +110,7 @@ jobs:
       - name: Change Permissions
         run: chmod +x ./gradlew
       - name: Build JavaDocs
-        run: ./gradlew clean allJavadoc
+        run: ./gradlew allJavadoc
       - name: Deploy JavaDoc
         run: bash javadoc.sh ${GITHUB_SHA::7}
 
@@ -133,4 +133,4 @@ jobs:
         run: chmod +x ./gradlew
       - name: Build with Gradle
         run: |
-          ./gradlew clean publish -Psuffix=${GITHUB_SHA::7} -Purl=https://maven.pkg.github.com/gmitch215/SocketMC -Pusername=${{ secrets.GITHUB_ACTOR }} -Ppassword=${{ secrets.GITHUB_TOKEN }}
+          ./gradlew publish -Psuffix=${GITHUB_SHA::7} -Purl=https://maven.pkg.github.com/gmitch215/SocketMC -Pusername=${{ secrets.GITHUB_ACTOR }} -Ppassword=${{ secrets.GITHUB_TOKEN }}
