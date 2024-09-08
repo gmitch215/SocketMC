@@ -1756,6 +1756,7 @@ public final class Instruction implements Serializable, Paramaterized {
      * @param players Players to Show
      * @return Show Players Instruction
      */
+    @NotNull
     public static Instruction showPlayers(@NotNull Iterable<UUID> players) {
         if (players == null) throw new IllegalArgumentException("Players cannot be null");
 
@@ -1767,6 +1768,7 @@ public final class Instruction implements Serializable, Paramaterized {
      * @param players Players to Show
      * @return Show Players Instruction
      */
+    @NotNull
     public static Instruction showPlayers(@NotNull UUID... players) {
         if (players == null) throw new IllegalArgumentException("Players cannot be null");
 
@@ -1778,6 +1780,7 @@ public final class Instruction implements Serializable, Paramaterized {
      * @param players Players to Hide
      * @return Hide Players Instruction
      */
+    @NotNull
     public static Instruction hidePlayers(@NotNull Iterable<UUID> players) {
         if (players == null) throw new IllegalArgumentException("Players cannot be null");
 
@@ -1789,6 +1792,7 @@ public final class Instruction implements Serializable, Paramaterized {
      * @param players Players to Hide
      * @return Hide Players Instruction
      */
+    @NotNull
     public static Instruction hidePlayers(@NotNull UUID... players) {
         if (players == null) throw new IllegalArgumentException("Players cannot be null");
 
