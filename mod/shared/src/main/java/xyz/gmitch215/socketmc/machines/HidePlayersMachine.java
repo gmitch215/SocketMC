@@ -8,7 +8,7 @@ import xyz.gmitch215.socketmc.instruction.Machine;
 
 import java.util.UUID;
 
-@InstructionId(Instruction.SHOW_PLAYERS)
+@InstructionId(Instruction.HIDE_PLAYERS)
 public final class HidePlayersMachine implements Machine {
 
     public static final HidePlayersMachine MACHINE = new HidePlayersMachine();
