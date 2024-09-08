@@ -3,7 +3,7 @@ rootProject.name = "SocketMC"
 include(":socketmc-core")
 project(":socketmc-core").projectDir = rootDir.resolve("core")
 
-listOf("shared", "fabric", "forge").forEach {
+listOf("shared", "fabric", "forge", "neoforge").forEach {
     include(":socketmc-$it")
     project(":socketmc-$it").projectDir = rootDir.resolve("mod/$it")
 }
@@ -21,5 +21,6 @@ pluginManagement {
         maven("https://maven.fabricmc.net/")
         maven("https://maven.minecraftforge.net/")
         maven("https://maven.parchmentmc.org")
+        maven("https://maven.neoforged.net/releases/")
     }
 }

@@ -1,5 +1,12 @@
 package xyz.gmitch215.socketmc.fabric.machines;
 
+import net.minecraft.client.gui.screens.*;
+import net.minecraft.client.gui.screens.achievement.StatsScreen;
+import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
+import net.minecraft.client.gui.screens.options.OptionsScreen;
+import net.minecraft.network.chat.Component;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import xyz.gmitch215.socketmc.fabric.FabricUtil;
 import xyz.gmitch215.socketmc.fabric.screen.FabricScreen;
 import xyz.gmitch215.socketmc.instruction.Instruction;
@@ -8,13 +15,6 @@ import xyz.gmitch215.socketmc.instruction.Machine;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.CustomScreen;
 import xyz.gmitch215.socketmc.screen.DefaultScreen;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.client.gui.screens.achievement.StatsScreen;
-import net.minecraft.client.gui.screens.advancements.AdvancementsScreen;
-import net.minecraft.client.gui.screens.options.OptionsScreen;
-import net.minecraft.network.chat.Component;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
 

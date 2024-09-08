@@ -1,8 +1,12 @@
-package xyz.gmitch215.socketmc.retriever;
+package xyz.gmitch215.socketmc.forge;
 
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import net.minecraft.network.FriendlyByteBuf;
+import xyz.gmitch215.socketmc.retriever.ClientProperty;
+import xyz.gmitch215.socketmc.retriever.Retriever;
+import xyz.gmitch215.socketmc.retriever.RetrieverType;
+import xyz.gmitch215.socketmc.retriever.Window;
 import xyz.gmitch215.socketmc.util.InputType;
 
 import java.io.ByteArrayOutputStream;
@@ -13,12 +17,12 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static xyz.gmitch215.socketmc.fabric.FabricSocketMC.minecraft;
+import static xyz.gmitch215.socketmc.forge.ForgeSocketMC.minecraft;
 import static xyz.gmitch215.socketmc.retriever.Retriever.create;
 
-public final class FabricRetriever {
+public final class ForgeRetriever {
 
-    private FabricRetriever() {}
+    private ForgeRetriever() {}
 
     public static final Set<ClientProperty<?>> PROPERTIES = Stream.concat(
             Retriever.PROPERTIES.stream(),
@@ -26,23 +30,22 @@ public final class FabricRetriever {
                     create(RetrieverType.CURRENT_WINDOW, () -> {
                         com.mojang.blaze3d.platform.Window window = minecraft.getWindow();
 
-                        Window w = new Window();
-                        w.id = window.getWindow();
-                        w.fullscreen = window.isFullscreen();
-                        w.x = window.getX();
-                        w.y = window.getY();
-                        w.width = window.getWidth();
-                        w.height = window.getHeight();
-                        w.screenWidth = window.getScreenWidth();
-                        w.screenHeight = window.getScreenHeight();
-                        w.guiScaledWidth = window.getGuiScaledWidth();
-                        w.guiScaledHeight = window.getGuiScaledHeight();
-                        w.guiScale = window.getGuiScale();
-                        w.framerateLimit = window.getFramerateLimit();
-                        w.platform = com.mojang.blaze3d.platform.Window.getPlatform();
-                        w.refreshRate = window.getRefreshRate();
-
-                        return w;
+                        return new Window(
+                                window.getWindow(),
+                                window.isFullscreen(),
+                                window.getX(),
+                                window.getY(),
+                                window.getWidth(),
+                                window.getHeight(),
+                                window.getScreenWidth(),
+                                window.getScreenHeight(),
+                                window.getGuiScaledWidth(),
+                                window.getGuiScaledHeight(),
+                                window.getGuiScale(),
+                                window.getFramerateLimit(),
+                                com.mojang.blaze3d.platform.Window.getPlatform(),
+                                window.getRefreshRate()
+                        );
                     }),
                     create(RetrieverType.PAUSED, minecraft::isPaused),
                     create(RetrieverType.FPS, minecraft::getFps),
@@ -71,9 +74,10 @@ public final class FabricRetriever {
 
         buf.writeByteArray(out.toByteArray());
 
-        ChannelFuture future = minecraft.player.connection.getConnection().channel.writeAndFlush(buf);
+        ChannelFuture future = minecraft.player.connection.getConnection().channel().writeAndFlush(buf);
         future.await();
         if (!future.isSuccess())
             throw new IOException("Failed to send retriever response", future.cause());
     }
+
 }

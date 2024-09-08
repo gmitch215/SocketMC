@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.fabric.mixin.events;
 
+import net.minecraft.client.MouseHandler;
 import xyz.gmitch215.socketmc.fabric.FabricSocketMC;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -9,7 +10,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Map;
 
-@Mixin(targets = "net.minecraft.client.MouseHandler")
+@Mixin(MouseHandler.class)
 public class PlayerMouseInputEvent {
 
     @Unique

@@ -60,6 +60,11 @@ public enum ModPermission {
      */
     READ_GAME_PROPERTIES(true),
 
+    /**
+     * Permission to change various soft game preferences, such as social interactions.
+     */
+    CHANGE_GAME_PREFERENCES(false),
+
     ;
 
     private final boolean changeable;

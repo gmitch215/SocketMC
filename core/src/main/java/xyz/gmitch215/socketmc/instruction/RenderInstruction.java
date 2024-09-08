@@ -3,9 +3,11 @@ package xyz.gmitch215.socketmc.instruction;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 import xyz.gmitch215.socketmc.util.DataHolder;
+import xyz.gmitch215.socketmc.util.NBTTag;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.security.SecureRandom;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -75,6 +77,15 @@ public abstract class RenderInstruction implements Serializable, DataHolder {
     }
 
     /**
+     * Creates a new instruction for the DebugRenderer.
+     * @return Debug Renderer Instruction
+     */
+    @NotNull
+    public static RenderInstruction.DebugRenderer debug() {
+        return new DebugRenderer();
+    }
+
+    /**
      * Represents instructions for the Game Renderer.
      */
     public static final class GameRenderer extends RenderInstruction {
@@ -120,7 +131,7 @@ public abstract class RenderInstruction implements Serializable, DataHolder {
         }
 
         /**
-         * Renders the confusion effect, used when the player has the nausea effect.
+         * Renders the confusion effect. Used when the player has the nausea effect.
          * @param strength The strength of the effect, between 0 and 1
          * @throws IllegalArgumentException if the strength is not between 0 and 1
          */
@@ -132,6 +143,61 @@ public abstract class RenderInstruction implements Serializable, DataHolder {
             data.put("strength", strength);
 
             subOrdinal = 1;
+            isFilled = true;
+        }
+
+        /**
+         * Renders the item activation effect. Used when the player activates a Totem of Undying.
+         * @param item The item that is being activated
+         * @throws IllegalArgumentException if the item is null
+         */
+        public void renderItemActivation(@NotNull NBTTag item) throws IllegalArgumentException {
+            SecureRandom random = new SecureRandom();
+            renderItemActivation(item, random.nextFloat() * 2.0f - 1.0f, random.nextFloat() * 2.0f - 1.0f);
+        }
+
+        /**
+         * Renders the item activation effect. Used when the player activates a Totem of Undying.
+         * @param item The item that is being activated
+         * @param offsetX The final offsetX the item should glide to
+         * @param offsetY The final offsetY the item should glide to
+         * @throws IllegalArgumentException if the item is null
+         */
+        public void renderItemActivation(@NotNull NBTTag item, float offsetX, float offsetY) throws IllegalArgumentException {
+            checkFilled();
+
+            data.put("item", item);
+            data.put("offsetX", offsetX);
+            data.put("offsetY", offsetY);
+
+            subOrdinal = 2;
+            isFilled = true;
+        }
+
+    }
+
+    public static final class DebugRenderer extends RenderInstruction {
+
+        /**
+         * The ordinal for a {@link RenderInstruction.DebugRenderer}.
+         */
+        public static final int ORDINAL = 1;
+
+        @Serial
+        private static final long serialVersionUID = -2873349323016509570L;
+
+        private DebugRenderer() { super(ORDINAL); }
+
+        /**
+         * Renders the chunk border seen when using the F3+G debug keybind.
+         * @param enabled Whether the chunk border should be rendered
+         */
+        public void renderChunkborder(boolean enabled) {
+            checkFilled();
+
+            data.put("enabled", enabled);
+
+            subOrdinal = 0;
             isFilled = true;
         }
 

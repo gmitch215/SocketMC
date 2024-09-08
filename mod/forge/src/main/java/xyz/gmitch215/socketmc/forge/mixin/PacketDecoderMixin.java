@@ -15,7 +15,7 @@ import xyz.gmitch215.socketmc.forge.ForgeSocketMC;
 import xyz.gmitch215.socketmc.forge.machines.ForgeMachineFinder;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.machines.MachineFinder;
-import xyz.gmitch215.socketmc.retriever.ForgeRetriever;
+import xyz.gmitch215.socketmc.forge.ForgeRetriever;
 import xyz.gmitch215.socketmc.retriever.Retriever;
 import xyz.gmitch215.socketmc.retriever.RetrieverType;
 import xyz.gmitch215.socketmc.spigot.SocketPlugin;

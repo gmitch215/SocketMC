@@ -23,7 +23,9 @@ public final class MachineFinder {
             OSBeepMachine.class,
             ExternalPopupMachine.class,
             ExternalMessageMachine.class,
-            SetWindowTitleMachine.class
+            SetWindowTitleMachine.class,
+            ShowPlayersMachine.class,
+            HidePlayersMachine.class
     );
 
     public static Machine getMachine(@NotNull Collection<Class<? extends Machine>> machines, @NotNull String id) {

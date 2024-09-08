@@ -4,10 +4,7 @@ import xyz.gmitch215.socketmc.SocketMC;
 import xyz.gmitch215.socketmc.config.ModPermission;
 import xyz.gmitch215.socketmc.spigot.SocketPlugin;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Supplier;
 
 @SuppressWarnings("unchecked")
@@ -30,7 +27,8 @@ public final class Retriever {
             }),
             create(RetrieverType.FREE_MEMORY, Runtime.getRuntime()::freeMemory),
             create(RetrieverType.TOTAL_MEMORY, Runtime.getRuntime()::totalMemory),
-            create(RetrieverType.MAX_MEMORY, Runtime.getRuntime()::maxMemory)
+            create(RetrieverType.MAX_MEMORY, Runtime.getRuntime()::maxMemory),
+            create(RetrieverType.HIDDEN_PLAYERS, () -> SocketMC.INSTANCE.get().getHiddenPlayers().toArray(UUID[]::new))
     );
 
     //<editor-fold desc="Properties" defaultstate="collapsed">

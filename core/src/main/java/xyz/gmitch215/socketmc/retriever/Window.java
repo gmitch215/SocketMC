@@ -26,7 +26,44 @@ public final class Window implements Serializable {
     String platform;
     int refreshRate;
 
-    Window() {}
+    /**
+     * Creates a new, empty window.
+     */
+    public Window() {}
+
+    /**
+     * Creates a new window with the specified parameters.
+     * @param id Window ID
+     * @param fullscreen Fullscreen Mode
+     * @param x X Position
+     * @param y Y Position
+     * @param width Width
+     * @param height Height
+     * @param screenWidth Screen Width
+     * @param screenHeight Screen Height
+     * @param guiScaledWidth GUI Scaled Width
+     * @param guiScaledHeight GUI Scaled Height
+     * @param guiScale GUI Scale
+     * @param framerateLimit Framerate Limit
+     * @param platform Window Platform
+     * @param refreshRate Refresh Rate
+     */
+    public Window(long id, boolean fullscreen, int x, int y, int width, int height, int screenWidth, int screenHeight, int guiScaledWidth, int guiScaledHeight, double guiScale, int framerateLimit, String platform, int refreshRate) {
+        this.id = id;
+        this.fullscreen = fullscreen;
+        this.x = x;
+        this.y = y;
+        this.width = width;
+        this.height = height;
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
+        this.guiScaledWidth = guiScaledWidth;
+        this.guiScaledHeight = guiScaledHeight;
+        this.guiScale = guiScale;
+        this.framerateLimit = framerateLimit;
+        this.platform = platform;
+        this.refreshRate = refreshRate;
+    }
 
     /**
      * Gets the window ID.
@@ -125,8 +162,16 @@ public final class Window implements Serializable {
     }
 
     /**
-     * <p>Gets the platform this window is currently on.</p>
-     * <p>Common values are {@code "win32"}, {@code "cocoa"}, {@code "wayland"}, and {@code "x11"}. {@code "null"} will be returned if not accessible, and {@code "<error>"} will be returned if something happened.</p>
+     * <p>Gets the platform this window is currently using.</p>
+     * <p>Some potential values are:</p>
+     * <ul>
+     *     <li>{@code win32} if on Windows</li>
+     *     <li>{@code cocoa} if on macOS</li>
+     *     <li>{@code x11} or {@code wayland} if on Unix</li>
+     *     <li>{@code null} if inaccessible</li>
+     *     <li>{@code <error>} if can't fetch the value</li>
+     *     <li>{@code unknown} if not using a generally known windows API</li>
+     * </ul>
      * @return Window Platform
      */
     public String getPlatform() {

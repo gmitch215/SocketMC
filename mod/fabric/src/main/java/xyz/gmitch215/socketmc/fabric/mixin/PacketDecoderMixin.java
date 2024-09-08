@@ -15,7 +15,7 @@ import xyz.gmitch215.socketmc.fabric.FabricSocketMC;
 import xyz.gmitch215.socketmc.fabric.machines.FabricMachineFinder;
 import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.machines.MachineFinder;
-import xyz.gmitch215.socketmc.retriever.FabricRetriever;
+import xyz.gmitch215.socketmc.fabric.FabricRetriever;
 import xyz.gmitch215.socketmc.retriever.Retriever;
 import xyz.gmitch215.socketmc.retriever.RetrieverType;
 import xyz.gmitch215.socketmc.spigot.SocketPlugin;

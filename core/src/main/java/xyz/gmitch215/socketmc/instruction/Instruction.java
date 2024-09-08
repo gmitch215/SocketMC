@@ -20,9 +20,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.net.URI;
 import java.time.Duration;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Represents a SocketMC Instruction to be sent to the client.
@@ -180,6 +179,24 @@ public final class Instruction implements Serializable, Paramaterized {
      */
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_ITEMSTACK = "draw_itemstack";
+
+    /**
+     * Instruction to change the native window icon of the client.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String SET_WINDOW_ICON = "set_window_icon";
+
+    /**
+     * Instruction to show players on the social interactions menu.
+     */
+    @InstructionPermission(ModPermission.CHANGE_GAME_PREFERENCES)
+    public static final String SHOW_PLAYERS = "show_players";
+
+    /**
+     * Instruction to hide players from the social interactions menu.
+     */
+    @InstructionPermission(ModPermission.CHANGE_GAME_PREFERENCES)
+    public static final String HIDE_PLAYERS = "hide_players";
 
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
@@ -1717,6 +1734,69 @@ public final class Instruction implements Serializable, Paramaterized {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_ITEMSTACK, List.of(item, x, y, guiOffset, randomSeed, millis));
+    }
+
+    /**
+     * <p>Creates a {@link #SET_WINDOW_ICON} instruction.</p>
+     * <ul>
+     *     <li>On Windows/Linux, a {@code .png} file must be loaded. The recommended size is {@code 16x16}.</li>
+     *     <li>On macOS, a {@code .icns} file must be loaded.</li>
+     * </ul>
+     * <p>The library will <strong>not</strong> make an effort to validate the byte array.</p>
+     * @param icon Icon to Set
+     * @return Set Window Icon Instruction
+     */
+    @NotNull
+    public static Instruction setWindowIcon(byte[] icon) {
+        return new Instruction(SET_WINDOW_ICON, List.of(icon));
+    }
+
+    /**
+     * Creates a {@link #SHOW_PLAYERS} instruction.
+     * @param players Players to Show
+     * @return Show Players Instruction
+     */
+    @NotNull
+    public static Instruction showPlayers(@NotNull Iterable<UUID> players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(SHOW_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #SHOW_PLAYERS} instruction.
+     * @param players Players to Show
+     * @return Show Players Instruction
+     */
+    @NotNull
+    public static Instruction showPlayers(@NotNull UUID... players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(SHOW_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #HIDE_PLAYERS} instruction.
+     * @param players Players to Hide
+     * @return Hide Players Instruction
+     */
+    @NotNull
+    public static Instruction hidePlayers(@NotNull Iterable<UUID> players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(HIDE_PLAYERS, List.of(players));
+    }
+
+    /**
+     * Creates a {@link #HIDE_PLAYERS} instruction.
+     * @param players Players to Hide
+     * @return Hide Players Instruction
+     */
+    @NotNull
+    public static Instruction hidePlayers(@NotNull UUID... players) {
+        if (players == null) throw new IllegalArgumentException("Players cannot be null");
+
+        return new Instruction(HIDE_PLAYERS, List.of(players));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">

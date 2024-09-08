@@ -2,7 +2,6 @@ package xyz.gmitch215.socketmc.util;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.nbt.TagParser;
-import net.minecraft.server.MinecraftServer;
 import org.bukkit.craftbukkit.v1_21_R1.CraftRegistry;
 import org.bukkit.craftbukkit.v1_21_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
