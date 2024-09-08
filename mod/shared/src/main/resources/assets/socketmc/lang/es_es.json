@@ -23,5 +23,7 @@
   "gui.socketmc.permission.read_gui_properties": "Leer Propiedades de la GUI",
   "gui.socketmc.permission.read_gui_properties.tooltip": "Permiso para leer las propiedades de la GUI, como el tamaño de la ventana y la posición de la ventana.",
   "gui.socketmc.permission.read_game_properties": "Leer Propiedades del Juego",
-  "gui.socketmc.permission.read_game_properties.tooltip": "Permiso para leer las propiedades del juego, como el historial de comandos y la información del juego."
+  "gui.socketmc.permission.read_game_properties.tooltip": "Permiso para leer las propiedades del juego, como el historial de comandos y la información del juego.",
+  "gui.socketmc.permission.change_game_preferences": "Cambiar Preferencias del Juego",
+  "gui.socketmc.permission.change_game_preferences.tooltip": "Permiso para cambiar las preferencias del juego, como las interacciones sociales."
 }

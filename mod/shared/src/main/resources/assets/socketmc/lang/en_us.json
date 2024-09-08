@@ -23,5 +23,7 @@
   "gui.socketmc.permission.read_gui_properties": "Read GUI Properties",
   "gui.socketmc.permission.read_gui_properties.tooltip": "Permission to read GUI properties, such as the screen size, window size, and more.",
   "gui.socketmc.permission.read_game_properties": "Read Game Properties",
-  "gui.socketmc.permission.read_game_properties.tooltip": "Permission to read various client game properties, such as command history and in-game information."
+  "gui.socketmc.permission.read_game_properties.tooltip": "Permission to read various client game properties, such as command history and in-game information.",
+  "gui.socketmc.permission.change_game_preferences": "Change Game Preferences",
+  "gui.socketmc.permission.change_game_preferences.tooltip": "Permission to change various soft game preferences, such as social interactions."
 }
