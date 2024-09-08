@@ -19,6 +19,20 @@ public interface Paramaterized {
     List<Object> getParameters();
 
     /**
+     * Gets the parameters of the specified type.
+     * @param type The type of the parameters to get
+     * @return The parameters of the specified type
+     * @param <T> The type of the parameters
+     */
+    default <T> List<T> getParameters(@NotNull Class<T> type) {
+        return getParameters()
+                .stream()
+                .filter(type::isInstance)
+                .map(type::cast)
+                .toList();
+    }
+
+    /**
      * Gets the parameter at the specified index.
      * @param index The index of the parameter to get
      * @return The parameter at the specified index
