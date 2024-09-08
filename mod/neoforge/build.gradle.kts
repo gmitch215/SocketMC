@@ -60,7 +60,7 @@ tasks {
     }
 
     named("modrinth") {
-        dependsOn("reobfJar")
+        dependsOn(jar)
     }
 }
 
