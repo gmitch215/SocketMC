@@ -122,6 +122,12 @@ public final class RetrieverType<T> implements Serializable {
     @RetrieverPermission(ModPermission.READ_GAME_PROPERTIES)
     public static final RetrieverType<String[]> COMMAND_HISTORY = new RetrieverType<>("command_history", String[].class);
 
+    /**
+     * A retriever for the client's hidden players on their social interaction screen.
+     */
+    @RetrieverPermission(ModPermission.READ_GAME_PROPERTIES)
+    public static final RetrieverType<UUID[]> HIDDEN_PLAYERS = new RetrieverType<>("hidden_players", UUID[].class);
+
     //<editor-fold desc="Implementation" defaultstate="collapsed">
 
     private final String id;
