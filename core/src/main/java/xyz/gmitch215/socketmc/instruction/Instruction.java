@@ -181,6 +181,12 @@ public final class Instruction implements Serializable, Paramaterized {
     @InstructionPermission(ModPermission.USE_GUI)
     public static final String DRAW_ITEMSTACK = "draw_itemstack";
 
+    /**
+     * Instruction to change the native window icon of the client.
+     */
+    @InstructionPermission(ModPermission.USE_GUI)
+    public static final String SET_WINDOW_ICON = "set_window_icon";
+
     @Serial
     private static final long serialVersionUID = -4177824277470078500L;
 
@@ -1717,6 +1723,21 @@ public final class Instruction implements Serializable, Paramaterized {
         if (millis < 0) throw new IllegalArgumentException("Duration cannot be negative");
 
         return new Instruction(DRAW_ITEMSTACK, List.of(item, x, y, guiOffset, randomSeed, millis));
+    }
+
+    /**
+     * <p>Creates a {@link #SET_WINDOW_ICON} instruction.</p>
+     * <ul>
+     *     <li>On Windows/Linux, a {@code .png} file must be loaded. The recommended size is {@code 16x16}.</li>
+     *     <li>On macOS, a {@code .icns} file must be loaded.</li>
+     * </ul>
+     * <p>The library will <strong>not</strong> make an effort to validate the byte array.</p>
+     * @param icon Icon to Set
+     * @return Set Window Icon Instruction
+     */
+    @NotNull
+    public static Instruction setWindowIcon(byte[] icon) {
+        return new Instruction(SET_WINDOW_ICON, List.of(icon));
     }
 
     // <editor-fold defaultstate="collapsed" desc="Instruction Serialization">
