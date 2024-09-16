@@ -11,7 +11,7 @@ plugins {
 
     // Mod
     id("fabric-loom") version "1.7.4" apply false
-    id("net.minecraftforge.gradle") version "6.0.28" apply false
+    id("net.minecraftforge.gradle") version "6.0.29" apply false
     id("net.neoforged.gradle.userdev") version "7.0.162" apply false
     id("net.neoforged.gradle.mixin") version "7.0.162" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
