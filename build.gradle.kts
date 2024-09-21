@@ -54,7 +54,7 @@ tasks {
 
 allprojects {
     val mc = "1.21"
-    val pr = "0.3.0"
+    val pr = "0.3.1"
 
     project.ext["minecraft_version"] = mc
     project.ext["project_version"] = pr
