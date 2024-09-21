@@ -20,7 +20,7 @@ public final class DrawItemStackMachine implements Machine {
 
     private DrawItemStackMachine() {}
 
-    private static final LifecycleMap<BiConsumer<GuiGraphics, DeltaTracker>> lifecycle = new LifecycleMap<>();
+    public static final LifecycleMap<BiConsumer<GuiGraphics, DeltaTracker>> lifecycle = new LifecycleMap<>();
 
     public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();

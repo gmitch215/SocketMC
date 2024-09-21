@@ -41,7 +41,7 @@ public final class DrawContextMachine implements Machine {
 
     private DrawContextMachine() {}
 
-    private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
+    public static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
     public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();

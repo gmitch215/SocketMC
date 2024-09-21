@@ -19,7 +19,7 @@ public final class DrawTextureMachine implements Machine {
 
     private DrawTextureMachine() {}
 
-    private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
+    public static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
     public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();
