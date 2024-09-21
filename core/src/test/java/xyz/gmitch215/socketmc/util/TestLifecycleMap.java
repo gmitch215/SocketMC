@@ -20,7 +20,7 @@ public class TestLifecycleMap {
         Assertions.assertEquals(3, map.size());
         for (int i = 1; i <= 3; i++) {
             Assertions.assertTrue(map.containsKey(i));
-            Assertions.assertEquals(1000, map.getRemainingTime(i));
+            Assertions.assertEquals(1000, map.getDuration(i));
         }
     }
 
