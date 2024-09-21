@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+import java.util.UUID;
 
 /**
  * <p>Represents a Namespaced Identifier.</p>
@@ -71,6 +72,26 @@ public final class Identifier implements Serializable {
     @NotNull
     public static Identifier minecraft(@NotNull String path) {
         return new Identifier("minecraft", path);
+    }
+
+    /**
+     * Creates a new Identifier with the namespace "socketmc".
+     * @param path The path of the Identifier.
+     * @return The new Identifier.
+     */
+    @NotNull
+    public static Identifier socketmc(@NotNull String path) {
+        return new Identifier("socketmc", path);
+    }
+
+    /**
+     * Creates a new random Identifier with the namespace "socketmc" and a random UUID as its path.
+     * @return The new random Identifier.
+     */
+    @NotNull
+    public static Identifier random() {
+        UUID uuid = UUID.randomUUID();
+        return Identifier.socketmc(uuid.toString());
     }
 
 }
