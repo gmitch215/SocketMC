@@ -33,7 +33,7 @@ import java.util.List;
  *     <li>Instructions are immutable and cannot be modified after creation.</li>
  *     <li>Instructions are serializable and can be sent over the network as byte arrays.</li>
  *     <li>All X, Y, Height, Width, and other measurements used in drawing instructions are in pixels.</li>
- *     <li>Players render things on the screen based on their own FPS (Frames Per Second), hence the provision of timed renderings in milliseconds.</li>
+ *     <li>Players render things on the screen based on their own FPS (Frames Per Second), hence the provision of timed renderings in milliseconds. In addition, you can specify {@code -1} for an infinite duration.</li>
  *     <li>SocketMC v0.1.3 introduced a permission system that allows or disallows specific types of Instructions. If permission is not given, the Instruction will <i>silently</i> fail.</li>
  * </ul>
  */
