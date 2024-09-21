@@ -1,5 +1,6 @@
 package xyz.gmitch215.socketmc.forge;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import net.minecraft.network.FriendlyByteBuf;
@@ -8,12 +9,14 @@ import xyz.gmitch215.socketmc.retriever.Retriever;
 import xyz.gmitch215.socketmc.retriever.RetrieverType;
 import xyz.gmitch215.socketmc.retriever.Window;
 import xyz.gmitch215.socketmc.util.InputType;
+import xyz.gmitch215.socketmc.util.RenderingProperties;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -44,7 +47,7 @@ public final class ForgeRetriever {
                                 window.getGuiScale(),
                                 window.getFramerateLimit(),
                                 com.mojang.blaze3d.platform.Window.getPlatform(),
-                                window.getRefreshRate()
+                                RenderingProperties.REFRESH_RATE.get()
                         );
                     }),
                     create(RetrieverType.PAUSED, minecraft::isPaused),

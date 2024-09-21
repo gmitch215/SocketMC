@@ -8,6 +8,7 @@ import xyz.gmitch215.socketmc.retriever.Retriever;
 import xyz.gmitch215.socketmc.retriever.RetrieverType;
 import xyz.gmitch215.socketmc.retriever.Window;
 import xyz.gmitch215.socketmc.util.InputType;
+import xyz.gmitch215.socketmc.util.RenderingProperties;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -44,7 +45,7 @@ public final class FabricRetriever {
                                 window.getGuiScale(),
                                 window.getFramerateLimit(),
                                 com.mojang.blaze3d.platform.Window.getPlatform(),
-                                window.getRefreshRate()
+                                RenderingProperties.REFRESH_RATE.get()
                         );
                     }),
                     create(RetrieverType.PAUSED, minecraft::isPaused),

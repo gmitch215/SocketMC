@@ -41,6 +41,8 @@ public final class FabricSocketMC implements SocketMC, ClientModInitializer {
 
         // Events - Machines
         HudRenderCallback.EVENT.register((graphics, delta) -> {
+            FabricRendering.frameTick();
+
             DrawTextMachine.frameTick(graphics, delta);
             DrawShapeMachine.frameTick(graphics, delta);
             DrawBufferMachine.frameTick(graphics, delta);
