@@ -38,9 +38,11 @@ public class LifecycleMap<T> implements Iterable<T> {
      * Runs the map, removing any expired values.
      */
     public void run() {
-        for (T key : origin.keySet()) {
+        Iterator<T> it = origin.keySet().iterator();
+        while (it.hasNext()) {
+            T key = it.next();
             if (getRemainingTime(key) <= 0) {
-                origin.remove(key);
+                it.remove();
                 duration.remove(key);
             }
         }
