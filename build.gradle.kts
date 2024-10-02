@@ -10,7 +10,7 @@ plugins {
     `maven-publish`
 
     // Mod
-    id("fabric-loom") version "1.8.5" apply false
+    id("fabric-loom") version "1.8.6" apply false
     id("net.minecraftforge.gradle") version "6.0.29" apply false
     id("net.neoforged.gradle.mixin") version "7.0.165" apply false
     id("net.neoforged.gradle.userdev") version "7.0.165" apply false
