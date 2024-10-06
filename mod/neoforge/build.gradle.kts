@@ -6,7 +6,7 @@ plugins {
 
 description = "NeoForge Mod for SocketMC Client-side Implementation"
 
-val minecraft = project.ext["minecraft_version"].toString()
+val mc = project.ext["minecraft_version"].toString()
 val parchmentV = project.ext["parchment"].toString()
 
 val neoforge = "21.0.167"
@@ -26,7 +26,7 @@ minecraft {
 
 subsystems {
     parchment {
-        minecraftVersion.set(minecraft)
+        minecraftVersion.set(mc)
         mappingsVersion.set(parchmentV)
     }
 }
@@ -73,8 +73,10 @@ modrinth {
     versionType.set(project.ext["version_type"].toString())
 
     uploadFile.set(tasks.jar.get().archiveFile.get().asFile)
-    gameVersions.add(project.ext["minecraft_version"].toString())
     changelog.set(project.ext["changelog"].toString())
+
+    gameVersions.add(mc)
+    gameVersions.addAll((project.ext["similar_versions"] as List<*>).map { it.toString() })
 
     loaders.add("neoforge")
 
