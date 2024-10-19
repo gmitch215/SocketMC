@@ -314,7 +314,6 @@ public class LifecycleMap<T> implements Iterable<T> {
      * Removes a specific key from multiple LifecycleMaps.
      * @param id The identifier of the key to remove
      * @param maps The LifecycleMaps to remove the key from
-     * @param <T> The type of object to remove
      * @throws IllegalArgumentException if the maps are null
      */
     public static void removeIn(@NotNull Identifier id, @NotNull LifecycleMap<?>... maps) {
