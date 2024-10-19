@@ -3,6 +3,7 @@ xyz.gmitch215.socketmc.config
 xyz.gmitch215.socketmc.events
 xyz.gmitch215.socketmc.events.input
 xyz.gmitch215.socketmc.events.screen
+xyz.gmitch215.socketmc.events.system
 xyz.gmitch215.socketmc.instruction
 xyz.gmitch215.socketmc.instruction.builder
 xyz.gmitch215.socketmc.log
@@ -16,5 +17,6 @@ xyz.gmitch215.socketmc.spigot
 xyz.gmitch215.socketmc.util
 xyz.gmitch215.socketmc.util.input
 xyz.gmitch215.socketmc.util.math
+xyz.gmitch215.socketmc.util.option
 xyz.gmitch215.socketmc.util.render
 xyz.gmitch215.socketmc.util.render.text
