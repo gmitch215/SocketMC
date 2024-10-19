@@ -2,7 +2,9 @@ package xyz.gmitch215.socketmc.retriever;
 
 import org.jetbrains.annotations.NotNull;
 import xyz.gmitch215.socketmc.config.ModPermission;
+import xyz.gmitch215.socketmc.instruction.Instruction;
 import xyz.gmitch215.socketmc.spigot.SocketPlugin;
+import xyz.gmitch215.socketmc.util.Identifier;
 import xyz.gmitch215.socketmc.util.InputType;
 
 import java.io.*;
@@ -127,6 +129,21 @@ public final class RetrieverType<T> implements Serializable {
      */
     @RetrieverPermission(ModPermission.READ_GAME_PROPERTIES)
     public static final RetrieverType<UUID[]> HIDDEN_PLAYERS = new RetrieverType<>("hidden_players", UUID[].class);
+
+    /**
+     * <p>A retriever for all of the drawn contents on the client's screen made through SocketMC Instructions.</p>
+     * <p>This currently includes the following instructions:</p>
+     * <ul>
+     *     <li>{@link Instruction#DRAW_TEXT}</li>
+     *     <li>{@link Instruction#DRAW_SHAPE}</li>
+     *     <li>{@link Instruction#DRAW_TEXTURE}</li>
+     *     <li>{@link Instruction#DRAW_BUFFER}</li>
+     *     <li>{@link Instruction#DRAW_CONTEXT}</li>
+     *     <li>{@link Instruction#DRAW_ITEMSTACK}</li>
+     * </ul>
+     */
+    @RetrieverPermission(ModPermission.READ_GUI_PROPERTIES)
+    public static final RetrieverType<Identifier[]> DRAWN_CONTENTS = new RetrieverType<>("drawn_contents", Identifier[].class);
 
     //<editor-fold desc="Implementation" defaultstate="collapsed">
 

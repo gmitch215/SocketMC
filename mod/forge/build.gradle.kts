@@ -7,7 +7,7 @@ plugins {
 
 description = "Forge Mod for SocketMC Client-side Implementation"
 
-val minecraft = project.ext["minecraft_version"].toString()
+val mc = project.ext["minecraft_version"].toString()
 val parchment = project.ext["parchment"].toString()
 
 val forge = "51.0.0"
@@ -16,13 +16,13 @@ dependencies {
     api(project(":socketmc-core"))
     api(project(":socketmc-shared"))
 
-    minecraft("net.minecraftforge:forge:$minecraft-$forge")
+    minecraft("net.minecraftforge:forge:$mc-$forge")
 
     annotationProcessor("org.spongepowered:mixin:0.8.6:processor")
 }
 
 minecraft {
-    mappings("parchment", "$parchment-$minecraft")
+    mappings("parchment", "$parchment-$mc")
 
     accessTransformer("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -73,8 +73,10 @@ modrinth {
     versionType.set(project.ext["version_type"].toString())
 
     uploadFile.set(tasks.jar.get().archiveFile.get().asFile)
-    gameVersions.add(project.ext["minecraft_version"].toString())
     changelog.set(project.ext["changelog"].toString())
+
+    gameVersions.add(mc)
+    gameVersions.addAll((project.ext["similar_versions"] as List<*>).map { it.toString() })
 
     loaders.add("forge")
 

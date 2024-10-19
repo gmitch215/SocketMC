@@ -1,13 +1,16 @@
 package xyz.gmitch215.socketmc.screen;
 
-import xyz.gmitch215.socketmc.screen.layout.Layout;
-import xyz.gmitch215.socketmc.util.render.text.Text;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Unmodifiable;
+import xyz.gmitch215.socketmc.screen.layout.Layout;
+import xyz.gmitch215.socketmc.util.render.text.Text;
 
 import java.io.Serial;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Represents a custom screen to be displayed on the client's screen.
@@ -23,6 +26,7 @@ public final class CustomScreen extends AbstractScreen {
     private boolean closeableOnEscape = true;
 
     private final List<Positionable> children = new ArrayList<>();
+    private final Map<String, Object> attributes = new HashMap<>();
 
     /**
      * Constructs a new screen with the given title.
@@ -174,7 +178,86 @@ public final class CustomScreen extends AbstractScreen {
         this.closeableOnEscape = closeableOnEscape;
     }
 
+    /**
+     * Gets an immutable copy of the attributes of this screen.
+     * @return Map of Attributes
+     */
+    @Unmodifiable
+    @NotNull
+    public Map<String, Object> getAttributes() {
+        return Map.copyOf(attributes);
+    }
+
+    /**
+     * Gets an attribute from this screen.
+     * @param key the key of the attribute
+     * @return the attribute value, or null if the attribute does not exist
+     * @throws IllegalArgumentException if the key is null
+     */
+    @Nullable
+    public Object getAttribute(@NotNull String key) throws IllegalArgumentException {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+        return attributes.get(key);
+    }
+
+    /**
+     * Gets an attribute from this screen.
+     * @param key the key of the attribute
+     * @param def the default value if the attribute does not exist
+     * @return the attribute value, or the default value if the attribute does not exist
+     * @throws IllegalArgumentException if the key is null
+     */
+    public Object getAttribute(@NotNull String key, @Nullable Object def) throws IllegalArgumentException {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+        return attributes.getOrDefault(key, def);
+    }
+
+    /**
+     * Gets an attribute from this screen.
+     * @param key the key of the attribute
+     * @param type the type of the attribute
+     * @return the attribute value, or null if the attribute does not exist
+     * @param <T> the type of the attribute
+     */
+    @Nullable
+    public <T> T getAttribute(@NotNull String key, @NotNull Class<T> type) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+        if (type == null) throw new IllegalArgumentException("Type cannot be null");
+
+        return type.cast(attributes.get(key));
+    }
+
+    /**
+     * Gets an attribute from this screen.
+     * @param key the key of the attribute
+     * @param type the type of the attribute
+     * @param def the default value if the attribute does not exist
+     * @return the attribute value, or the default value if the attribute does not exist
+     * @param <T> the type of the attribute
+     */
+    @Nullable
+    public <T> T getAttribute(@NotNull String key, @NotNull Class<T> type, @Nullable T def) {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+        if (type == null) throw new IllegalArgumentException("Type cannot be null");
+
+        return type.cast(attributes.getOrDefault(key, def));
+    }
+
+    /**
+     * Sets an attribute for this screen.
+     * @param key the key of the attribute
+     * @param value the value of the attribute
+     * @throws IllegalArgumentException if the key is null
+     */
+    public void setAttribute(@NotNull String key, @Nullable Object value) throws IllegalArgumentException {
+        if (key == null) throw new IllegalArgumentException("Key cannot be null");
+
+        if (value == null) attributes.remove(key);
+        else attributes.put(key, value);
+    }
+
     @Override
+    @NotNull
     public String toString() {
         return "CustomScreen{" +
                 "title='" + titleJSON + '\'' +
@@ -182,6 +265,8 @@ public final class CustomScreen extends AbstractScreen {
                 ", children=" + children +
                 ", background=" + background +
                 ", layout=" + layout +
+                ", closeableOnEscape=" + closeableOnEscape +
+                ", attributes=" + attributes +
                 '}';
     }
 }

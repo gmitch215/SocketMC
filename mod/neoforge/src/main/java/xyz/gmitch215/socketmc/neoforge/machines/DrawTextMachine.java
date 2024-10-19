@@ -20,7 +20,7 @@ public final class DrawTextMachine implements Machine {
 
     private DrawTextMachine() {}
 
-    private static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
+    public static final LifecycleMap<Consumer<GuiGraphics>> lifecycle = new LifecycleMap<>();
 
     public static void frameTick(GuiGraphics graphics, DeltaTracker delta) {
         lifecycle.run();

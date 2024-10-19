@@ -3,6 +3,7 @@ package xyz.gmitch215.socketmc.spigot;
 import io.netty.channel.ChannelPipeline;
 import xyz.gmitch215.socketmc.events.SocketEvent;
 import xyz.gmitch215.socketmc.events.input.*;
+import xyz.gmitch215.socketmc.events.system.AsyncPlayerChangeOptionEvent;
 import xyz.gmitch215.socketmc.screen.AbstractScreen;
 import xyz.gmitch215.socketmc.screen.ui.AbstractButton;
 import xyz.gmitch215.socketmc.screen.ui.CheckboxButton;
@@ -114,6 +115,16 @@ final class EventFactory {
                 boolean success = (boolean) params.get("success");
 
                 return new AsyncPlayerClickExternalMessageBoxEvent(success, p);
+            },
+            // PlayerChangeOptionEvent - 10
+            (p, params) -> {
+                String option = (String) params.get("option");
+                Object oldValue = params.get("old_value");
+                String oldValueS = (String) params.get("old_value_string");
+                Object newValue = params.get("new_value");
+                String newValueS = (String) params.get("new_value_string");
+
+                return new AsyncPlayerChangeOptionEvent(option, oldValue, oldValueS, newValue, newValueS, p);
             }
     );
 
