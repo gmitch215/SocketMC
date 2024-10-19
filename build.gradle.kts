@@ -3,17 +3,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import java.net.*
 
 plugins {
-    kotlin("jvm") version "2.0.20"
+    kotlin("jvm") version "2.0.21"
 
     java
     jacoco
     `maven-publish`
 
     // Mod
-    id("fabric-loom") version "1.7.4" apply false
+    id("fabric-loom") version "1.8.10" apply false
     id("net.minecraftforge.gradle") version "6.0.29" apply false
-    id("net.neoforged.gradle.mixin") version "7.0.163" apply false
-    id("net.neoforged.gradle.userdev") version "7.0.163" apply false
+    id("net.neoforged.gradle.mixin") version "7.0.165" apply false
+    id("net.neoforged.gradle.userdev") version "7.0.165" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
     id("org.spongepowered.mixin") version "0.7.+" apply false
     id("com.modrinth.minotaur") version "2.+" apply false
@@ -204,9 +204,9 @@ subprojects {
 
     dependencies {
         compileOnly(kotlin("stdlib"))
-        compileOnly("org.jetbrains:annotations:24.1.0")
+        compileOnly("org.jetbrains:annotations:26.0.1")
 
-        testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
+        testImplementation("org.junit.jupiter:junit-jupiter:5.11.2")
     }
 
 }
