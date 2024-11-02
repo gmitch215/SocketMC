@@ -73,7 +73,7 @@ allprojects {
     project.ext["license"] = "GPL-3.0"
     project.ext["github"] = "https://github.com/gmitch215/SocketMC"
 
-//    project.ext["similar_versions"] = listOf()
+    project.ext["similar_versions"] = listOf<String>()
     project.ext["version_type"] = when {
         version.toString().contains("SNAPSHOT") -> "alpha"
         version.toString().split("-")[1].startsWith("0") -> "beta"
