@@ -53,7 +53,7 @@ tasks {
 }
 
 allprojects {
-    val mc = "1.21"
+    val mc = "1.21.1"
     val pr = "0.3.1"
 
     project.ext["minecraft_version"] = mc
@@ -73,7 +73,7 @@ allprojects {
     project.ext["license"] = "GPL-3.0"
     project.ext["github"] = "https://github.com/gmitch215/SocketMC"
 
-    project.ext["similar_versions"] = listOf("1.21.1")
+    project.ext["similar_versions"] = listOf()
     project.ext["version_type"] = when {
         version.toString().contains("SNAPSHOT") -> "alpha"
         version.toString().split("-")[1].startsWith("0") -> "beta"
