@@ -13,7 +13,7 @@ plugins {
     id("fabric-loom") version "1.8.12" apply false
     id("net.minecraftforge.gradle") version "6.0.29" apply false
     id("net.neoforged.gradle.mixin") version "7.0.171" apply false
-    id("net.neoforged.gradle.userdev") version "7.0.165" apply false
+    id("net.neoforged.gradle.userdev") version "7.0.171" apply false
     id("org.parchmentmc.librarian.forgegradle") version "1.+" apply false
     id("org.spongepowered.mixin") version "0.7.+" apply false
     id("com.modrinth.minotaur") version "2.+" apply false
